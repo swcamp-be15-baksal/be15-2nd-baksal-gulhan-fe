@@ -6,15 +6,31 @@ import Footer from '@/components/layout/Footer.vue';
 <template>
     <div id="app">
         <Header />
-        <router-view />
+        <div class="layout">
+            <router-view />
+        </div>
         <Footer />
     </div>
 </template>
 
-<style scoped>
+<style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 
 * {
     font-family: 'Pretendard Variable', sans-serif;
+}
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.layout {
+    padding: 76px 108px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: #fffdf8;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0));
 }
 </style>
