@@ -5,12 +5,11 @@ export const userRoutes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: import('@/features/user/views/LoginView.vue')
   },
   {
-    path: '/agree',
-    name: 'agree',
-    component: AgreeView
-
+    path: '/signup',
+    name: 'signup',
+    component: import('@/features/user/views/SignupView.vue')
   }
 ];
