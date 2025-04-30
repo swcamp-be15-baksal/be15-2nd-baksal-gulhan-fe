@@ -9,7 +9,7 @@ function selectFilter(filter) {
 </script>
 
 <template>
-    <div>
+    <div style="margin-bottom: 103px">
         <div
             class="d-flex align-items-center"
             style="gap: 10px; margin-left: 33px; margin-bottom: 41px">
