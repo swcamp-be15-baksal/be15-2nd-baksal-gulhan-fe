@@ -1,6 +1,13 @@
 <script setup>
 import UserInfoItem from '../components/UserInfoItem.vue';
 
+const menuList = [
+  { label: '구매 내역', to: '/mypage/orderhistory' },
+  { label: '배송지 관리', to: '/mypage/deliveryaddress' },
+  { label: 'MY 관심', to: '/mypage/like' },
+  { label: '리뷰 관리', to: '/mypage/review' },
+  { label: '작성글 관리', to: '/mypage/post' }
+];
 </script>
 
 <template>
@@ -8,30 +15,19 @@ import UserInfoItem from '../components/UserInfoItem.vue';
     <div class="title">
       <h1>마이페이지</h1>
     </div>
-
-    <div class="profile-box">
+    <div class="user-info-box">
       <UserInfoItem />
     </div>
 
     <div class="menu-box">
-      <router-link to="/mypage/orderhistory" class="menu-item">
-        구매 내역
-        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
-      </router-link>
-      <router-link to="/mypage/deliveryaddress" class="menu-item">
-        배송지 관리
-        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
-      </router-link>
-      <router-link to="/mypage/like" class="menu-item">
-        MY 관심
-        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
-      </router-link>
-      <router-link to="/mypage/review" class="menu-item">
-        리뷰 관리
-        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
-      </router-link>
-      <router-link to="/mypage/post" class="menu-item">
-        작성글 관리
+      <router-link
+        v-for="(menu, index) in menuList"
+        :key="menu.to"
+        :to="menu.to"
+        class="menu-item"
+        :class="{ 'no-border': index === menuList.length - 1}"
+      >
+        {{ menu.label}}
         <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
     </div>
@@ -77,11 +73,7 @@ import UserInfoItem from '../components/UserInfoItem.vue';
   outline: none;
 }
 
-.menu-item:visited {
-  color: inherit;
-}
-
-.menu-item:last-child {
+.menu-item.no-border {
   border-bottom: none;
 }
 
