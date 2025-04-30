@@ -66,6 +66,13 @@
     cursor: pointer;
 }
 
+.user-menu img{
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
 .header-bottom {
     display: flex;
     justify-content: space-between;
@@ -83,6 +90,10 @@
 
 .logo-button img {
     height: 83px;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }
 
 .nav-menu {
