@@ -16,21 +16,23 @@ import UserInfoItem from '../components/UserInfoItem.vue';
     <div class="menu-box">
       <router-link to="/mypage/orderhistory" class="menu-item">
         구매 내역
-        <img class="chevron-right" src="@/assets/chevron-right.svg" />
+        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
       <router-link to="/mypage/deliveryaddress" class="menu-item">
         배송지 관리
-        <img class="chevron-right" src="@/assets/chevron-right.svg">
+        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
       <router-link to="/mypage/like" class="menu-item">
         MY 관심
-        <img class="chevron-right" src="@/assets/chevron-right.svg">
+        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
-      <router-link to="/mypage/review" class="menu-item">        리뷰 관리
-        <img class="chevron-right" src="@/assets/chevron-right.svg">
+      <router-link to="/mypage/review" class="menu-item">
+        리뷰 관리
+        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
-      <router-link to="/mypage/post" class="menu-item">        작성글 관리
-        <img class="chevron-right" src="@/assets/chevron-right.svg">
+      <router-link to="/mypage/post" class="menu-item">
+        작성글 관리
+        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
       </router-link>
     </div>
   </div>
