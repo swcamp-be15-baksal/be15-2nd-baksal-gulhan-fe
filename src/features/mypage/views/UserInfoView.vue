@@ -120,28 +120,4 @@ function handleDelete() {
   font-size: 16px;
   cursor: pointer;
 }
-
-.modal {
-  background: white;
-  border: 1px solid #aaa;
-  padding: 20px;
-  margin-top: 20px;
-}
-
-.modal input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal-buttons button {
-  flex: 1;
-  margin: 0 5px;
-  padding: 8px;
-}
 </style>
