@@ -14,7 +14,7 @@ export const mypageRoutes = [
   // 회원 정보 수정
   {
     path : '/mypage/user/:id/edit',
-    name : 'EditUserInfo',
+    name : 'UpdateUserInfo',
     component : () => import('@/features/mypage/views/EditUserInfoView.vue')
   },
   // 등급 목록 전체 조회
@@ -46,6 +46,12 @@ export const mypageRoutes = [
     path : '/mypage/deliveryaddress',
     name : 'DeliveryAddress',
     component : () => import('@/features/mypage/views/DeliveryAddressView.vue')
+  },
+  // 배송지 수정
+  {
+    path : '/mypage/deliveryaddress/edit',
+    name : 'UpdateDeliveryAddress',
+    component : () => import('@/features/mypage/views/EditDeliveryAddressView.vue')
   },
   // 관심 조회
   {
