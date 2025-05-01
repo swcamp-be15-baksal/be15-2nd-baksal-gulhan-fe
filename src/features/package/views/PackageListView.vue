@@ -1,11 +1,13 @@
 <script setup>
 import PackageHeader from '@/features/package/components/PackageHeader.vue';
-import PackageDetail from '@/features/package/components/PackageDetail.vue';
+import PackageDetailCard from '@/features/package/components/PackageDetailCard.vue';
+import PackageTextInfo from '@/features/package/components/PackageTextInfo.vue';
 </script>
 
 <template>
     <PackageHeader />
-    <PackageDetail />
+    <PackageDetailCard />
+    <PackageTextInfo />
 </template>
 
 <style scoped></style>
