@@ -1,9 +1,8 @@
 <script setup>
 
-  import { useRouter } from 'vue-router';
   import { reactive, ref } from 'vue';
   import StartSignup from '@/features/user/components/StartSignup.vue';
-  import SignupAgree from '@/features/user/components/SignupAgree.vue';
+  import SignupTerms from '@/features/user/components/SignupTerms.vue';
 
   const signupData = reactive({
     userId : null,
@@ -14,7 +13,8 @@
     phone : null,
     birth : null,
     gender: null,
-    address: null
+    address: null,
+    agreed: false
   })
 
   const step = ref(0);
@@ -26,11 +26,15 @@
   const prevStep = () => {
     if(step.value > 0) step.value -=1;
   }
+
+  const setAgreed = () => {
+    signupData.agreed = true;
+  }
 </script>
 
 <template>
   <StartSignup v-if="step === 0" @nextStep="nextStep"/>
-  <SignupAgree v-if="step === 1" @nextStep="nextStep" @prevStep="prevStep" :step="step"/>
+  <SignupTerms v-if="step === 1" @setAgreed="setAgreed" @nextStep="nextStep" :step="step"/>
 
 </template>
 
