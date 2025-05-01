@@ -11,6 +11,12 @@ export const mypageRoutes = [
     name : 'UserInfo',
     component : () => import('@/features/mypage/views/UserInfoView.vue')
   },
+  // 회원 정보 수정
+  {
+    path : '/mypage/user/:id/edit',
+    name : 'EditUserInfo',
+    component : () => import('@/features/mypage/views/EditUserInfoView.vue')
+  },
   // 등급 목록 전체 조회
   {
     path : '/mypage/rank',
