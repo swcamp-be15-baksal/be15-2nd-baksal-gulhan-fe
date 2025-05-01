@@ -1,4 +1,5 @@
 <script setup>
+import ReviewItem from '@/features/review/components/ReviewItem.vue';
 import { ref } from 'vue';
 const activeTab = ref('detail');
 </script>
@@ -59,7 +60,7 @@ const activeTab = ref('detail');
                     donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis
                     mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit.
                 </div>
-                <div v-else>아직 리뷰가 없어요 🥲 첫 리뷰를 남겨주세요!</div>
+                <div v-else><ReviewItem /></div>
             </div>
         </div>
     </div>

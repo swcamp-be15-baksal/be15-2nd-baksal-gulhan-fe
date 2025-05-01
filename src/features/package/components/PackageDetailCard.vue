@@ -30,9 +30,7 @@ const { packages } = defineProps({
         <div class="d-flex" style="gap: 47px">
             <img src="https://placehold.co/555x416" alt="package-image" class="main-img" />
             <div class="info-box d-flex flex-column">
-                <div
-                    class="edit d-flex justify-content-end"
-                    style="position: relative; width: 353px">
+                <div class="d-flex justify-content-end" style="position: relative; width: 353px">
                     <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
                     <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
                 </div>
