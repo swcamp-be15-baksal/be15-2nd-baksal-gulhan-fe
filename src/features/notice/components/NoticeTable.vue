@@ -1,12 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getNoticeList } from '@/features/notice/api.js';
-
-const notices = ref([])
-
-onMounted(async () => {
-  const response = await getNoticeList()
-  notices.value = response.data.data
+defineProps({
+  notices: {
+    type: Array,
+    required: true
+  }
 })
 </script>
 
@@ -18,16 +15,18 @@ onMounted(async () => {
       <th>제목</th>
       <th>ID</th>
       <th>작성일</th>
-      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr v-for="notice in notices" :key="notice.noticeId">
       <td>{{ notice.noticeId }}</td>
-      <td>{{ notice.title }}</td>
+      <td>
+        <RouterLink :to="`/notice/${notice.noticeId}`" class="notice-title-link">
+          {{ notice.title }}
+        </RouterLink>
+      </td>
       <td>{{ notice.userId }}</td>
       <td>{{ notice.createdAt }}</td>
-      <td>⋯</td>
     </tr>
     </tbody>
   </table>
@@ -39,7 +38,6 @@ onMounted(async () => {
   border-collapse: collapse;
   border-top: 2px solid #aaa;
   table-layout: fixed;
-  margin: 0 auto;
 }
 
 .notice-table th,
@@ -51,7 +49,6 @@ onMounted(async () => {
   word-break: break-word;
 }
 
-/* 열 너비 비율 조정 */
 .notice-table th:nth-child(1),
 .notice-table td:nth-child(1) {
   width: 8%;
@@ -60,6 +57,7 @@ onMounted(async () => {
 .notice-table th:nth-child(2),
 .notice-table td:nth-child(2) {
   width: 60%;
+  text-align: center; /* ✅ 제목 가운데 정렬 */
 }
 
 .notice-table th:nth-child(3),
@@ -71,5 +69,14 @@ onMounted(async () => {
 .notice-table td:nth-child(4) {
   width: 15%;
 }
-</style>
 
+.notice-title-link {
+  color: inherit; /* ✅ 파란색 제거 */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.notice-title-link:hover {
+  color: #d32f2f; /* ✅ hover 시 강조 색상 */
+}
+</style>

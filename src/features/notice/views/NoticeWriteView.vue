@@ -32,6 +32,7 @@ import { useRouter } from 'vue-router'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import QuillResize from 'quill-resize-module';
+import { api } from '@/plugins/axios.js';
 
 Quill.register('modules/resize', QuillResize);
 
@@ -73,34 +74,50 @@ onMounted(() => {
 })
 
 const onCancel = () => {
-  router.back() // 이전 페이지로 이동
+  router.back()
 }
 
-const onSubmit = () => {
+const onSubmit = async () => {
   const content = quill.root.innerHTML
-  console.log('제목:', title.value)
-  console.log('내용:', content)
+
+  const requestData = {
+    title: title.value,
+    content: content
+  }
+
+  try {
+    const response = await api.post('/notice/list', requestData)
+    console.log('등록 성공, noticeId:', response.data.data.noticeId)
+    router.push('/notice') // 목록으로 이동
+  } catch (error) {
+    console.error('등록 실패:', error.response?.data || error)
+  }
 }
 </script>
 
 <style scoped>
 .container {
-  padding: 40px 80px;
+  width: 100%;
+  padding: 40px 100px;
+  box-sizing: border-box;
   background-color: #fffef9;
 }
 
 .notice-title h2 {
   font-size: 20px;
   margin-bottom: 16px;
+  margin-left: 55px;
 }
 
 .editor-page {
-  width: 800px;
+  width: 100%;
+  max-width: 1000px;
   margin: 40px auto;
   background: #fff;
-  padding: 20px;
+  padding: 30px 40px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .title-input {
@@ -139,13 +156,13 @@ const onSubmit = () => {
 }
 
 .cancel-btn {
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: #E57575;
+  color: white;
   margin-right: 10px;
 }
 
 .submit-btn {
-  background-color: #4caf50;
+  background-color: #75A9FF;
   color: white;
 }
 
@@ -154,6 +171,6 @@ const onSubmit = () => {
 }
 
 .submit-btn:hover {
-  background-color: #45a049;
+  background-color: #e0e0e0;
 }
 </style>

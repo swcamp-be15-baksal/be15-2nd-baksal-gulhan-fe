@@ -1,13 +1,23 @@
 export const noticeRoutes = [
-    {
-        path: '/notice', // 게시글 목록
-        name: 'notice',
-        component: () => import('@/features/notice/views/NoticeListView.vue'),
-    },
-    {
-      path: '/notice/write', // 글쓰기
-      name: 'NoticeWrite',
-      component: () => import('@/features/notice/views/NoticeWriteView.vue'),
-    }
+  {
+    path: '/notice',
+    name: 'NoticeList',
+    component: () => import('@/features/notice/views/NoticeListView.vue')
+  },
+  {
+    path: '/notice/write',
+    name: 'NoticeWrite',
+    component: () => import('@/features/notice/views/NoticeWriteView.vue')
+  },
+  {
+    path: '/notice/:id',
+    name: 'NoticeDetail',
+    component: () => import('@/features/notice/views/NoticeDetailView.vue')
+  },
+  {
+    path: '/notice/edit/:noticeId',
+    name: 'NoticeEdit',
+    component: () => import('@/features/notice/views/NoticeEditView.vue')
+  }
 
 ];

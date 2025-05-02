@@ -2,12 +2,9 @@
 import NoticeTable from '../components/NoticeTable.vue'
 import SearchBar from '../components/SearchBar.vue'
 import PagingBar from '../components/PagingBar.vue'
-import { useRouter } from 'vue-router'
+import { noticeMap } from '@/features/notice/noticeDummy.js'
 
-const router = useRouter()
-const goToWrite = () => {
-  router.push('/notice/write')
-}
+const notices = noticeMap
 </script>
 
 <template>
@@ -16,12 +13,12 @@ const goToWrite = () => {
       <h2>공지사항</h2>
       <SearchBar />
     </div>
-    <NoticeTable />
+    <NoticeTable :notices="notices" />
     <div class="notice-footer">
       <div class="pagination-wrapper">
         <PagingBar />
       </div>
-      <button class="btn-write" @click="goToWrite">글쓰기</button>
+      <RouterLink to="/notice/write" class="btn-write">글쓰기</RouterLink>
     </div>
   </div>
 </template>
@@ -60,6 +57,13 @@ const goToWrite = () => {
   background-color: white;
   border-radius: 6px;
   cursor: pointer;
+  color: #333; /* ✅ 파란색 제거 */
+  text-decoration: none; /* ✅ 밑줄 제거 */
+  transition: all 0.2s ease;
+}
+
+.btn-write:hover {
+  background-color: #f2f2f2;
+  border-color: #888;
 }
 </style>
-
