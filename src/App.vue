@@ -25,6 +25,7 @@ import Footer from '@/components/layout/Footer.vue';
 }
 
 .layout {
+    min-height: 100vh;
     padding: 76px 108px;
     min-height: 100vh;
     box-sizing: border-box;

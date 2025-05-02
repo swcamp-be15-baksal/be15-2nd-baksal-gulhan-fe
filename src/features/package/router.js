@@ -1,9 +1,15 @@
-import PackageListView from '@/features/package/views/PackageList.vue';
+import PackageListView from '@/features/package/views/PackageListView.vue';
+import PackageDetailView from '@/features/package/views/PackageDetailView.vue';
 
 export const packageRoutes = [
     {
-        path: '/package',
-        name: 'package',
+        path: '/packages/:id',
+        name: 'package-detail',
+        component: PackageDetailView,
+    },
+    {
+        path: '/packages',
+        name: 'package-list',
         component: PackageListView,
     },
 ];
