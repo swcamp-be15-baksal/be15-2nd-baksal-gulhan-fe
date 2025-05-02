@@ -32,7 +32,7 @@
 .header {
     width: 100%;
     background: #fff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;
     z-index: 10;
 }
@@ -60,10 +60,17 @@
 
 .user-menu button {
     all: unset;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 300;
     color: #000;
     cursor: pointer;
+}
+
+.user-menu img{
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }
 
 .header-bottom {
@@ -83,6 +90,10 @@
 
 .logo-button img {
     height: 83px;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }
 
 .nav-menu {
@@ -94,7 +105,7 @@
 .nav-menu button {
     all: unset;
     display: inline-block;
-    font-size: 25px;
+    font-size: 1.5rem;
     font-weight: 500;
     cursor: pointer;
 }
