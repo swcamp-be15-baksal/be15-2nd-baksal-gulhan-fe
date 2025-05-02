@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
-import PackageItem from '@/components/common/ItemCard.vue';
-import packages from '@/features/package/mock/packages.json';
+import GoodsItem from '@/components/common/ItemCard.vue';
+import goods from '@/features/goods/mock/goods.json';
 import PaginationBar from '@/components/common/PaginationBar.vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -12,11 +12,11 @@ const currentPage = ref(Number(route.query.page) || 1);
 
 const itemsPerPage = 20;
 
-const totalPages = computed(() => Math.ceil(packages.length / itemsPerPage));
+const totalPages = computed(() => Math.ceil(goods.length / itemsPerPage));
 
 const paginatedItems = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
-    return packages.slice(start, start + itemsPerPage);
+    return goods.slice(start, start + itemsPerPage);
 });
 
 function updatePage(page) {
@@ -30,15 +30,16 @@ function updatePage(page) {
 </script>
 
 <template>
-    <div class="package-list-wrapper">
+    <div class="goods-list-wrapper">
         <div class="grid">
-            <PackageItem
+            <GoodsItem
                 v-for="item in paginatedItems"
-                :key="item.packageId"
+                :key="item.goodsId"
                 :data="item"
-                :linkPrefix="'/packages'"
-                :idKey="'packageId'"
-                :showDate="true" />
+                :linkPrefix="'/goods'"
+                :idKey="'goodsId'"
+                :categoryKey="'goodsCategoryName'"
+                :showDate="false" />
         </div>
         <PaginationBar
             :current-page="currentPage"
@@ -48,7 +49,7 @@ function updatePage(page) {
 </template>
 
 <style scoped>
-.package-list-wrapper {
+.goods-list-wrapper {
     max-width: 1040px;
     margin: 0 auto;
 }

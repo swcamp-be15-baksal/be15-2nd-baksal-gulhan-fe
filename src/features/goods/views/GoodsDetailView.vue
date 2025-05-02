@@ -2,33 +2,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import PackageHeader from '@/features/package/components/PackageHeader.vue';
+import GoodsHeader from '@/features/goods/components/GoodsHeader.vue';
 import DetailCard from '@/components/common/DetailCard.vue';
 import DetailReviewTab from '@/components/common/DetailReviewTab.vue';
 import ReviewItem from '@/features/review/components/ReviewItem.vue';
-import packages from '@/features/package/mock/packages.json';
+import goods from '@/features/goods/mock/goods.json';
 
 const route = useRoute();
-const packagesData = ref(null);
+const goodsData = ref(null);
 
 onMounted(() => {
     const id = Number(route.params.id);
-    packagesData.value = packages.find((p) => p.packageId === id);
+    goodsData.value = goods.find((g) => g.goodsId === id);
 });
 </script>
 
 <template>
-    <PackageHeader />
+    <GoodsHeader />
     <DetailCard
-        v-if="packagesData"
-        :data="packagesData"
-        :categoryKey="'area'"
-        :showDate="true"
-        :showGuide="true" />
+        v-if="goodsData"
+        :data="goodsData"
+        :categoryKey="'goodsCategoryName'"
+        :showDate="false"
+        :showGuide="false" />
     <DetailReviewTab
-        v-if="packagesData"
-        :detail="packagesData.detail"
-        :reviewCount="packagesData.reviewCount">
+        v-if="goodsData"
+        :detail="goodsData.detail"
+        :reviewCount="goodsData.reviewCount">
         <template #review>
             <ReviewItem />
         </template>

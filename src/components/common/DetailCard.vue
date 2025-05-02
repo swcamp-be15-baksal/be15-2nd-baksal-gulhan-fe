@@ -9,6 +9,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    categoryKey: {
+        type: String,
+        default: 'area',
+    },
     showDate: {
         type: Boolean,
         default: true,
@@ -29,14 +33,16 @@ function formatDate(ts) {
 <template>
     <div v-if="data" class="d-flex justify-content-center">
         <div class="d-flex" style="gap: 47px">
-            <img src="https://placehold.co/555x416" alt="package-image" class="main-img" />
+            <img src="https://placehold.co/555x416" alt="data-image" class="main-img" />
             <div class="info-box d-flex flex-column">
                 <div class="d-flex justify-content-end" style="position: relative; width: 353px">
                     <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
                     <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
                 </div>
-                <div class="package-info">
-                    <button class="category" style="margin-bottom: 18px">{{ data.area }}</button>
+                <div class="data-info">
+                    <button class="category" style="margin-bottom: 18px">
+                        {{ data[categoryKey] }}
+                    </button>
                     <div class="title">{{ data.title }}</div>
                     <div class="title" v-if="showDate">
                         {{ formatDate(data.startDate) }} ~ {{ formatDate(data.endDate) }}
@@ -83,8 +89,7 @@ function formatDate(ts) {
     font-size: 1rem;
     font-weight: 400;
     color: white;
-    height: 32px;
-    width: 132px;
+    padding: 4px 12px;
 }
 .title {
     font-size: 1.6rem;

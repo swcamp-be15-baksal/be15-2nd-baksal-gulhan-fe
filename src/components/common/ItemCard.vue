@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         default: 'packageId',
     },
+    categoryKey: {
+        type: String,
+        default: 'area',
+    },
     showDate: {
         type: Boolean,
         default: true,
@@ -25,7 +29,7 @@ const props = defineProps({
     <div class="card">
         <router-link :to="`${linkPrefix}/${data[idKey]}`">
             <div class="data-img">
-                <div class="category-label">{{ data.area }}</div>
+                <div class="category-label">{{ data[categoryKey] }}</div>
                 <img :src="data.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'" />
             </div>
             <div>

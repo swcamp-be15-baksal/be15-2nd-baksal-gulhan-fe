@@ -3,13 +3,13 @@ import PackageDetailView from '@/features/package/views/PackageDetailView.vue';
 
 export const packageRoutes = [
     {
-        path: '/packages/:id', // 나중에 id 포함된 url로 변경할 듯 /packages/:id
-        name: 'packages/:id',
+        path: '/packages/:id',
+        name: 'package-detail',
         component: PackageDetailView,
     },
     {
         path: '/packages',
-        name: 'packages',
+        name: 'package-list',
         component: PackageListView,
     },
 ];
