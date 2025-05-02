@@ -88,11 +88,6 @@ input[type='text']:focus {
     border: 1px solid #000000;
 }
 
-button[class='login'] {
-    background-color: #3e4042;
-    color: #ededed;
-}
-
 button[class='kakao-login'] {
     background-color: #fee500;
     display: flex;

@@ -20,3 +20,8 @@ button:active {
   vertical-align: middle;
   margin-right: 8px;
 }
+
+button[class='login'] {
+  background-color: #3e4042;
+  color: #ededed;
+}

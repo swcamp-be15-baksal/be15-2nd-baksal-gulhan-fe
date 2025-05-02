@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue';
 import StartSignup from '@/features/user/components/StartSignup.vue';
 import SignupTerms from '@/features/user/components/SignupTerms.vue';
 import SignupForm from '@/features/user/components/SignupForm.vue';
+import SignupFinish from '../components/SignupFinish.vue';
 
 const signupData = reactive({
     userId: null,
@@ -40,6 +41,9 @@ const setAgreed = () => {
         @nextStep="nextStep"
         v-model:signupData="signupData"
         :step="step" />
+    <SignupFinish
+     v-if="step === 3"
+     :step="step"/>
 </template>
 
 <style scoped></style>

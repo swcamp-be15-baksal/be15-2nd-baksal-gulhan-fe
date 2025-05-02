@@ -1,5 +1,7 @@
 <script setup>
 import SignupStatus from '@/features/user/components/SignupStatus.vue';
+import userValid from '../validator/userValid';
+
 import { ref, computed, nextTick, watch } from 'vue';
 
 const emit = defineEmits(['nextStep']);
@@ -8,6 +10,10 @@ const signupData = defineModel('signupData');
 function nextStep() {
     emit('nextStep');
 }
+
+const popupWidth = 500;
+const popupHeight = 600;
+
 
 const phone1 = ref('');
 const phone2 = ref('');
@@ -37,22 +43,20 @@ const isPasswordValid = computed(
 
 const userIdLengthValid = computed(() => signupData.value.userId?.length >= 5);
 const userIdStartValid = computed(() => /^[a-z]/.test(signupData.value.userId || ''));
-const isEmailValid = computed(() =>
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(signupData.value.email || '')
+const isEmailValid = computed(() => userValid.validateEmail(signupData.value.email)
 );
 
-const isFormValid = computed(
-    () =>
-        isUserIdValid.value &&
-        isPasswordValid.value &&
-        isPasswordMatch.value &&
-        isEmailValid.value &&
-        signupData.value.name &&
-        signupData.value.email &&
-        signupData.value.phone &&
-        signupData.value.birth &&
-        signupData.value.gender &&
-        signupData.value.address
+const isFormValid = computed(() =>
+  isUserIdValid.value === true &&
+  isPasswordValid.value === true &&
+  isPasswordMatch.value === true &&
+  isEmailValid.value === true &&
+  !!signupData.value.name?.trim() &&
+  !!signupData.value.email?.trim() &&
+  !!signupData.value.phone?.trim() &&
+  !!signupData.value.birth?.trim() &&
+  !!signupData.value.gender?.trim() &&
+  !!signupData.value.address?.trim()
 );
 
 function openPostcodeSearch() {
@@ -66,12 +70,17 @@ function openPostcodeSearch() {
                 window.close();
             });
         },
-    }).open();
+    }).open({
+        left: (window.screen.width / 2) - (popupWidth / 2),
+        top: (window.screen.height / 2) - (popupHeight / 2)
+    });
 }
 
 const onClickSignup = async () => {
     try {
-        signupData.value.detailAddress = document.getElementById('detailAddress')?.value || '';
+        if(!isFormValid.value){
+            throw Error("입력 값이 잘못 되었습니다.")
+        }
         const payload = {
             userId: signupData.value.userId,
             password: signupData.value.password,
@@ -172,7 +181,7 @@ const onClickSignup = async () => {
             </div>
 
             <div class="input-box">
-                <input id="detailAddress" placeholder="상세 주소" />
+                <input id="detailAddress" v-model="signupData.detailAddress" placeholder="상세 주소" />
             </div>
 
             <button class="submit" :disabled="!isFormValid" @click="onClickSignup">회원가입</button>
@@ -187,14 +196,17 @@ const onClickSignup = async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px;
     background: #fffdf8;
+}
+
+.inner-title {
+    margin-bottom: 26px;
 }
 
 .inner-title h1 {
     font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 24px;
+    font-weight: bolder;
+    color: #232527;
 }
 
 .form-wrapper {
