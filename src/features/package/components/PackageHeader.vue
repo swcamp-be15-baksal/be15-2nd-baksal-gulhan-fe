@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import SearchBar from '@/components/common/SearchBar.vue';
+function handleSearch(keyword) {
+    console.log('검색어', keyword);
+    // fetch(`/s1/packages/list?title={keyword}`)
+}
 
 const selectedFilter = ref('전체');
 
@@ -40,7 +45,7 @@ function selectFilter(filter) {
                 </button>
             </div>
             <div class="d-flex" style="gap: 16px">
-                <div class="sort">검색 바가 들어갈 자리</div>
+                <SearchBar placeholder="원하는 패키지를 검색해보세요!" @search="handleSearch" />
                 <button class="sort">시작일 빠른순</button>
             </div>
         </div>

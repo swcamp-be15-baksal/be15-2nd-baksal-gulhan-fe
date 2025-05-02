@@ -30,7 +30,7 @@ const props = defineProps({
                             : 'background-color: #e6e6e6'
                     "
                     @click="activeTab = 'review'">
-                    리뷰
+                    리뷰 ({{ packages.reviewCount }})
                     <!-- 여기에 개수 적는 게 맞을 듯-->
                 </button>
             </div>
