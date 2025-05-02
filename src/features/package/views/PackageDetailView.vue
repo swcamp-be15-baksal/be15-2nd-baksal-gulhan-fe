@@ -1,9 +1,11 @@
+<!-- 수정된 화면 파일 -->
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import PackageHeader from '@/features/package/components/PackageHeader.vue';
-import PackageDetailCard from '@/features/package/components/PackageDetailCard.vue';
-import PackageTextInfo from '@/features/package/components/PackageTextInfo.vue';
+import DetailCard from '@/components/common/DetailCard.vue';
+import DetailReviewTab from '@/components/common/DetailReviewTab.vue';
+import ReviewItem from '@/features/review/components/ReviewItem.vue';
 import packages from '@/features/package/mock/packages.json';
 
 const route = useRoute();
@@ -17,8 +19,13 @@ onMounted(() => {
 
 <template>
     <PackageHeader />
-    <PackageDetailCard v-if="packagesData" :packages="packagesData" />
-    <PackageTextInfo v-if="packagesData" :packages="packagesData" />
+    <DetailCard v-if="packagesData" :data="packagesData" :showDate="true" :showGuide="true" />
+    <DetailReviewTab
+        v-if="packagesData"
+        :detail="packagesData.detail"
+        :reviewCount="packagesData.reviewCount">
+        <template #review>
+            <ReviewItem />
+        </template>
+    </DetailReviewTab>
 </template>
-
-<style scoped></style>

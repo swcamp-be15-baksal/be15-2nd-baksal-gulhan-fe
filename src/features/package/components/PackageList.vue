@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import PackageItem from '@/features/package/components/PackageItem.vue';
+import PackageItem from '@/components/common/ItemCard.vue';
 import packages from '@/features/package/mock/packages.json';
 import PaginationBar from '@/components/common/PaginationBar.vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -32,9 +32,14 @@ function updatePage(page) {
 <template>
     <div class="package-list-wrapper">
         <div class="grid">
-            <PackageItem v-for="item in paginatedItems" :key="item.packageId" :packages="item" />
+            <PackageItem
+                v-for="item in paginatedItems"
+                :key="item.packageId"
+                :data="item"
+                :linkPrefix="'/packages'"
+                idKey="packageId"
+                :showDate="true" />
         </div>
-
         <PaginationBar
             :current-page="currentPage"
             :total-pages="totalPages"

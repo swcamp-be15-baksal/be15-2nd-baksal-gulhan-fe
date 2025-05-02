@@ -1,31 +1,44 @@
 <script setup>
 import heartIcon from '@/assets/heart.svg';
-const { packages } = defineProps({
-    packages: {
+
+const props = defineProps({
+    data: {
         type: Object,
         required: true,
+    },
+    linkPrefix: {
+        type: String,
+        default: '/packages',
+    },
+    idKey: {
+        type: String,
+        default: 'packageId',
+    },
+    showDate: {
+        type: Boolean,
+        default: true,
     },
 });
 </script>
 
 <template>
     <div class="card">
-        <router-link :to="`/packages/${packages.packageId}`">
-            <div class="package-img">
-                <div class="category-label">{{ packages.area }}</div>
-                <img src="https://d152i3f1t56z95.cloudfront.net/test/image.png" />
+        <router-link :to="`${linkPrefix}/${data[idKey]}`">
+            <div class="data-img">
+                <div class="category-label">{{ data.area }}</div>
+                <img :src="data.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'" />
             </div>
             <div>
-                <div class="main-info">{{ packages.title }}</div>
-                <div class="main-info">
-                    {{ formatDate(packages.startDate) }} ~ {{ formatDate(packages.endDate) }}
+                <div class="main-info">{{ data.title }}</div>
+                <div class="main-info" v-if="showDate">
+                    {{ formatDate(data.startDate) }} ~ {{ formatDate(data.endDate) }}
                 </div>
                 <div class="card-bottom">
-                    <div class="price">{{ packages.price.toLocaleString() }}원</div>
+                    <div class="price">{{ data.price.toLocaleString() }}원</div>
                     <div class="like-review">
                         <img :src="heartIcon" style="width: 22.5px; height: 20px" />
-                        <span style="color: #ff268f">{{ packages.likeCount ?? 0 }}</span>
-                        <span style="color: #adadad">({{ packages.reviewCount ?? 0 }})</span>
+                        <span style="color: #ff268f">{{ data.likeCount ?? 0 }}</span>
+                        <span style="color: #adadad">({{ data.reviewCount ?? 0 }})</span>
                     </div>
                 </div>
             </div>
@@ -37,7 +50,7 @@ const { packages } = defineProps({
 function formatDate(ts) {
     if (!ts) return '';
     const date = new Date(ts);
-    return date.toISOString().split('T')[0]; // YYYY-MM-DD
+    return date.toISOString().split('T')[0];
 }
 </script>
 
@@ -55,15 +68,15 @@ function formatDate(ts) {
     color: inherit;
     text-decoration: none;
 }
-.package-img {
+.data-img {
     position: relative;
     width: 100%;
     margin-bottom: 24px;
 }
 
-.package-img img {
+.data-img img {
     width: 100%;
-    height: auto%;
+    height: auto;
     object-fit: cover;
     display: block;
     border-radius: 20px;
