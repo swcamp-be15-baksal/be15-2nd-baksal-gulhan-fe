@@ -19,7 +19,7 @@ const sendEmail = async () => {
     }
 };
 
-const findId = async () => {
+const findFunction = async () => {
     try {
         userInput.verificationCode = userInput.verificationCode.trim();
         if (userInput.verificationCode === null || userInput.verificationCode === '') {
@@ -50,7 +50,7 @@ const findId = async () => {
                 v-if="maskedId === null"
                 v-model:userInput="userInput"
                 :sendEmail="sendEmail"
-                :findId="findId" />
+                :findFunction="findFunction" />
             <ShowUserId v-if="maskedId !== null" :maskedId="maskedId" />
         </div>
     </div>

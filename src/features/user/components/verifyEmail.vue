@@ -7,7 +7,7 @@ const props = defineProps({
     sendEmail: {
         type: Function,
     },
-    findId: {
+    findFunction: {
         type: Function,
     },
 });
@@ -57,9 +57,9 @@ const clickSendEmail = async () => {
     }, 1000);
 };
 
-const findId = async () => {
-    if (typeof props.findId === 'function') {
-        await props.findId();
+const findFunction = async () => {
+    if (typeof props.findFunction === 'function') {
+        await props.findFunction();
     }
 };
 
@@ -91,7 +91,7 @@ const formattedVerifyTime = computed(() => formatTime(verifyTimer.value));
             v-model="userInput.verificationCode"
             placeholder="인증번호를 입력해주세요" />
     </div>
-    <button v-if="isSendEmail" type="submit" @click="findId">인증하기</button>
+    <button v-if="isSendEmail" type="submit" @click="findFunction">인증하기</button>
 </template>
 
 <style scoped>
