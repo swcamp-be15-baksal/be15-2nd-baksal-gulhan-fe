@@ -18,7 +18,7 @@ function selectFilter(filter) {
         <div
             class="d-flex align-items-center"
             style="gap: 10px; margin-left: 33px; margin-bottom: 41px">
-            <span class="" style="font-size: 1.5rem; font-weight: 700"> 패키지 </span>
+            <span style="font-size: 1.5rem; font-weight: 700"> 패키지 </span>
             <button class="text-white add-package-button" @click="navigate('')">
                 패키지 등록하기
             </button>
@@ -59,6 +59,7 @@ function selectFilter(filter) {
     font-size: 0.9rem;
     font-weight: 400;
     width: 117px;
+    border: none;
 }
 
 .filter-button {
