@@ -1,26 +1,33 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
+import noticeList from '@/features/notice/mock/notice.json' // 배열 import
 
 const route = useRoute()
 const router = useRouter()
 const noticeId = Number(route.params.id)
 
-import { noticeMap } from '@/features/notice/noticeDummy.js'
-const noticeMaps = noticeMap
+// 🔥 배열에서 해당 noticeId를 가진 항목 찾기
+const notice = computed(() =>
+  noticeList.find((n) => n.noticeId === noticeId)
+)
 
-const notice = computed(() => noticeMaps[noticeId])
 const goBack = () => router.push('/notice')
 
 const showMenu = ref(false)
 const toggleMenu = () => {
   showMenu.value = !showMenu.value
-  console.log(showMenu.value)
 }
 
 const goToEdit = () => {
+  console.log('click')
   router.push(`/notice/edit/${noticeId}`)
 }
+
+  const goToWrite = () => {
+    console.log('clicked')
+    router.push(`/notice/write`)
+  }
 
 const deleteNotice = async (id) => {
   alert(`예시 데이터에서 noticeId ${id} 삭제됨 (실제 삭제 아님)`)
@@ -38,7 +45,7 @@ const onDelete = async () => {
 </script>
 
 <template>
-  <div class="notice-detail">
+  <div class="notice-detail" v-if="notice">
     <div class="notice-breadcrumb">
       <RouterLink to="/notice" class="back-link">공지사항 &gt;</RouterLink>
     </div>
@@ -47,7 +54,7 @@ const onDelete = async () => {
       <div class="notice-header">
         <div class="badge">공지</div>
         <h3>{{ notice.title }}</h3>
-        <!-- 문제 많은 수정 삭제 버튼;;; -->
+
         <div class="menu-wrapper">
           <button @click="toggleMenu" class="menu-btn">⋯</button>
           <div v-show="showMenu" class="dropdown-menu">
@@ -69,7 +76,7 @@ const onDelete = async () => {
 
     <div class="notice-buttons">
       <button @click="goBack" class="btn">목록으로</button>
-      <RouterLink to="/notice/write" class="btn red">글쓰기</RouterLink>
+      <button @click="goToWrite" class="btn red">글쓰기</button>
     </div>
   </div>
 </template>
@@ -88,7 +95,7 @@ const onDelete = async () => {
 
 .back-link {
   text-decoration: none;
-  font-size: 16px;
+  font-size: 1rem;
   color: #333;
 }
 
@@ -109,14 +116,15 @@ const onDelete = async () => {
 .badge {
   background-color: #333;
   color: white;
-  font-size: 12px;
+  font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 4px;
 }
+
 .menu-btn {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
   padding: 4px;
 }
@@ -124,27 +132,35 @@ const onDelete = async () => {
 .menu-wrapper {
   position: relative;
   margin-left: auto;
-  z-index: 20;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
 }
 
 .dropdown-menu {
   position: absolute;
+  top: 28px;
   right: 0;
-  top: 32px;
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
 }
 
 .dropdown-menu button {
-  display: block;
-  width: 100%;
-  padding: 8px 16px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
   border: none;
   background: white;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
 }
 
 .dropdown-menu button:hover {
@@ -153,22 +169,22 @@ const onDelete = async () => {
 
 .notice-meta {
   color: #777;
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-bottom: 24px;
   display: flex;
   gap: 20px;
 }
 
 .notice-content {
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.6;
   white-space: pre-wrap;
 }
 
 .notice-buttons {
-  align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 12px;
   margin-top: 30px;
 }
 

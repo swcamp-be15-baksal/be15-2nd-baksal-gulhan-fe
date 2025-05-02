@@ -1,43 +1,21 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import Quill from 'quill'
-import 'quill/dist/quill.snow.css'
+import notices from '@/features/notice/mock/notice.json'
+import QuillEditor from '@/components/common/QuillEditor.vue'
 
 const router = useRouter()
 const route = useRoute()
 const noticeId = Number(route.params.noticeId)
 
-import { noticeMap } from '@/features/notice/noticeDummy.js'
-const notices = noticeMap
-
 const title = ref('')
-let quill
+const content = ref('')
 
 onMounted(() => {
-  const notice = notices[noticeId]
-  if (notice) {
-    title.value = notice.title
-  }
-
-  quill = new Quill('#editor', {
-    theme: 'snow',
-    placeholder: '  내용을 입력하세요.',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['link', 'image'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        [{ size: ['small', false, 'large', 'huge'] }],
-        [{ color: [] }, { background: [] }],
-        [{ font: [] }],
-        [{ align: [] }]
-      ]
-    }
-  })
-
-  if (notice) {
-    quill.root.innerHTML = notice.content
+  const target = notices.find(n => n.noticeId === noticeId)
+  if (target) {
+    title.value = target.title
+    content.value = target.content
   }
 })
 
@@ -46,7 +24,7 @@ const onCancel = () => {
 }
 
 const onSubmit = () => {
-  alert(`수정 완료됨`)
+  alert('수정 완료됨 (실제 저장은 안 됨)')
   router.push('/notice')
 }
 </script>
@@ -63,11 +41,7 @@ const onSubmit = () => {
         placeholder="제목을 입력하세요."
         class="title-input"
       />
-
-      <div class="editor-wrapper">
-        <div id="editor"></div>
-      </div>
-
+      <QuillEditor v-model="content" />
       <div class="button-wrapper">
         <button class="cancel-btn" @click="onCancel">취소</button>
         <button class="submit-btn" @click="onSubmit">수정 완료</button>
@@ -87,7 +61,7 @@ const onSubmit = () => {
 .notice-title h2 {
   font-size: 20px;
   margin-bottom: 16px;
-  margin-left: 55px;
+  margin-left: 60px;
 }
 
 .editor-page {
@@ -108,19 +82,6 @@ const onSubmit = () => {
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 6px;
-}
-
-.editor-wrapper {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-
-#editor {
-  height: 400px;
-  background: white;
-  padding: 10px;
 }
 
 .button-wrapper {
@@ -151,5 +112,4 @@ const onSubmit = () => {
 .submit-btn:hover {
   background-color: #e0e0e0;
 }
-
 </style>
