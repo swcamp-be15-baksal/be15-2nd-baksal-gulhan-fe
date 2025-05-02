@@ -40,7 +40,7 @@ function formatDate(ts) {
                     <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
                 </div>
                 <div class="data-info">
-                    <button class="category" style="margin-bottom: 18px">
+                    <button class="category" style="margin-bottom: 8px">
                         {{ data[categoryKey] }}
                     </button>
                     <div class="title">{{ data.title }}</div>
@@ -48,13 +48,13 @@ function formatDate(ts) {
                         {{ formatDate(data.startDate) }} ~ {{ formatDate(data.endDate) }}
                     </div>
                     <div v-if="showGuide" style="font-size: 1.4rem; font-weight: 400">
-                        {{ data.guideName }}
+                        {{ data.guideName }} 가이드
                     </div>
-                    <div class="like-review" style="margin-top: 40px">
+                    <div class="like-review" style="margin-top: 16px">
                         <img :src="heartIcon" style="margin-left: 6px; margin-right: 6px" />
                         <span style="color: #ff268f">{{ data.likeCount }}</span>
                     </div>
-                    <div class="like-review" style="margin-bottom: 40px">
+                    <div class="like-review" style="margin-bottom: 16px">
                         <img :src="starIcon" />
                         <span style="color: #ffdc3e">{{ data.avgRating }}</span>
                     </div>
@@ -62,7 +62,11 @@ function formatDate(ts) {
                         잔여수량 {{ data.remaining }}
                     </div>
                 </div>
-                <div class="price">{{ data.price }}원</div>
+                <div class="price">{{ data.price.toLocaleString() }}원</div>
+                <div class="buy-button">
+                    <button style="background-color: #2c2c2c">장바구니 담기</button>
+                    <button style="background-color: #e57575">결제하기</button>
+                </div>
             </div>
         </div>
     </div>
@@ -108,9 +112,28 @@ function formatDate(ts) {
 }
 .price {
     position: absolute;
-    bottom: 0;
+    bottom: 60px;
     right: 0;
     font-size: 1.6rem;
     font-weight: 700;
+}
+.buy-button {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buy-button button {
+    width: 100%;
+    height: 54px;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: white;
+    border: none;
+    border-radius: 8px;
 }
 </style>
