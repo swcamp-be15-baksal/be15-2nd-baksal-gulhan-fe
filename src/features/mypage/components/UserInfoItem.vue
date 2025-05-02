@@ -10,12 +10,10 @@ const total_purchase = 150000;
 <template>
 
   <div class="user-summary">
-    <router-link :to="`/mypage/user/${user_id}`" class="user-item">
+    <router-link :to="`/mypage/userinfo`" class="user-item">
       <h3>{{username}}님 안녕하세요!</h3>
     </router-link>
-    <router-link to="/mypage/rank" class="user-item">
       <p>{{user_rank}} ∙ {{point_rate}}% 적립</p>
-    </router-link>
   </div>
 
   <div class="user-order">

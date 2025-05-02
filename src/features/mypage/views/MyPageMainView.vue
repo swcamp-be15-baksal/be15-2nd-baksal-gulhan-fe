@@ -2,11 +2,11 @@
 import UserInfoItem from '../components/UserInfoItem.vue';
 
 const menuList = [
-  { label: '구매 내역', to: '/mypage/orderhistory' },
-  { label: '배송지 관리', to: '/mypage/deliveryaddress' },
-  { label: 'MY 관심', to: '/mypage/like' },
-  { label: '리뷰 관리', to: '/mypage/review' },
-  { label: '작성글 관리', to: '/mypage/post' }
+  { label: '구매 내역', to: `/mypage/orderhistory` },
+  { label: '배송지 관리', to: `/mypage/deliveryaddress` },
+  { label: 'MY 관심', to: `/mypage/like` },
+  { label: '리뷰 관리', to: `/mypage/review` },
+  { label: '작성글 관리', to: `/mypage/post` }
 ];
 </script>
 

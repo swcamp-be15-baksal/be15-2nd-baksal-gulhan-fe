@@ -1,29 +1,35 @@
 <script setup>
-// 테스트용 배송지 List
+
 import { ref } from 'vue';
 import router from '@/router/index.js';
 
+// 테스트용 배송지 List
 const addressList = ref([
   {
+    deliveryAddressId: 'address01',
     receiver : '윤채영',
-    address : '주소주소주소주소주소1'
-    , detailAddress : '상세주소상세주소1',
+    postcode : '12345',
+    address : '주소주소주소주소주소1',
+    detailAddress : '상세주소상세주소1',
     phone : '010-1234-5678',
-    isDefault: true
+    isDefault: 'Y'
   },
   {
+    deliveryAddressId: 'address02',
     receiver : '차은우',
+    postcode : '54321',
     address : '주소주소주소주소주소2',
     detailAddress : '상세주소상세주소2',
     phone : '010-1111-2222',
-    isDefault: false
+    isDefault: 'N'
   }
 ]);
 
-function handleDelete() {
+function handleDelete(index) {
   const confirmed = confirm('정말 삭제 하시겠습니까?');
   if (confirmed) {
     // 배송지 삭제 처리하는 로직
+    addressList.value.splice(index, 1);
     console.log('삭제 처리');
   }
 }
@@ -32,15 +38,25 @@ function handleDelete() {
 <template>
   <div class="container">
     <h2 class="title">배송지 관리</h2>
-
+      <p
+        class="add-address"
+        @click="router.push('/mypage/deliveryaddress/create')"
+      >
+        배송지 추가
+      </p>
     <div v-for="(item, idx) in addressList" :key="idx"
          :class="['address-box', { default: item.isDefault }]"
     >
       <div class="actions">
-        <button @click="router.push(`/mypage/deliveryaddress/edit`)">
+        <button
+          @click="router.push({
+            name : 'UpdateDeliveryAddress',
+            params : { deliveryAddressId : item.deliveryAddressId }
+          })"
+        >
           <img src="@/assets/edit.svg" alt="edit" class="icon" />
         </button>
-        <button @click="handleDelete">
+        <button @click="handleDelete(idx)">
           <img src="@/assets/delete.svg" alt="delete" class="icon" />
         </button>
       </div>
@@ -68,6 +84,14 @@ function handleDelete() {
   font-weight: bold;
   text-align: center;
   margin-bottom: 40px;
+}
+
+.add-address {
+  width: 670px;
+  text-align: right;
+  font-size: 1rem;
+  color: #75A9FF;
+  cursor: pointer;
 }
 
 .address-box {

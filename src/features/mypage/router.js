@@ -7,21 +7,15 @@ export const mypageRoutes = [
   },
   // 회원 정보 조회
   {
-    path : '/mypage/user/:id',
+    path : '/mypage/userinfo',
     name : 'UserInfo',
     component : () => import('@/features/mypage/views/UserInfoView.vue')
   },
   // 회원 정보 수정
   {
-    path : '/mypage/user/:id/edit',
+    path : '/mypage/userinfo/edit',
     name : 'UpdateUserInfo',
-    component : () => import('@/features/mypage/views/EditUserInfoView.vue')
-  },
-  // 등급 목록 전체 조회
-  {
-    path : '/mypage/rank',
-    name : 'Rank',
-    component : () => import('@/features/mypage/views/RankListView.vue')
+    component : () => import('@/features/mypage/views/UserInfoEditView.vue')
   },
   // 구매 내역 조회
   {
@@ -45,13 +39,19 @@ export const mypageRoutes = [
   {
     path : '/mypage/deliveryaddress',
     name : 'DeliveryAddress',
-    component : () => import('@/features/mypage/views/DeliveryAddressView.vue')
+    component : () => import('@/features/mypage/views/DeliveryAddressListView.vue')
+  },
+  // 배송지 등록
+  {
+    path : '/mypage/deliveryaddress/create',
+    name : 'CreateDeliveryAddress',
+    component : () => import('@/features/mypage/views/DeliveryAddressCreateView.vue')
   },
   // 배송지 수정
   {
-    path : '/mypage/deliveryaddress/edit',
+    path : '/mypage/deliveryaddress/:deliveryAddressId/edit',
     name : 'UpdateDeliveryAddress',
-    component : () => import('@/features/mypage/views/EditDeliveryAddressView.vue')
+    component : () => import('@/features/mypage/views/DeliveryAddressEditView.vue')
   },
   // 관심 조회
   {

@@ -155,7 +155,7 @@ hr {
   line-height: 1.2;
   background-color: white;
   border: 1px solid #3E4042;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   box-sizing: border-box;
 }
