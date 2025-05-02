@@ -1,6 +1,5 @@
 <script setup>
 // 예시 데이터 바인딩용
-const user_id = 'user99';
 const username = '윤채영';
 const user_rank = '평민';
 const point_rate = 1;
