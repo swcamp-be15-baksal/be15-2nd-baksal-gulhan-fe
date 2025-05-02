@@ -1,153 +1,39 @@
 <script setup>
-
-import { ref } from 'vue';
 import router from '@/router/index.js';
-
-// 테스트용 배송지 List
-const addressList = ref([
-  {
-    deliveryAddressId: 'address01',
-    receiver : '윤채영',
-    postcode : '12345',
-    address : '주소주소주소주소주소1',
-    detailAddress : '상세주소상세주소1',
-    phone : '010-1234-5678',
-    isDefault: 'Y'
-  },
-  {
-    deliveryAddressId: 'address02',
-    receiver : '차은우',
-    postcode : '54321',
-    address : '주소주소주소주소주소2',
-    detailAddress : '상세주소상세주소2',
-    phone : '010-1111-2222',
-    isDefault: 'N'
-  }
-]);
-
-function handleDelete(index) {
-  const confirmed = confirm('정말 삭제 하시겠습니까?');
-  if (confirmed) {
-    // 배송지 삭제 처리하는 로직
-    addressList.value.splice(index, 1);
-    console.log('삭제 처리');
-  }
-}
+import DeliveryAddressList from '@/features/mypage/components/DeliveryAddressList.vue';
 </script>
 
 <template>
-  <div class="container">
-    <h2 class="title">배송지 관리</h2>
-      <p
-        class="add-address"
-        @click="router.push('/mypage/deliveryaddress/create')"
-      >
+  <div class="delivery-container">
+    <h2 class="delivery-title">배송지 관리</h2>
+    <div class="add-address">
+      <p @click="router.push('/mypage/deliveryaddress/create')">
         배송지 추가
       </p>
-    <div v-for="(item, idx) in addressList" :key="idx"
-         :class="['address-box', { default: item.isDefault }]"
-    >
-      <div class="actions">
-        <button
-          @click="router.push({
-            name : 'UpdateDeliveryAddress',
-            params : { deliveryAddressId : item.deliveryAddressId }
-          })"
-        >
-          <img src="@/assets/edit.svg" alt="edit" class="icon" />
-        </button>
-        <button @click="handleDelete(idx)">
-          <img src="@/assets/delete.svg" alt="delete" class="icon" />
-        </button>
-      </div>
-      <div class="info">
-        <p class="receiver">
-          <strong :class="{ 'gray-text': !item.isDefault }">{{ item.receiver }}</strong>
-          <span v-if="item.isDefault" class="badge">기본 배송지</span>
-        </p>
-        <p :class="{ 'gray-text': !item.isDefault }">{{ item.address }}</p>
-        <p :class="{ 'gray-text': !item.isDefault }">{{ item.detailAddress }}</p>
-        <p :class="{ 'gray-text': !item.isDefault }">{{ item.phone }}</p>
-      </div>
     </div>
+    <DeliveryAddressList />
   </div>
 </template>
 
 <style scoped>
-.container {
+.delivery-container {
   width: 100%;
   justify-items: center;
 }
-
-.title {
+.delivery-title {
   font-size: 1.75rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 40px;
 }
-
 .add-address {
   width: 670px;
-  text-align: right;
+  justify-items: flex-end;
+}
+.add-address p {
+  color: #75A9FF;
   font-size: 1rem;
-  color: #75A9FF;
   cursor: pointer;
-}
-
-.address-box {
-  display: flex;
-  width: 670px;
-  height: 225px;
-  position: relative;
-  background-color: white;
-  border: 1px solid #A0A0A0;
-  border-radius: 10px;
-  padding: 50px;
-  margin-bottom: 30px;
-  align-items: center;
-}
-.address-box.default {
-  border-color: #75A9FF;
-}
-
-.receiver {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.5rem;
-  margin-bottom: 25px;
-}
-
-.badge {
-  font-size: 0.75rem;
-  color: #75A9FF;
-  border: 1px solid #75A9FF;
-  border-radius: 10px;
-  margin-left: 8px;
-}
-
-.gray-text {
-  color: #A0A0A0;
-}
-
-.actions {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  justify-content: start;
-}
-
-.icon {
-  width: 30px;
-  height: 30px;
-}
-.actions button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
+  justify-content: flex-end;
 }
 </style>
