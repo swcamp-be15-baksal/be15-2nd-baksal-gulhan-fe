@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import VerifyEmail from '../components/verifyEmail.vue';
 import ShowUserId from '../components/ShowUserId.vue';
+import VerifyEmail from '../components/VerifyEmail.vue';
 
 const userInput = reactive({
     email: null,
