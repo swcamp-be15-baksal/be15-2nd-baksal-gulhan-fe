@@ -15,7 +15,7 @@
             <p>주말, 공휴일 휴무</p>
         </div>
         <div class="footer-logo">
-            <img src="@/assets/logo-white.svg" alt="logo-white" />
+            <img src="../../assets/icons/logo-white.svg" alt="logo-white" />
         </div>
     </footer>
 </template>
