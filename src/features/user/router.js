@@ -8,5 +8,15 @@ export const userRoutes = [
     path: '/signup',
     name: 'signup',
     component: import('@/features/user/views/SignupView.vue')
+  },
+  {
+    path: '/verify-success',
+    name: 'verify-success',
+    component: import('@/features/user/views/EmailVerifySuccesView.vue')
+  },
+  {
+    path: '/verify-fail',
+    name: 'verify-fail',
+    component: import('@/features/user/views/EmailVerifyFailView.vue')
   }
 ];

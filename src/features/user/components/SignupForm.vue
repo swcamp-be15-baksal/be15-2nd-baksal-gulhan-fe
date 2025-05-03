@@ -1,8 +1,10 @@
 <script setup>
 import SignupStatus from '@/features/user/components/SignupStatus.vue';
 import userValid from '../validator/userValid';
+import {registerUser} from '../api/user.js'
 
 import { ref, computed, nextTick, watch } from 'vue';
+import { useToast } from "vue-toastification";
 
 const emit = defineEmits(['nextStep']);
 const signupData = defineModel('signupData');
@@ -14,6 +16,7 @@ function nextStep() {
 const popupWidth = 500;
 const popupHeight = 600;
 
+const toast = useToast();
 
 const phone1 = ref('');
 const phone2 = ref('');
@@ -76,6 +79,14 @@ function openPostcodeSearch() {
     });
 }
 
+function formatDate(input) {
+  if (!/^\d{8}$/.test(input)) return null; // 형식이 8자리 숫자가 아니면 null 반환
+  const year = input.slice(0, 4);
+  const month = input.slice(4, 6);
+  const day = input.slice(6, 8);
+  return `${year}-${month}-${day}`;
+}
+
 const onClickSignup = async () => {
     try {
         if(!isFormValid.value){
@@ -83,25 +94,30 @@ const onClickSignup = async () => {
         }
         const payload = {
             userId: signupData.value.userId,
+            username: signupData.value.name,
             password: signupData.value.password,
             confirmPassword: signupData.value.confirmPassword,
-            name: signupData.value.name,
             email: signupData.value.email,
             phone: signupData.value.phone,
-            birth: signupData.value.birth,
+            birth: formatDate(signupData.value.birth),
             gender: signupData.value.gender,
             address: signupData.value.address,
             detailAddress: signupData.value.detailAddress,
-            agreed: signupData.value.agreed,
+            countryCode : "82",
+            isAgreed: signupData.value.agreed,
         };
 
         console.log('회원가입 데이터 전송:', JSON.stringify(payload));
 
         // TODO: API 연동 로직 삽입
+        const response = await registerUser(payload)
 
         nextStep();
     } catch (e) {
-        alert('회원가입 중 오류가 발생했습니다: ' + e);
+        // alert('회원가입 중 오류가 발생했습니다: ' + e);
+        console.log(e.response.data.message);
+
+        toast.error(e.response.data.message);
     }
 };
 </script>
