@@ -12,7 +12,7 @@ const reviews = ref([
       '생각보다 색상이 너무 누런데 생각했던 이미지랑 맞아서 잘 쓰고 있음. \n' +
       '친구들이 뭐 이런 걸 쓰냐고 했지만 제 취향인 걸 어쩌겠나요?\n' +
       '근데 리뷰 쓰면 포인트 안 주나요? 얼른 평민 탈출하고 싶음 ㅋ',
-    image: 'https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-ab8c-61f7-8e00-d8993e4f9664/raw?se=2025-05-03T17%3A18%3A32Z&sp=r&sv=2024-08-04&sr=b&scid=6f20476c-017d-5e90-b376-5faf85cd154b&skoid=dfdaf859-26f6-4fed-affc-1befb5ac1ac2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-02T20%3A37%3A48Z&ske=2025-05-03T20%3A37%3A48Z&sks=b&skv=2024-08-04&sig=eLXY8V%2BCS/bQERbPasMNv7bBJoIo6v503xeY3T3kHcs%3D'
+    image: 'https://i.postimg.cc/Hm6p7PW8/2025-05-04-1-13-40.png'
   },
   {
     id: 2,
