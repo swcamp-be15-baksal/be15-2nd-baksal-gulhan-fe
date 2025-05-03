@@ -29,6 +29,8 @@ const router = useRouter();
 </template>
 
 <style scoped>
+@import '@/features/user/user.css';
+
 .container {
     max-width: 440px;
     margin: auto;
@@ -65,12 +67,6 @@ input[type='text'] {
     font-size: 1rem;
 }
 
-.kakao-logo {
-    width: 24px;
-    vertical-align: middle;
-    margin-right: 8px;
-}
-
 .list-user {
     display: flex;
     justify-content: flex-end;
@@ -80,7 +76,7 @@ input[type='text'] {
 
 .list-user a {
     text-decoration: none;
-    color: #A0A0A0; /* 기본 색상 */
+    color: #a0a0a0; /* 기본 색상 */
     transition: color 0.2s ease;
 }
 
@@ -90,28 +86,6 @@ input[type='text'] {
 
 input[type='text']:focus {
     border: 1px solid #000000;
-}
-
-button {
-    width: 100%;
-    margin-bottom: 8px;
-    border: none;
-    border-radius: 12px;
-    padding: 20px;
-    transition: filter 0.2s ease;
-}
-
-button:hover {
-    filter: brightness(95%);
-}
-
-button:active {
-    filter: brightness(90%);
-}
-
-button[class='login'] {
-    background-color: #3e4042;
-    color: #ededed;
 }
 
 button[class='kakao-login'] {
