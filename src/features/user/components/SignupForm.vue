@@ -1,10 +1,10 @@
 <script setup>
 import SignupStatus from '@/features/user/components/SignupStatus.vue';
 import userValid from '../validator/userValid';
-import {registerUser} from '../api/user.js'
+import { registerUser } from '../api/user.js';
 
 import { ref, computed, nextTick, watch } from 'vue';
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 
 const emit = defineEmits(['nextStep']);
 const signupData = defineModel('signupData');
@@ -21,6 +21,7 @@ const toast = useToast();
 const phone1 = ref('');
 const phone2 = ref('');
 const phone3 = ref('');
+const isLoading = ref(false);
 
 watch([phone1, phone2, phone3], () => {
     signupData.value.phone = `${phone1.value}-${phone2.value}-${phone3.value}`;
@@ -46,20 +47,20 @@ const isPasswordValid = computed(
 
 const userIdLengthValid = computed(() => signupData.value.userId?.length >= 5);
 const userIdStartValid = computed(() => /^[a-z]/.test(signupData.value.userId || ''));
-const isEmailValid = computed(() => userValid.validateEmail(signupData.value.email)
-);
+const isEmailValid = computed(() => userValid.validateEmail(signupData.value.email));
 
-const isFormValid = computed(() =>
-  isUserIdValid.value === true &&
-  isPasswordValid.value === true &&
-  isPasswordMatch.value === true &&
-  isEmailValid.value === true &&
-  !!signupData.value.name?.trim() &&
-  !!signupData.value.email?.trim() &&
-  !!signupData.value.phone?.trim() &&
-  !!signupData.value.birth?.trim() &&
-  !!signupData.value.gender?.trim() &&
-  !!signupData.value.address?.trim()
+const isFormValid = computed(
+    () =>
+        isUserIdValid.value === true &&
+        isPasswordValid.value === true &&
+        isPasswordMatch.value === true &&
+        isEmailValid.value === true &&
+        !!signupData.value.name?.trim() &&
+        !!signupData.value.email?.trim() &&
+        !!signupData.value.phone?.trim() &&
+        !!signupData.value.birth?.trim() &&
+        !!signupData.value.gender?.trim() &&
+        !!signupData.value.address?.trim()
 );
 
 function openPostcodeSearch() {
@@ -74,24 +75,25 @@ function openPostcodeSearch() {
             });
         },
     }).open({
-        left: (window.screen.width / 2) - (popupWidth / 2),
-        top: (window.screen.height / 2) - (popupHeight / 2)
+        left: window.screen.width / 2 - popupWidth / 2,
+        top: window.screen.height / 2 - popupHeight / 2,
     });
 }
 
 function formatDate(input) {
-  if (!/^\d{8}$/.test(input)) return null; // 형식이 8자리 숫자가 아니면 null 반환
-  const year = input.slice(0, 4);
-  const month = input.slice(4, 6);
-  const day = input.slice(6, 8);
-  return `${year}-${month}-${day}`;
+    if (!/^\d{8}$/.test(input)) return null; // 형식이 8자리 숫자가 아니면 null 반환
+    const year = input.slice(0, 4);
+    const month = input.slice(4, 6);
+    const day = input.slice(6, 8);
+    return `${year}-${month}-${day}`;
 }
 
 const onClickSignup = async () => {
     try {
-        if(!isFormValid.value){
-            throw Error("입력 값이 잘못 되었습니다.")
+        if (!isFormValid.value) {
+            throw Error('입력 값이 잘못 되었습니다.');
         }
+        isLoading.value = true;
         const payload = {
             userId: signupData.value.userId,
             username: signupData.value.name,
@@ -103,14 +105,14 @@ const onClickSignup = async () => {
             gender: signupData.value.gender,
             address: signupData.value.address,
             detailAddress: signupData.value.detailAddress,
-            countryCode : "82",
+            countryCode: '82',
             isAgreed: signupData.value.agreed,
         };
 
         console.log('회원가입 데이터 전송:', JSON.stringify(payload));
 
         // TODO: API 연동 로직 삽입
-        const response = await registerUser(payload)
+        const response = await registerUser(payload);
 
         nextStep();
     } catch (e) {
@@ -118,6 +120,8 @@ const onClickSignup = async () => {
         console.log(e.response.data.message);
 
         toast.error(e.response.data.message);
+    } finally {
+        isLoading.value = false;
     }
 };
 </script>
@@ -197,10 +201,15 @@ const onClickSignup = async () => {
             </div>
 
             <div class="input-box">
-                <input id="detailAddress" v-model="signupData.detailAddress" placeholder="상세 주소" />
+                <input
+                    id="detailAddress"
+                    v-model="signupData.detailAddress"
+                    placeholder="상세 주소" />
             </div>
-
-            <button class="submit" :disabled="!isFormValid" @click="onClickSignup">회원가입</button>
+            <button class="submit" :disabled="!isFormValid || isLoading" @click="onClickSignup">
+                <span v-if="!isLoading">회원가입</span>
+                <span v-else class="spinner"></span>
+            </button>
         </div>
     </div>
 </template>
@@ -413,5 +422,22 @@ const onClickSignup = async () => {
 .submit:disabled {
     background-color: #a0a0a0;
     cursor: not-allowed;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #fff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>
