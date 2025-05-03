@@ -48,7 +48,7 @@ function handleSearch(keyword) {
           @update:page="updatePage"
         />
       </div>
-      <RouterLink to="/travelpost/write" class="btn-write">글쓰기</RouterLink>
+      <RouterLink to="/board/write" class="btn-write">글쓰기</RouterLink>
     </div>
   </div>
 </template>

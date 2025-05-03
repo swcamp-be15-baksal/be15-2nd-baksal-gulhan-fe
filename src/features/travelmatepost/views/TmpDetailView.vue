@@ -1,36 +1,69 @@
-<!-- 수정된 화면 파일 -->
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import PackageHeader from '@/features/package/components/PackageHeader.vue';
-import DetailCard from '@/components/common/DetailCard.vue';
-import DetailReviewTab from '@/components/common/DetailReviewTab.vue';
-import ReviewItem from '@/features/review/components/ReviewItem.vue';
-import packages from '@/features/package/mock/packages.json';
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
+import posts from '@/features/travelmatepost/mock/tmp.json'
+import TmpDetailContent from '../components/TmpDetailContent.vue'
+import TmpCommentList from '../components/TmpCommentList.vue'
+import TmpCommentForm from '../components/TmpCommentForm.vue'
 
-const route = useRoute();
-const packagesData = ref(null);
+const route = useRoute()
+const router = useRouter()
+const postId = Number(route.params.id)
+
+const post = ref(null)
 
 onMounted(() => {
-    const id = Number(route.params.id);
-    packagesData.value = packages.find((p) => p.packageId === id);
-});
+  post.value = posts.find(p => p.travelMatePostId === postId)
+})
 </script>
 
 <template>
-    <PackageHeader />
-    <DetailCard
-        v-if="packagesData"
-        :data="packagesData"
-        :categoryKey="'area'"
-        :showDate="true"
-        :showGuide="true" />
-    <DetailReviewTab
-        v-if="packagesData"
-        :detail="packagesData.detail"
-        :reviewCount="packagesData.reviewCount">
-        <template #review>
-            <ReviewItem />
-        </template>
-    </DetailReviewTab>
+  <div class="tmp-detail-page">
+    <TmpDetailContent v-if="post" :post="post" />
+    <TmpCommentList :postId="postId" />
+    <TmpCommentForm :postId="postId" />
+    <div class="button-group">
+      <button class="back-btn" @click="router.push('/board')">목록으로</button>
+      <button class="write-btn" @click="router.push('/board/write')">글쓰기</button>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.tmp-detail-page {
+  padding: 32px 80px;
+  background: #fefcf7;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.back-btn, .write-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: 1px solid #d66;
+  transition: all 0.2s ease;
+}
+
+.back-btn {
+  background-color: #333;
+  color: white;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.write-btn {
+  background-color: white;
+  color: #d66;
+}
+
+.write-btn:hover {
+  background-color: #fef0f0;
+}
+
+</style>

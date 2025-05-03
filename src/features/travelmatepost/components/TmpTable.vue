@@ -22,7 +22,7 @@ defineProps({
     <tr v-for="post in posts" :key="post.travelMatePostId">
       <td>{{ post.travelMatePostId }}</td>
       <td>
-        <RouterLink :to="`/travelpost/${post.travelMatePostId}`" class="title-link">
+        <RouterLink :to="`/board/${post.travelMatePostId}`" class="title-link">
           {{ post.title }}
         </RouterLink>
       </td>
