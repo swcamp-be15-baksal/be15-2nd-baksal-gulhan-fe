@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { toast } from 'vue3-toastify';
+import { useToast } from 'vue-toastification';
 
 const { initialData, submitLabel = '제출' } = defineProps({
   initialData: { type: Object, default: null },
@@ -9,6 +9,7 @@ const { initialData, submitLabel = '제출' } = defineProps({
 });
 
 const router = useRouter();
+const toast = useToast();
 
 const rating = ref(0);
 const hover = ref(0);

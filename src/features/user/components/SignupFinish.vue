@@ -28,12 +28,12 @@ const gotoLogin = () => {
         </div>
     <SignupStatus :step="step"/>
     <div class="contianer inner-container">
-            <img class="logo" src="@/assets/logo-black.svg" alt="logo">
-            <img class="checked-img" src="@/assets/checked.svg" alt="checked"/>
+            <img class="logo" src="@/assets/icons/logo-black.svg" alt="logo">
+            <img class="checked-img" src="@/assets/icons/checked.svg" alt="checked"/>
         <div class="signup-finish">
             <h2>
                 회원가입 완료
-            </h2>          
+            </h2>
         </div>
         <div class="signup-content">
             <p>회원 가입이 완료 되었습니다.</p>

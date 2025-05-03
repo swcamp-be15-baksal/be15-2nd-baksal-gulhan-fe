@@ -1,6 +1,8 @@
 <script setup>
 import router from '@/router/index.js';
-import { toast } from 'vue3-toastify';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
   review: {
