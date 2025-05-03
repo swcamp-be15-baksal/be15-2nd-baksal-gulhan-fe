@@ -1,0 +1,442 @@
+[
+    {
+        "commentId": 1,
+        "content": "게시글 1에 대한 댓글 1입니다.",
+        "createdAt": "2025-04-07T16:03:19.366588",
+        "updatedAt": "2025-04-07T17:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 1,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 2,
+        "content": "게시글 2에 대한 댓글 2입니다.",
+        "createdAt": "2025-04-12T16:03:19.366588",
+        "updatedAt": "2025-04-12T17:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 2,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 3,
+        "content": "게시글 3에 대한 댓글 3입니다.",
+        "createdAt": "2025-04-09T16:03:19.366588",
+        "updatedAt": "2025-04-09T17:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 3,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 4,
+        "content": "게시글 3에 대한 댓글 4입니다.",
+        "createdAt": "2025-04-29T16:03:19.366588",
+        "updatedAt": "2025-04-29T19:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 3,
+        "parentCommentId": 3
+    },
+    {
+        "commentId": 5,
+        "content": "게시글 3에 대한 댓글 5입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T21:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 3,
+        "parentCommentId": 3
+    },
+    {
+        "commentId": 6,
+        "content": "게시글 4에 대한 댓글 6입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T20:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 4,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 7,
+        "content": "게시글 5에 대한 댓글 7입니다.",
+        "createdAt": "2025-04-25T16:03:19.366588",
+        "updatedAt": "2025-04-25T18:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 5,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 8,
+        "content": "게시글 6에 대한 댓글 8입니다.",
+        "createdAt": "2025-04-05T16:03:19.366588",
+        "updatedAt": "2025-04-05T21:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 6,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 9,
+        "content": "게시글 6에 대한 댓글 9입니다.",
+        "createdAt": "2025-04-18T16:03:19.366588",
+        "updatedAt": "2025-04-18T19:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 6,
+        "parentCommentId": 8
+    },
+    {
+        "commentId": 10,
+        "content": "게시글 7에 대한 댓글 10입니다.",
+        "createdAt": "2025-04-03T16:03:19.366588",
+        "updatedAt": "2025-04-03T21:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 7,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 11,
+        "content": "게시글 7에 대한 댓글 11입니다.",
+        "createdAt": "2025-04-10T16:03:19.366588",
+        "updatedAt": "2025-04-10T18:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 7,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 12,
+        "content": "게시글 7에 대한 댓글 12입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T19:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 7,
+        "parentCommentId": 11
+    },
+    {
+        "commentId": 13,
+        "content": "게시글 8에 대한 댓글 13입니다.",
+        "createdAt": "2025-04-27T16:03:19.366588",
+        "updatedAt": "2025-04-27T18:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 8,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 14,
+        "content": "게시글 8에 대한 댓글 14입니다.",
+        "createdAt": "2025-04-21T16:03:19.366588",
+        "updatedAt": "2025-04-21T18:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 8,
+        "parentCommentId": 13
+    },
+    {
+        "commentId": 15,
+        "content": "게시글 9에 대한 댓글 15입니다.",
+        "createdAt": "2025-04-26T16:03:19.366588",
+        "updatedAt": "2025-04-26T19:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 9,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 16,
+        "content": "게시글 10에 대한 댓글 16입니다.",
+        "createdAt": "2025-04-24T16:03:19.366588",
+        "updatedAt": "2025-04-24T19:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 10,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 17,
+        "content": "게시글 11에 대한 댓글 17입니다.",
+        "createdAt": "2025-04-18T16:03:19.366588",
+        "updatedAt": "2025-04-18T17:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 11,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 18,
+        "content": "게시글 11에 대한 댓글 18입니다.",
+        "createdAt": "2025-04-05T16:03:19.366588",
+        "updatedAt": "2025-04-05T17:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 11,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 19,
+        "content": "게시글 12에 대한 댓글 19입니다.",
+        "createdAt": "2025-04-13T16:03:19.366588",
+        "updatedAt": "2025-04-13T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 12,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 20,
+        "content": "게시글 12에 대한 댓글 20입니다.",
+        "createdAt": "2025-04-24T16:03:19.366588",
+        "updatedAt": "2025-04-24T20:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 12,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 21,
+        "content": "게시글 13에 대한 댓글 21입니다.",
+        "createdAt": "2025-05-01T16:03:19.366588",
+        "updatedAt": "2025-05-01T21:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 13,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 22,
+        "content": "게시글 13에 대한 댓글 22입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T21:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 13,
+        "parentCommentId": 21
+    },
+    {
+        "commentId": 23,
+        "content": "게시글 14에 대한 댓글 23입니다.",
+        "createdAt": "2025-04-13T16:03:19.366588",
+        "updatedAt": "2025-04-13T20:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 14,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 24,
+        "content": "게시글 15에 대한 댓글 24입니다.",
+        "createdAt": "2025-04-23T16:03:19.366588",
+        "updatedAt": "2025-04-23T19:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 15,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 25,
+        "content": "게시글 16에 대한 댓글 25입니다.",
+        "createdAt": "2025-04-14T16:03:19.366588",
+        "updatedAt": "2025-04-14T18:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 16,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 26,
+        "content": "게시글 17에 대한 댓글 26입니다.",
+        "createdAt": "2025-04-24T16:03:19.366588",
+        "updatedAt": "2025-04-24T17:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 17,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 27,
+        "content": "게시글 17에 대한 댓글 27입니다.",
+        "createdAt": "2025-04-13T16:03:19.366588",
+        "updatedAt": "2025-04-13T17:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 17,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 28,
+        "content": "게시글 18에 대한 댓글 28입니다.",
+        "createdAt": "2025-04-06T16:03:19.366588",
+        "updatedAt": "2025-04-06T18:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 18,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 29,
+        "content": "게시글 18에 대한 댓글 29입니다.",
+        "createdAt": "2025-04-15T16:03:19.366588",
+        "updatedAt": "2025-04-15T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 18,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 30,
+        "content": "게시글 18에 대한 댓글 30입니다.",
+        "createdAt": "2025-04-28T16:03:19.366588",
+        "updatedAt": "2025-04-28T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 18,
+        "parentCommentId": 28
+    },
+    {
+        "commentId": 31,
+        "content": "게시글 19에 대한 댓글 31입니다.",
+        "createdAt": "2025-04-20T16:03:19.366588",
+        "updatedAt": "2025-04-20T17:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 19,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 32,
+        "content": "게시글 19에 대한 댓글 32입니다.",
+        "createdAt": "2025-04-15T16:03:19.366588",
+        "updatedAt": "2025-04-15T18:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 19,
+        "parentCommentId": 31
+    },
+    {
+        "commentId": 33,
+        "content": "게시글 19에 대한 댓글 33입니다.",
+        "createdAt": "2025-04-14T16:03:19.366588",
+        "updatedAt": "2025-04-14T17:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 19,
+        "parentCommentId": 31
+    },
+    {
+        "commentId": 34,
+        "content": "게시글 20에 대한 댓글 34입니다.",
+        "createdAt": "2025-04-03T16:03:19.366588",
+        "updatedAt": "2025-04-03T18:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 20,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 35,
+        "content": "게시글 20에 대한 댓글 35입니다.",
+        "createdAt": "2025-04-26T16:03:19.366588",
+        "updatedAt": "2025-04-26T18:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 20,
+        "parentCommentId": 34
+    },
+    {
+        "commentId": 36,
+        "content": "게시글 21에 대한 댓글 36입니다.",
+        "createdAt": "2025-04-19T16:03:19.366588",
+        "updatedAt": "2025-04-19T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 21,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 37,
+        "content": "게시글 21에 대한 댓글 37입니다.",
+        "createdAt": "2025-05-02T16:03:19.366588",
+        "updatedAt": "2025-05-02T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 21,
+        "parentCommentId": 36
+    },
+    {
+        "commentId": 38,
+        "content": "게시글 21에 대한 댓글 38입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T21:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 21,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 39,
+        "content": "게시글 22에 대한 댓글 39입니다.",
+        "createdAt": "2025-04-09T16:03:19.366588",
+        "updatedAt": "2025-04-09T20:03:19.366588",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 22,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 40,
+        "content": "게시글 23에 대한 댓글 40입니다.",
+        "createdAt": "2025-04-09T16:03:19.366588",
+        "updatedAt": "2025-04-09T17:03:19.366588",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 23,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 41,
+        "content": "게시글 23에 대한 댓글 41입니다.",
+        "createdAt": "2025-04-24T16:03:19.366588",
+        "updatedAt": "2025-04-24T20:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 23,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 42,
+        "content": "게시글 24에 대한 댓글 42입니다.",
+        "createdAt": "2025-04-16T16:03:19.366588",
+        "updatedAt": "2025-04-16T17:03:19.366588",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 24,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 43,
+        "content": "게시글 25에 대한 댓글 43입니다.",
+        "createdAt": "2025-04-19T16:03:19.366588",
+        "updatedAt": "2025-04-19T19:03:19.366588",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 25,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 44,
+        "content": "게시글 25에 대한 댓글 44입니다.",
+        "createdAt": "2025-04-17T16:03:19.366588",
+        "updatedAt": "2025-04-17T18:03:19.366588",
+        "userNo": 5,
+        "userId": "user05",
+        "travelMatePostId": 25,
+        "parentCommentId": null
+    }
+]
