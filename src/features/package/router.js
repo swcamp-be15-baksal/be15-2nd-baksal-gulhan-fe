@@ -1,5 +1,6 @@
 import PackageListView from '@/features/package/views/PackageListView.vue';
 import PackageDetailView from '@/features/package/views/PackageDetailView.vue';
+import PackageWriteView from '@/features/package/views/PackageWriteView.vue';
 
 export const packageRoutes = [
     {
@@ -11,5 +12,10 @@ export const packageRoutes = [
         path: '/packages',
         name: 'package-list',
         component: PackageListView,
+    },
+    {
+        path: '/packages/write',
+        name: 'packages-write',
+        component: PackageWriteView,
     },
 ];
