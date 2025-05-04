@@ -37,7 +37,7 @@
 .team-info,
 .customer-center {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1rem;
     gap: 7px;
 }
 
