@@ -24,7 +24,7 @@
             <div class="input-info" style="flex: 1">
                 <div class="input-title">가ㅤ격</div>
                 <input
-                    v-model="title"
+                    v-model="price"
                     type="text"
                     placeholder="기념품 가격을 입력하세요."
                     class="title-input" />
@@ -32,7 +32,7 @@
             <div class="input-info" style="flex: 1">
                 <div class="input-title">수ㅤ량</div>
                 <input
-                    v-model="title"
+                    v-model="quantity"
                     type="text"
                     placeholder="기념품 수량을 입력하세요."
                     class="title-input" />
@@ -42,25 +42,23 @@
             <div class="input-info" style="flex: 1">
                 <div class="input-title">판 매 량</div>
                 <input
-                    v-model="title"
+                    v-model="sold"
                     type="text"
-                    placeholder="기념품 판매량을 입력하세요. "
+                    placeholder="기념품 판매량을 입력하세요."
                     class="title-input" />
             </div>
             <div class="input-info" style="flex: 1">
                 <div class="input-title">잔여수량</div>
                 <input
-                    v-model="title"
+                    v-model="remaining"
                     type="text"
-                    placeholder="기념품 잔여수량을 입력하세요. "
+                    placeholder="기념품 잔여수량을 입력하세요."
                     class="title-input" />
             </div>
         </div>
         <!-- 에디터 -->
         <div class="input-info">
-            <div class="input-title" style="display: flex; justify-content: flex-start">
-                상세설명
-            </div>
+            <div class="input-title" style="margin-bottom: 500px">상세설명</div>
             <div class="editor-wrapper">
                 <div id="editor" />
             </div>
@@ -90,6 +88,7 @@ const quantity = ref('');
 const sold = ref('');
 const remaining = ref('');
 let quill;
+
 onMounted(() => {
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
@@ -104,11 +103,10 @@ onMounted(() => {
     quill = new Quill('#editor', {
         modules: {
             toolbar: toolbarOptions,
-            /* https://github.com/mudoo/quill-resize-module */
             resize: {
                 parchment: {
                     image: {
-                        attribute: ['width'], // ['width', 'height']
+                        attribute: ['width'],
                         limit: {
                             minWidth: 200,
                             maxWidth: 1000,
@@ -119,13 +117,14 @@ onMounted(() => {
             },
         },
         theme: 'snow',
-        placeholder: '  기념품 상세설명을 작성해 주세요.',
+        placeholder: '기념품 상세설명을 작성해 주세요.',
     });
 });
 
 const onCancel = () => {
     router.back();
 };
+
 const onSubmit = () => {
     const content = quill.root.innerHTML;
     console.log('제목:', title.value);
@@ -155,9 +154,9 @@ const onSubmit = () => {
 
 .input-info {
     display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
     gap: 8px;
 }
 
@@ -168,6 +167,7 @@ const onSubmit = () => {
     justify-content: flex-start;
     display: flex;
     width: 120px;
+    margin-bottom: 16px;
 }
 
 .title-input {
