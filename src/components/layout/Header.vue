@@ -126,6 +126,7 @@ const handleLogout = async () => {
         await logoutUser(accessToken);
         authStore.clearAuth();
         console.log('로그아웃!');
+        router.replace('/');
     } catch (e) {
         console.log(e);
     }

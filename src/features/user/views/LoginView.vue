@@ -25,10 +25,10 @@ const handleLogin = async () => {
         const resp = await loginUser({ userId: userId.value, password: password.value });
         const at = resp.data.data.accessToken;
         authStore.setAuth(at);
-        // await router.replace('/');
+        await router.replace('/');
     } catch (e) {
-        // toast.error(e.response.data.message);
-        console.log(e);
+        toast.error(e.response.data.message);
+        // console.log(e);
     }
 };
 </script>
