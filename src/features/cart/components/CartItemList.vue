@@ -2,14 +2,18 @@
 import CartItem from '@/features/cart/components/CartItem.vue';
 
 const { items } = defineProps({
-  items: Array
+  items: Array,
+  selectedItemIds: Array
 });
 
-const emit = defineEmits(['updateItemCount']);
+const emit = defineEmits(['updateItemCount','updateSelected']);
 
-function handleUpdateItemCount(id, count){
-  emit('updateItemCount',id,count);
+function handleUpdateItemCount(id, quantity){
+  emit('updateItemCount',id,quantity);
+}
 
+function handleUpdateSelected(id){
+  emit(`updateSelected`, id);
 }
 </script>
 
@@ -19,7 +23,9 @@ function handleUpdateItemCount(id, count){
       v-for="item in items"
       :key="item.id"
       :item="item"
+      :isSelected="selectedItemIds.includes(item.id)"
       @updateItemCount="handleUpdateItemCount"
+      @updateSelected="handleUpdateSelected"
     />
   </div>
 

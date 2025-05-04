@@ -1,29 +1,59 @@
 <script setup>
-import { reactive, computed } from 'vue';
+import { computed, ref } from 'vue';
 import CartItemList from '@/features/cart/components/CartItemList.vue';
 import { useRouter } from 'vue-router';
-const router = useRouter()
-const goToPayInfo = () =>  {
-  router.push('/beforePayment')
-}
-const cartItems = reactive([
-  { id: "1",image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png', name: "훈민정음 메모지", count:3, price: 5000, type : "기념품"},
-  { id: 2 ,image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png', name: "조선지도 마스킹 테이프",count:4, price: 3000, type :"기념품" },
-  { id: 3,image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png', name: "경복궁 연필 세트", count:5, price: 2000, type: "기념품" },
-]);
+import { useCartStore } from '@/stores/cart.js';
 
+const router = useRouter()
+const cartStore = useCartStore();
+const cartItems = computed(() => cartStore.cartItems)
+const selectedItemIds = computed(() => cartStore.selectedItemIds);
+const showSelectAll = ref(true);
+const selectAll = computed({
+  get() {
+    return selectedItemIds.value.length === cartItems.value.length;
+  },
+  set(value) {
+    if (value) {
+      cartStore.toggleSelectAll();
+    } else {
+      cartStore.selectedItemIds = [];
+    }
+  }
+});
+
+
+
+
+const toggleSelectItem = (id) => {
+  cartStore.toggleSelection(id);
+};
 const totalPrice = computed(() => {
-  return cartItems.reduce((total, item) => total + item.price * item.count, 0);
+  // 선택된 아이템들만 필터링하여 계산
+  return cartItems.value
+    .filter(item => selectedItemIds.value.includes(item.id))  // 선택된 아이템들만 필터링
+    .reduce((total, item) => total + item.price * item.quantity, 0); // 필터링된 아이템들의 가격 합산
 });
 
 const souvenirPrice = computed(() => {
-  return cartItems.filter(item => item.type === '기념품').reduce((total, item) => total + item.price * item.count, 0);
+  return cartItems.value
+    .filter(item => selectedItemIds.value.includes(item.id) && item.type === '기념품')
+    .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
 const packagePrice = computed(() => {
-  return cartItems.filter(item => item.type === '패키지').reduce((total, item) => total + item.price * item.count,0);
+  return cartItems.value
+    .filter(item => selectedItemIds.value.includes(item.id) && item.type === '패키지')
+    .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
+const deleteAllItems = () =>{
+  cartStore.clearCart();
+  showSelectAll.value = false;
+}
+const goToPayInfo = (selectedItems) =>  {
+  router.push(`/beforePayment?selectedItems=${JSON.stringify(selectedItems)}`);
+}
 // 결제 상세 항목 목록
 const priceDetails = computed(() => [
   {label : '총 금액', value : totalPrice},
@@ -31,31 +61,38 @@ const priceDetails = computed(() => [
   {label : '패키지 금액', value: packagePrice.value}
 ])
 function updateItemCount(id, newCount){
-  const item = cartItems.find(i => i.id === id);
-  if (item) item.count = newCount;
+  cartStore.updateItemQuantity(id,newCount);
 }
 </script>
+
 <template>
   <div class="cart-page">
     <div class="cart-content">
       <div class="cart-header">
         <h1 class="cart-title">장바구니</h1>
-        <button class="delete-all-btn" @click="deleteAllItems">전체 삭제</button>
 
       </div>
-      <div class="select-all-wrapper">
+      <!-- 장바구니가 비었을 때 메시지 추가 -->
+      <div v-if="cartItems.length === 0" class="empty-cart-message">
+        장바구니가 비어 있습니다.
+      </div>
+      <div class="select-all-wrapper"  v-if="showSelectAll">
         <label>
-          <input type="checkbox" v-model="selectAll" @change="toggleSelectAll" />
+          <input type="checkbox" v-model="selectAll"/>
           전체 선택
         </label>
+        <button class="delete-all-btn" @click="deleteAllItems">전체 삭제</button>
+
       </div>
 
       <CartItemList
         :items="cartItems"
+        :selectedItemIds="selectedItemIds"
         @updateItemCount="updateItemCount"
+        @updateSelected="toggleSelectItem"
       />
 
-      <div class="paymentInfo">
+      <div class="paymentInfo" v-if="selectedItemIds.length>0">
         <div class="total-price">
           <span>결제 예상 금액: </span>
         </div>
@@ -71,7 +108,7 @@ function updateItemCount(id, newCount){
         </div>
 
       </div>
-      <button class="complete-purchase" @click="goToPayInfo">구매 완료</button>
+      <button class="complete-purchase" @click="goToPayInfo(selectedItemIds)"  v-if="showSelectAll">구매하기</button>
 
     </div>
   </div>
@@ -92,14 +129,13 @@ function updateItemCount(id, newCount){
   flex-direction: column;
   align-items: center;
   gap: 1rem; /* 간격을 줄임 */
+  min-height: 35rem;
+  min-width: 50rem;
 }
 
 /* cart-title과 버튼을 세로로 정렬 */
 .cart-header {
   display: flex;
-  flex-direction: row; /* 세로 → 가로로 변경 */
-  align-items: center; /* 수직 중앙 정렬 */
-  justify-content: space-between; /* 양쪽 정렬 */
   width: 100%;
   padding: 0 1rem; /* 좌우 패딩 */
   margin-bottom: 0.25rem; /* 장바구니와 다른 항목 간의 간격을 줄임 */
@@ -131,8 +167,10 @@ function updateItemCount(id, newCount){
   margin-top: 0.25rem; /* 전체 선택과 장바구니 간의 간격을 좁힘 */
   margin-bottom: 0.25rem; /* 전체 선택과 아래 항목 간격을 좁힘 */
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+
+  flex-direction: row; /* 세로 → 가로로 변경 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: space-between; /* 양쪽 정렬 */
 }
 /* 결제 예상 금액 상자 */
 .paymentInfo {
@@ -193,5 +231,6 @@ function updateItemCount(id, newCount){
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: auto; /* 버튼을 항상 맨 아래로 위치시키는 속성 */
 }
 </style>

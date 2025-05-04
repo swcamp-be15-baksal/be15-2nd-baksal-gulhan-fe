@@ -1,28 +1,36 @@
 <script setup>
 // 부모로부터 item을 받음
+import { useCartStore } from '@/stores/cart.js';
+
 const props = defineProps({
   item: Object,
   isSelected: Boolean
 });
 
+
+const cartStore = useCartStore();
 // 부모에게 수량 변경 알리기 위해 emit 정의
 const emit = defineEmits(['updateItemCount', 'updateSelected']);
 
 // 개별 아이템 선택 여부 업데이트
-function toggleSelect() {
+function toggleSelection() {
   emit('updateSelected', props.item.id);
 }
 // 수량 증가
 const increaseCount = () => {
-  emit('updateItemCount', props.item.id, props.item.count + 1);
+  emit('updateItemCount', props.item.id, props.item.quantity + 1);
 };
 
 // 수량 감소
 const decreaseCount = () => {
-  if (props.item.count > 0) {
-    emit('updateItemCount', props.item.id, props.item.count - 1);
+  if (props.item.quantity > 1) {
+    emit('updateItemCount', props.item.id, props.item.quantity - 1);
   }
 };
+
+function removeFromCart(itemId) {
+  cartStore.removeItem(itemId);
+}
 </script>
 
 <template>
@@ -32,13 +40,16 @@ const decreaseCount = () => {
       <div class="cart-item-header">
         <!-- 구분선 -->
         <div class="item-line"></div>
+
         <!-- 체크박스 -->
         <input
           type="checkbox"
           :checked="isSelected"
-          @change="toggleSelect"
+          @change="toggleSelection"
           class="item-checkbox"
         />
+        <button class="cancel-btn" @click="removeFromCart(props.item.id)">X</button>
+
       </div>
 
       <!-- 본문 내용 -->
@@ -51,16 +62,16 @@ const decreaseCount = () => {
           </div>
           <div class="item-info">
             <div class="item-type">{{ item.type }}</div>
-            <div class="item-name">{{ item.name }}</div>
+            <div class="item-name">{{ item.title }}</div>
           </div>
         </div>
 
         <!-- 오른쪽 영역 -->
         <div class="item-right">
-          <div class="item-price">{{ item.price * item.count }}원</div>
+          <div class="item-price">{{ item.price * item.quantity }}원</div>
           <div class="item-controls">
-            <button class="count-btn" @click="decreaseCount">-</button>
-            <span>{{ item.count }}</span>
+            <button class="count-btn" @click="decreaseCount" :disabled="item.quantity <= 1">-</button>
+            <span>{{ item.quantity }}</span>
             <button class="count-btn" @click="increaseCount">+</button>
           </div>
         </div>
@@ -204,6 +215,17 @@ const decreaseCount = () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.cancel-btn{
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  position: absolute;
+  right: 1rem;
+  top: -0.8rem; /* 구분선 위로 올리기 */
+  z-index: 2;
 }
 </style>
 
