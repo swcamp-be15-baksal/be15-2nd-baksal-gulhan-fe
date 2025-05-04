@@ -62,12 +62,12 @@ const onDelete = () => {
 </script>
 
 <style scoped>
-.detail-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #fffef9;
-  box-sizing: border-box;
+.post-box {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background-color: white;
 }
 
 .breadcrumb {
@@ -123,6 +123,7 @@ const onDelete = () => {
   display: flex;
   flex-direction: column;
   z-index: 100;
+  min-width: 100px;
 }
 
 .dropdown-menu button {

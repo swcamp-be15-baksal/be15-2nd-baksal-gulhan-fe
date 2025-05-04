@@ -147,6 +147,7 @@ const onDelete = (commentId) => {
   padding: 16px;
   margin-bottom: 20px;
   border-radius: 6px;
+  background-color: white;
 }
 
 .comment-header {
@@ -203,14 +204,15 @@ const onDelete = (commentId) => {
   display: flex;
   flex-direction: column;
   z-index: 100;
+  min-width: 80px;
 }
 
 .dropdown-menu button {
   width: 100%;
-  padding: 6px 12px;
+  padding: 6px 1px;
   background: none;
   border: none;
-  text-align: left;
+  text-align: center;
   font-size: 0.75rem;
   cursor: pointer;
 }
@@ -245,7 +247,7 @@ textarea {
   display: flex;
   justify-content: flex-end;
   margin-top: 8px;
-  gap: 10px;
+  gap: 2px;
 }
 
 .cancel-btn,
