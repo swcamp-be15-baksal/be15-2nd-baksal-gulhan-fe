@@ -45,7 +45,7 @@ export const mypageRoutes = [
   {
     path : '/mypage/post',
     name : 'Post',
-    component : () => import('@/features/mypage/views/UserPostView.vue')
+    component : () => import('@/features/mypage/views/post/UserPostView.vue')
   },
   // 배송지 조회
   {
