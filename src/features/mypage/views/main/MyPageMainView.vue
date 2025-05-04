@@ -1,5 +1,5 @@
 <script setup>
-import UserInfoItem from '../components/UserInfoItem.vue';
+import UserInfoItem from '../../components/UserInfoItem.vue';
 
 const menuList = [
   { label: '구매 내역', to: `/mypage/orderhistory` },
@@ -28,7 +28,7 @@ const menuList = [
         :class="{ 'no-border': index === menuList.length - 1}"
       >
         {{ menu.label}}
-        <img class="chevron-right" src="@/assets/chevron-right.svg" alt="chevron-right"/>
+        <img class="chevron-right" src="../../../../assets/icons/chevron-right.svg" alt="chevron-right"/>
       </router-link>
     </div>
   </div>
