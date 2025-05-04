@@ -23,7 +23,7 @@ function handleSearch() {
             :placeholder="props.placeholder"
             @keyup.enter="handleSearch" />
         <button @click="handleSearch">
-            <img src="@/assets/search.svg" alt="검색" style="width: 18px; height: 18px" />
+            <img src="../../assets/icons/search.svg" alt="검색" style="width: 18px; height: 18px" />
         </button>
     </div>
 </template>

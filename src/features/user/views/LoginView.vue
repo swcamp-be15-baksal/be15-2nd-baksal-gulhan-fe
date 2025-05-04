@@ -20,7 +20,7 @@ const router = useRouter();
         <!--        TODO : 라우팅 구현하기-->
         <button class="login">로그인</button>
         <button class="kakao-login">
-            <img class="kakao-logo" src="@/assets/kakao-logo.svg" alt="kakao-logo" />
+            <img class="kakao-logo" src="../../../assets/icons/kakao-logo.svg" alt="kakao-logo" />
             카카오 로그인
         </button>
         <hr />

@@ -3,10 +3,10 @@
         <div class="header-top">
             <div class="user-menu">
                 <button class="icon-small" @click="navigate('home')">
-                    <img src="@/assets/home.svg" alt="home" />
+                    <img src="../../assets/icons/home.svg" alt="home" />
                 </button>
                 <button class="icon-small" @click="navigate('cart')">
-                    <img src="@/assets/cart.svg" alt="cart" />
+                    <img src="../../assets/icons/cart.svg" alt="cart" />
                 </button>
                 <button @click="navigate('login')">로그인</button>
                 <button @click="navigate('signup')">회원가입</button>
@@ -16,7 +16,7 @@
 
         <div class="header-bottom">
             <button class="logo-button" @click="navigate('home')">
-                <img src="@/assets/logo-black.svg" alt="logo-black" />
+                <img src="../../assets/icons/logo-black.svg" alt="logo-black" />
             </button>
             <nav class="nav-menu">
                 <button @click="navigate('place')">관람 정보</button>

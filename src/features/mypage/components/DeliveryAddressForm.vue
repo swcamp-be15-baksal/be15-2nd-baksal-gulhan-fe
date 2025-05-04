@@ -60,9 +60,6 @@ const {initialData, submitLabel, disabled } = defineProps({
   disabled:    { type: Boolean, default: false }
 });
 
-// const emit = defineEmits(['submit']);
-// const isEditMode = computed(() => initialData !== null);
-
 const formData = ref({
   receiver : '',
   phone : '',
