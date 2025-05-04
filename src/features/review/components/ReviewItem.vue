@@ -11,6 +11,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    showName: {
+        type: Boolean,
+        default: true,
+    },
 });
 const rating = props.review.rating;
 
@@ -24,19 +28,14 @@ const displayDateInfo = computed(() => {
     const formattedDate = dateToShow.toISOString().split('T')[0].replace(/-/g, '.');
     return { formattedDate, label };
 });
-
-// "target_id": 13,
-// "detail": "해남 단풍 숲길은 정말 힐링 그 자체였어요. 단풍 절정 시기에 가서 그런지 사진도 예쁘게 나왔어요.",
-// "created_at": "2025-04-09 09:00:00",
-// "updated_at": "2025-04-09 09:30:00",
-// "rating": 5.0
 </script>
 
 <template>
     <div>
         <div class="review-header">
             <!-- 이거 나중에는 userNo의 이름으로 불러와야 됨 -->
-            <div>User {{ review.userNo }}</div>
+            <div v-if="!showName"></div>
+            <div v-if="showName">User {{ review.userNo }}</div>
             <div>
                 <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
                 <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
