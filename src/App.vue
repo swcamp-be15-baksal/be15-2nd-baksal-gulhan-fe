@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer.vue';
     <div id="app">
         <Header />
         <div class="layout">
-            <router-view />
+            <RouterView/>
         </div>
         <Footer />
     </div>
