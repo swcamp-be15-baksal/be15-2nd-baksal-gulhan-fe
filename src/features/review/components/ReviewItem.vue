@@ -1,6 +1,6 @@
 <script setup>
-import editIcon from '@/assets/edit.svg';
-import deleteIcon from '@/assets/delete.svg';
+import editIcon from '@/assets/icons/edit.svg';
+import deleteIcon from '@/assets/icons/delete.svg';
 import RatingIcon from './RatingIcon.vue';
 
 const rating = 4; // 예시 값임 나중에 값 가져올 거임

@@ -1,5 +1,5 @@
 <script setup>
-import heartIcon from '@/assets/heart.svg';
+import heartIcon from '@/assets/icons/heart.svg';
 
 const props = defineProps({
     data: {

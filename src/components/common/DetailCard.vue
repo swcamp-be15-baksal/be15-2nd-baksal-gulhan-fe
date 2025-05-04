@@ -1,8 +1,8 @@
 <script setup>
-import editIcon from '@/assets/edit.svg';
-import deleteIcon from '@/assets/delete.svg';
-import heartIcon from '@/assets/heart.svg';
-import starIcon from '@/assets/star.svg';
+import editIcon from '@/assets/icons/edit.svg';
+import deleteIcon from '@/assets/icons/delete.svg';
+import heartIcon from '@/assets/icons/heart.svg';
+import starIcon from '@/assets/icons/star.svg';
 
 const props = defineProps({
     data: {
