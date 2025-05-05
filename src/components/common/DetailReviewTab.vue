@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import ReviewList from '@/features/review/components/ReviewList.vue';
+import reviews from '@/features/review/mock/reviews.json';
 
 const props = defineProps({
     detail: {
@@ -17,6 +20,25 @@ const props = defineProps({
 });
 
 const activeTab = ref('detail');
+const route = useRoute();
+
+const targetType = computed(() => {
+    if (route.path.startsWith('/packages/')) return 'PACKAGE';
+    if (route.path.startsWith('/goods/')) return 'GOODS';
+    return null;
+});
+
+const targetId = computed(() => Number(route.params.id));
+
+const filteredReviews = computed(() =>
+    reviews.filter((r) => r.targetType === targetType.value && r.targetId === targetId.value)
+);
+
+watchEffect(() => {
+    console.log('[ReviewTab] targetType:', targetType.value);
+    console.log('[ReviewTab] targetId:', targetId.value);
+    console.log('[ReviewTab] filteredReviews:', filteredReviews.value);
+});
 </script>
 
 <template>
@@ -43,7 +65,7 @@ const activeTab = ref('detail');
                             : 'background-color: #e6e6e6'
                     "
                     @click="activeTab = 'review'">
-                    리뷰 ({{ reviewCount }})
+                    리뷰 ({{ filteredReviews.length }})
                 </button>
             </div>
 
@@ -52,7 +74,14 @@ const activeTab = ref('detail');
                     {{ detail }}
                 </div>
                 <div v-else>
-                    <slot name="review" />
+                    <template v-if="filteredReviews.length > 0">
+                        <ReviewList :reviews="filteredReviews" />
+                    </template>
+                    <template v-else>
+                        <div style="text-align: center; color: gray">
+                            아직 작성된 리뷰가 없습니다.
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
