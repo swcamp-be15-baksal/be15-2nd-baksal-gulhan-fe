@@ -36,7 +36,7 @@ function handleDelete(index) {
 
 <template>
   <div v-for="(item, idx) in addressList" :key="idx"
-       :class="['address-box', { default: item.isDefault }]"
+       :class="['address-box', { default: item.isDefault === 'Y' }]"
   >
     <div class="actions">
       <button
@@ -45,20 +45,20 @@ function handleDelete(index) {
             params : { deliveryAddressId : item.deliveryAddressId }
           })"
       >
-        <img src="@/assets/edit.svg" alt="edit" class="icon" />
+        <img src="../../../assets/icons/edit.svg" alt="edit" class="icon" />
       </button>
       <button @click="handleDelete(idx)">
-        <img src="@/assets/delete.svg" alt="delete" class="icon" />
+        <img src="../../../assets/icons/delete.svg" alt="delete" class="icon" />
       </button>
     </div>
     <div class="info">
       <p class="receiver">
-        <strong :class="{ 'gray-text': !item.isDefault }">{{ item.receiver }}</strong>
-        <span v-if="item.isDefault" class="badge">기본 배송지</span>
+        <strong :class="{ 'gray-text': item.isDefault === 'N' }">{{ item.receiver }}</strong>
+        <span v-if="item.isDefault === 'Y'" class="badge">기본 배송지</span>
       </p>
-      <p :class="{ 'gray-text': !item.isDefault }">{{ item.address }}</p>
-      <p :class="{ 'gray-text': !item.isDefault }">{{ item.detailAddress }}</p>
-      <p :class="{ 'gray-text': !item.isDefault }">{{ item.phone }}</p>
+      <p :class="{ 'gray-text': item.isDefault === 'N' }">{{ item.address }}</p>
+      <p :class="{ 'gray-text': item.isDefault === 'N' }">{{ item.detailAddress }}</p>
+      <p :class="{ 'gray-text': item.isDefault === 'N' }">{{ item.phone }}</p>
     </div>
   </div>
 </template>
