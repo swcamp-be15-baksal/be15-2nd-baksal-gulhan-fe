@@ -1,7 +1,36 @@
 <script setup>
+import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+import { loginUser } from '../api/user';
 
 const router = useRouter();
+const toast = useToast();
+const authStore = useAuthStore();
+
+const userId = ref('');
+const password = ref('');
+
+const handleLogin = async () => {
+    try {
+        // 1. 공백 제거
+        userId.value = userId.value.trim();
+        password.value = password.value.trim();
+        if (!userId.value || !password.value) {
+            toast.error('아이디와 비밀번호를 모두 입력해주세요.');
+            return;
+        }
+
+        const resp = await loginUser({ userId: userId.value, password: password.value });
+        const at = resp.data.data.accessToken;
+        authStore.setAuth(at);
+        await router.replace('/');
+    } catch (e) {
+        toast.error(e.response.data.message);
+        // console.log(e);
+    }
+};
 </script>
 
 <template>
@@ -9,18 +38,20 @@ const router = useRouter();
         <div class="inner-title">
             <h1>로그인</h1>
         </div>
-        <input type="text" placeholder="아이디" />
-        <input type="text" placeholder="비밀번호" />
-        <div class="info-user">
-            <ul class="list-user">
-                <RouterLink to="/find/id">아이디 찾기</RouterLink>
-                <RouterLink to="/find/password">비밀번호 찾기</RouterLink>
-            </ul>
-        </div>
-        <!--        TODO : 라우팅 구현하기-->
-        <button class="login">로그인</button>
+        <form @submit.prevent="handleLogin">
+            <input v-model="userId" type="text" placeholder="아이디" />
+            <input v-model="password" type="password" placeholder="비밀번호" />
+            <div class="info-user">
+                <ul class="list-user">
+                    <RouterLink to="/find/id">아이디 찾기</RouterLink>
+                    <RouterLink to="/find/password">비밀번호 찾기</RouterLink>
+                </ul>
+            </div>
+            <button type="submit" class="login">로그인</button>
+        </form>
+
         <button class="kakao-login">
-            <img class="kakao-logo" src="@/assets/kakao-logo.svg" alt="kakao-logo" />
+            <img class="kakao-logo" src="@/assets/icons/kakao-logo.svg" alt="kakao-logo" />
             카카오 로그인
         </button>
         <hr />
@@ -57,7 +88,8 @@ const router = useRouter();
     margin-bottom: 8px;
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='password'] {
     margin-bottom: 8px;
     width: 100%;
     border: 1px solid #797472;
@@ -72,32 +104,55 @@ input[type='text'] {
     justify-content: flex-end;
     gap: 8px;
     list-style: none;
+    padding: 0;
 }
 
 .list-user a {
     text-decoration: none;
-    color: #a0a0a0; /* 기본 색상 */
+    color: #a0a0a0;
     transition: color 0.2s ease;
 }
 
 .list-user a:hover {
-    color: #232527; /* 클릭 시 */
+    color: #232527;
 }
 
-input[type='text']:focus {
+input:focus {
     border: 1px solid #000000;
 }
 
-button[class='kakao-login'] {
+button.login {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background-color: #232527;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button.kakao-login {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
     background-color: #fee500;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-button[class='signup'] {
+button.signup {
+    width: 100%;
+    padding: 10px;
     background-color: #5d857d;
     color: #ededed;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 hr {

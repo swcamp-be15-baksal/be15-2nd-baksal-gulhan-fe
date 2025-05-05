@@ -1,0 +1,202 @@
+[
+    {
+        "travelMatePostId": 1,
+        "title": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)",
+        "content": "역사적인 장소들을 함께 걸으며 이야기 나눌 수 있는 분 찾습니다. 여행 일정은 유동적이며, 서로 조율 가능해요.",
+        "createdAt": "2025-04-10",
+        "updatedAt": "2025-04-10",
+        "userId": "user03"
+    },
+    {
+        "travelMatePostId": 2,
+        "title": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!",
+        "content": "서울 박물관 중심으로 가볍게 다녀올 계획입니다. 사진 찍기 좋아하시는 분 환영해요!",
+        "createdAt": "2025-04-11",
+        "updatedAt": "2025-04-11",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 3,
+        "title": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~",
+        "content": "5월 첫 주에 여행 가실 분 구합니다. 일정표와 숙소는 제가 준비할게요. 비용은 더치페이입니다!",
+        "createdAt": "2025-04-12",
+        "updatedAt": "2025-04-12",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 4,
+        "title": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다",
+        "content": "박물관, 유적지 방문하며 하루 여행 같이하실 분! 교통은 제 차로 이동 가능합니다.",
+        "createdAt": "2025-04-13",
+        "updatedAt": "2025-04-13",
+        "userId": "user01"
+    },
+    {
+        "travelMatePostId": 5,
+        "title": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!",
+        "content": "서울 전통시장, 역사적 장소 같이 둘러볼 분을 찾습니다. 나이, 성별 무관!",
+        "createdAt": "2025-04-14",
+        "updatedAt": "2025-04-14",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 6,
+        "title": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)",
+        "content": "중년 여성분 동행 원합니다. 말수는 적지만 예의 있는 분이면 좋겠어요.",
+        "createdAt": "2025-04-15",
+        "updatedAt": "2025-04-15",
+        "userId": "hanhwa_tae"
+    },
+    {
+        "travelMatePostId": 7,
+        "title": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영",
+        "content": "한복 입고 사진 찍는 일정도 있어요. 역사에 관심 많은 분이면 누구나 환영입니다.",
+        "createdAt": "2025-04-16",
+        "updatedAt": "2025-04-16",
+        "userId": "hanhwa_tae"
+    },
+    {
+        "travelMatePostId": 8,
+        "title": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)",
+        "content": "역사 덕후 환영! 조선, 고려사 중심의 여행 계획이에요. 차분한 분위기로 함께 해요.",
+        "createdAt": "2025-04-17",
+        "updatedAt": "2025-04-17",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 9,
+        "title": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)",
+        "content": "1일 투어입니다. 민속촌, 박물관 등 테마에 맞춰 방문 예정이에요. 함께 가요!",
+        "createdAt": "2025-04-18",
+        "updatedAt": "2025-04-18",
+        "userId": "user03"
+    },
+    {
+        "travelMatePostId": 10,
+        "title": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫",
+        "content": "역사 전시 좋아하시는 분 함께해요. 20~30대면 좋겠어요. 일정표는 공유 드릴게요.",
+        "createdAt": "2025-04-19",
+        "updatedAt": "2025-04-19",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 11,
+        "title": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)",
+        "content": "역사적인 장소들을 함께 걸으며 이야기 나눌 수 있는 분 찾습니다. 여행 일정은 유동적이며, 서로 조율 가능해요.",
+        "createdAt": "2025-04-20",
+        "updatedAt": "2025-04-20",
+        "userId": "user03"
+    },
+    {
+        "travelMatePostId": 12,
+        "title": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!",
+        "content": "서울 박물관 중심으로 가볍게 다녀올 계획입니다. 사진 찍기 좋아하시는 분 환영해요!",
+        "createdAt": "2025-04-21",
+        "updatedAt": "2025-04-21",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 13,
+        "title": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~",
+        "content": "5월 첫 주에 여행 가실 분 구합니다. 일정표와 숙소는 제가 준비할게요. 비용은 더치페이입니다!",
+        "createdAt": "2025-04-22",
+        "updatedAt": "2025-04-22",
+        "userId": "user03"
+    },
+    {
+        "travelMatePostId": 14,
+        "title": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다",
+        "content": "박물관, 유적지 방문하며 하루 여행 같이하실 분! 교통은 제 차로 이동 가능합니다.",
+        "createdAt": "2025-04-23",
+        "updatedAt": "2025-04-23",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 15,
+        "title": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!",
+        "content": "서울 전통시장, 역사적 장소 같이 둘러볼 분을 찾습니다. 나이, 성별 무관!",
+        "createdAt": "2025-04-24",
+        "updatedAt": "2025-04-24",
+        "userId": "user01"
+    },
+    {
+        "travelMatePostId": 16,
+        "title": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)",
+        "content": "중년 여성분 동행 원합니다. 말수는 적지만 예의 있는 분이면 좋겠어요.",
+        "createdAt": "2025-04-25",
+        "updatedAt": "2025-04-25",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 17,
+        "title": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영",
+        "content": "한복 입고 사진 찍는 일정도 있어요. 역사에 관심 많은 분이면 누구나 환영입니다.",
+        "createdAt": "2025-04-26",
+        "updatedAt": "2025-04-26",
+        "userId": "user03"
+    },
+    {
+        "travelMatePostId": 18,
+        "title": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)",
+        "content": "역사 덕후 환영! 조선, 고려사 중심의 여행 계획이에요. 차분한 분위기로 함께 해요.",
+        "createdAt": "2025-04-27",
+        "updatedAt": "2025-04-27",
+        "userId": "user01"
+    },
+    {
+        "travelMatePostId": 19,
+        "title": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)",
+        "content": "1일 투어입니다. 민속촌, 박물관 등 테마에 맞춰 방문 예정이에요. 함께 가요!",
+        "createdAt": "2025-04-28",
+        "updatedAt": "2025-04-28",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 20,
+        "title": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫",
+        "content": "역사 전시 좋아하시는 분 함께해요. 20~30대면 좋겠어요. 일정표는 공유 드릴게요.",
+        "createdAt": "2025-04-29",
+        "updatedAt": "2025-04-29",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 21,
+        "title": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)",
+        "content": "역사적인 장소들을 함께 걸으며 이야기 나눌 수 있는 분 찾습니다. 여행 일정은 유동적이며, 서로 조율 가능해요.",
+        "createdAt": "2025-04-30",
+        "updatedAt": "2025-04-30",
+        "userId": "user04"
+    },
+    {
+        "travelMatePostId": 22,
+        "title": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!",
+        "content": "서울 박물관 중심으로 가볍게 다녀올 계획입니다. 사진 찍기 좋아하시는 분 환영해요!",
+        "createdAt": "2025-05-01",
+        "updatedAt": "2025-05-01",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 23,
+        "title": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~",
+        "content": "5월 첫 주에 여행 가실 분 구합니다. 일정표와 숙소는 제가 준비할게요. 비용은 더치페이입니다!",
+        "createdAt": "2025-05-02",
+        "updatedAt": "2025-05-02",
+        "userId": "hanhwa_tae"
+    },
+    {
+        "travelMatePostId": 24,
+        "title": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다",
+        "content": "박물관, 유적지 방문하며 하루 여행 같이하실 분! 교통은 제 차로 이동 가능합니다.",
+        "createdAt": "2025-05-03",
+        "updatedAt": "2025-05-03",
+        "userId": "user02"
+    },
+    {
+        "travelMatePostId": 25,
+        "title": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!",
+        "content": "서울 전통시장, 역사적 장소 같이 둘러볼 분을 찾습니다. 나이, 성별 무관!",
+        "createdAt": "2025-05-04",
+        "updatedAt": "2025-05-04",
+        "userId": "user01"
+    }
+]

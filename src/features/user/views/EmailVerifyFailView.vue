@@ -18,12 +18,12 @@ const gotoLogin = () => {
             <h1>이메일 인증 실패</h1>
         </div>
     <div class="contianer inner-container">
-            <img class="logo" src="@/assets/logo-black.svg" alt="logo">
-            <img class="fail-img" src="@/assets/email-fail.svg" alt="email-fail"/>
+            <img class="logo" src="@/assets/icons/logo-black.svg" alt="logo">
+            <img class="fail-img" src="@/assets/icons/email-fail.svg" alt="email-fail"/>
         <div class="signup-finish">
             <h2>
                 이메일 인증 실패
-            </h2>          
+            </h2>
         </div>
         <div class="signup-content">
             <p>이메일 인증이 실패하였습니다.</p>

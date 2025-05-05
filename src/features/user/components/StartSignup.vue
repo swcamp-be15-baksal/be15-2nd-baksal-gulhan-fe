@@ -21,7 +21,7 @@ function nextStep() {
     </div>
     <button class="signup" @click="nextStep">일반 회원가입</button>
     <button class="kakao-signup">
-      <img class="kakao-logo" src="@/assets/kakao-logo.svg" alt="kakao-logo" />
+      <img class="kakao-logo" src="@/assets/icons/kakao-logo.svg" alt="kakao-logo" />
       카카오 회원가입
     </button>
   </div>
