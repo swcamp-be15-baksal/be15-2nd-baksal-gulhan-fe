@@ -1,49 +1,60 @@
 import {defineStore} from 'pinia';
 import mockData from '@/features/cart/mock/items.json'
-export const useCartStore = defineStore('cart', {
-  state: () => ({
-    cartItems: mockData.items,
-    selectedItemIds: [],
-  }),
-  getters: {
-    // 선택된 아이템들의 총 금액 계산
-    totalPrice: (state) => {
-      return state.cartItems
-        .filter((item) => state.selectedItemIds.includes(item.id)) // 선택된 아이템들만 필터링
-        .reduce((total, item) => total + item.price * item.quantity, 0); // 선택된 아이템들의 금액 합산
-    },
-  },
-  actions: {
-    addItem(item) {
-      this.cartItems.push(item);
-    },
-    updateItemQuantity(id, quantity) {
-      const item = this.cartItems.find((item) => item.id === id);
-      if (item) {
-        item.quantity = quantity;
-      }
-    },
-    removeItem(id) {
-      this.cartItems = this.cartItems.filter((item) => item.id !== id);
-    },
-    clearCart() {
-      this.cartItems = [];
-    },
-    toggleSelection(id) {
-      if (this.selectedItemIds.includes(id)) {
-        this.selectedItemIds = this.selectedItemIds.filter(itemId => itemId !== id);
-      } else {
-        this.selectedItemIds.push(id);
-      }
-    },
-    toggleSelectAll() {
-      if (this.selectedItemIds.length === this.cartItems.length) {
-        // 이미 모든 아이템이 선택된 경우, 선택 해제
-        this.selectedItemIds = [];
-      } else {
-        // 모든 아이템 선택
-        this.selectedItemIds = this.cartItems.map(item => item.id);
-      }
-    },
-  },
-});
+import { computed, ref } from 'vue';
+export const useCartStore = defineStore('cart', () => {
+  const cartItems = ref(mockData.items)
+  const selectedItems = ref([])
+  // Getter: 선택된 아이템들의 총 금액 계산
+  const totalPrice = computed(() => {
+    return selectedItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
+  })
+
+  // Actions
+  const addItem = (item) => {
+    cartItems.value.push(item)
+  }
+
+  const updateItemQuantity = (id, quantity) => {
+    const item = cartItems.value.find((item) => item.id === id)
+    if (item) item.quantity = quantity
+  }
+
+  const removeItem = (id) => {
+    cartItems.value = cartItems.value.filter((item) => item.id !== id)
+    selectedItems.value = selectedItems.value.filter((item) => item.id !== id) // 선택목록에서도 제거
+  }
+
+  const clearCart = () => {
+    cartItems.value = []
+    selectedItems.value = []
+  }
+
+  const toggleSelection = (item) => {
+    const index = selectedItems.value.findIndex(selected => selected.id === item.id)
+    if (index !== -1) {
+      selectedItems.value.splice(index, 1)
+    } else {
+      selectedItems.value.push(item)
+    }
+  }
+
+  const toggleSelectAll = () => {
+    if (selectedItems.value.length === cartItems.value.length) {
+      selectedItems.value = []
+    } else {
+      selectedItems.value = [...cartItems.value]
+    }
+  }
+
+  return {
+    cartItems,
+    selectedItems,
+    totalPrice,
+    addItem,
+    updateItemQuantity,
+    removeItem,
+    clearCart,
+    toggleSelection,
+    toggleSelectAll
+  }
+})

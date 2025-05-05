@@ -1,35 +1,33 @@
 <script setup>
-// 부모로부터 item을 받음
-import { useCartStore } from '@/stores/cart.js';
+import { useCartStore } from '@/stores/cart.js'
+import { computed } from 'vue'
 
 const props = defineProps({
-  item: Object,
-  isSelected: Boolean
-});
+  item: Object
+})
+const cartStore = useCartStore()
 
+// id 기준으로 선택 여부 확인
+const isSelected = computed(() =>
+  cartStore.selectedItems.some((selectedItem) => selectedItem.id === props.item.id)
+)
 
-const cartStore = useCartStore();
-// 부모에게 수량 변경 알리기 위해 emit 정의
-const emit = defineEmits(['updateItemCount', 'updateSelected']);
-
-// 개별 아이템 선택 여부 업데이트
-function toggleSelection() {
-  emit('updateSelected', props.item.id);
+const toggleSelection = () => {
+  cartStore.toggleSelection(props.item)
 }
-// 수량 증가
-const increaseCount = () => {
-  emit('updateItemCount', props.item.id, props.item.quantity + 1);
-};
 
-// 수량 감소
+const increaseCount = () => {
+  cartStore.updateItemQuantity(props.item.id, props.item.quantity + 1)
+}
+
 const decreaseCount = () => {
   if (props.item.quantity > 1) {
-    emit('updateItemCount', props.item.id, props.item.quantity - 1);
+    cartStore.updateItemQuantity(props.item.id, props.item.quantity - 1)
   }
-};
+}
 
-function removeFromCart(itemId) {
-  cartStore.removeItem(itemId);
+const removeFromCart = () => {
+  cartStore.removeItem(props.item.id)
 }
 </script>
 
@@ -48,8 +46,7 @@ function removeFromCart(itemId) {
           @change="toggleSelection"
           class="item-checkbox"
         />
-        <button class="cancel-btn" @click="removeFromCart(props.item.id)">X</button>
-
+        <button class="cancel-btn" @click="removeFromCart">X</button>
       </div>
 
       <!-- 본문 내용 -->
@@ -58,7 +55,6 @@ function removeFromCart(itemId) {
         <div class="item-left">
           <div class="cart-item-image">
             <img :src="item.image" alt="상품이미지"/>
-
           </div>
           <div class="item-info">
             <div class="item-type">{{ item.type }}</div>
@@ -79,6 +75,7 @@ function removeFromCart(itemId) {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .cart-container {
@@ -148,10 +145,7 @@ function removeFromCart(itemId) {
   min-width: 0;
 }
 
-.item-id {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
+
 
 .item-info {
   display: flex;

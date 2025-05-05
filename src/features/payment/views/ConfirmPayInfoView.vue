@@ -1,23 +1,29 @@
 <script setup>
-
 import ConfirmPayInfo from '@/features/payment/components/ConfirmPayInfo.vue';
 import PayInfo from '@/features/payment/components/PayInfo.vue';
+import { useCartStore } from '@/stores/cart.js';
+import { onMounted, ref } from 'vue';
 
-const props = defineProps({
-  selectedItemIds:{
-    type: Array,
-    required: true,
+const cartStore = useCartStore();
+const orderItems = cartStore.selectedItems;
+
+const priceDetails = ref([]);
+onMounted(() => {
+  const storedPriceDetails = sessionStorage.getItem('priceDetails');
+  if (storedPriceDetails){
+    priceDetails.value = JSON.parse(storedPriceDetails);
   }
-})
+});
 </script>
 
 <template>
   <div class="container">
     <div class="left">
-      <ConfirmPayInfo :orderItems="selectedItemIds"/>
+      <!-- ConfirmPayInfo에 orderItems 전달 -->
+      <ConfirmPayInfo :orderItems="orderItems"/>
     </div>
     <div class="right">
-      <PayInfo />
+      <PayInfo :orderItems="orderItems" :priceDetails="priceDetails"/>
     </div>
   </div>
 </template>
@@ -39,7 +45,7 @@ const props = defineProps({
   width: 20rem;
   background-color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: 0 0 1rem rgba(0,0,0,0.05);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
