@@ -11,82 +11,26 @@ const menuList = [
 </script>
 
 <template>
-  <div class="container">
-    <div class="title">
-      <h1>마이페이지</h1>
+  <div class="container py-5 min-vh-100">
+    <div class="text-center mb-5">
+      <h1 class="h3 fw-bold">마이페이지</h1>
     </div>
-    <div class="user-info-box">
+
+    <div class="mb-4">
       <UserInfoItem />
     </div>
 
-    <div class="menu-box">
+    <div class="border rounded bg-white shadow-sm overflow-hidden">
       <router-link
         v-for="(menu, index) in menuList"
         :key="menu.to"
         :to="menu.to"
-        class="menu-item"
-        :class="{ 'no-border': index === menuList.length - 1}"
+        class="d-flex justify-content-between align-items-center px-4 py-4 text-decoration-none text-dark border-bottom"
+        :class="{ 'border-0': index === menuList.length - 1 }"
       >
-        {{ menu.label}}
-        <img class="chevron-right" src="../../../../assets/icons/chevron-right.svg" alt="chevron-right"/>
+        <span class="fw-bold fs-5">{{ menu.label }}</span>
+        <img src="@/assets/icons/chevron-right.svg" alt="chevron-right" width="24" height="24" class="ms-2" />
       </router-link>
     </div>
   </div>
 </template>
-
-<style scoped>
-.container {
-  padding: 40px 20px;
-  min-height: 100vh;
-
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.title h1 {
-  font-size: 1.75rem;
-  font-weight: bold;
-}
-
-.menu-box {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  overflow: hidden;
-}
-
-.menu-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.125rem;
-  font-weight: bold;
-  padding: 20px;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  outline: none;
-}
-
-.menu-item.no-border {
-  border-bottom: none;
-}
-
-.menu-item:hover {
-  background-color: #f0f0f0;
-}
-
-.chevron-right {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-</style>
-
-
