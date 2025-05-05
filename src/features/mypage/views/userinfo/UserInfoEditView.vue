@@ -7,6 +7,7 @@ import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
 import PasswordEditForm from '@/features/mypage/components/PasswordEditForm.vue';
 import UserInfoEditForm from '@/features/mypage/components/UserInfoEditForm.vue';
+import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -133,6 +134,7 @@ function searchPostcode() {
 </script>
 
 <template>
+  <MyPageHeader />
   <div class="d-flex flex-column align-items-center py-5">
     <UserInfoEditForm
       v-if="userInfo && userInfo.userId"
