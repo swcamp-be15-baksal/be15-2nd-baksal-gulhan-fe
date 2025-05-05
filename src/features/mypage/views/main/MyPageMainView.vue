@@ -3,11 +3,9 @@ import UserSummaryItem from '../../components/common/UserSummaryItem.vue';
 import { computed, watch } from 'vue';
 import { useUserStore } from '@/features/mypage/stores/user.js';
 import { useAuthStore } from '@/stores/auth.js';
-import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 const authStore = useAuthStore();
-const router = useRouter();
 
 watch(
   () => authStore.accessToken,

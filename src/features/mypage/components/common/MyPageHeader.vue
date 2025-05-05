@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import { ref } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
