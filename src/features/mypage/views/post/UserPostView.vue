@@ -37,9 +37,9 @@ const changeTab = (type) => {
 <template>
     <MyPageHeader />
     <div class="user-post-view">
-        <h2>{{ tab === 'post' ? '내가 쓴 동행글' : '내가 쓴 댓글' }}</h2>
+        <h2 class="text-center fw-bold fs-3 mb-5">{{ tab === 'post' ? '내가 쓴 동행글' : '내가 쓴 댓글' }}</h2>
 
-        <div class="tab-buttons">
+      <div class="tab-buttons">
             <button :class="{ active: tab === 'post' }" @click="changeTab('post')">게시글</button>
             <button :class="{ active: tab === 'comment' }" @click="changeTab('comment')">
                 댓글
@@ -57,13 +57,8 @@ const changeTab = (type) => {
 
 <style scoped>
 .user-post-view {
-    padding: 40px 80px;
-    background: #fdfbf5;
-}
 
-h2 {
-    text-align: center;
-    margin-bottom: 24px;
+    background: #fdfbf5;
 }
 
 .tab-buttons {

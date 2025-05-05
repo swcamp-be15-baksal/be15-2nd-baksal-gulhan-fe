@@ -59,8 +59,7 @@ function handleEdit() {
 
 <template>
   <MyPageHeader />
-  <div class="d-flex flex-column align-items-center py-5">
-    <h2 class="text-center fw-bold fs-3 mb-5">회원 정보 조회</h2>
+  <div class="d-flex flex-column align-items-center">
     <UserInfoForm
       :user-info="userInfo"
       :masked-info="maskedInfo"

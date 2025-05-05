@@ -28,8 +28,9 @@ const reviews = ref([
 </script>
 
 <template>
-    <MyPageHeader />
-    <div class="container">
-        <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
-    </div>
+  <MyPageHeader />
+  <div class="d-flex flex-column align-items-center">
+    <h2 class="text-center fw-bold fs-3 mb-5">내가 쓴 리뷰</h2>
+    <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
+  </div>
 </template>

@@ -10,6 +10,7 @@ const emit = defineEmits(['edit', 'delete']);
 </script>
 
 <template>
+  <h2 class="text-center fw-bold fs-3 mb-5">회원 정보 조회</h2>
   <div style="width: 440px;">
     <form class="d-flex flex-column gap-3 mb-5" style="width: 440px;">
       <input

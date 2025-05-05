@@ -135,7 +135,7 @@ function searchPostcode() {
 
 <template>
   <MyPageHeader />
-  <div class="d-flex flex-column align-items-center py-5">
+  <div class="d-flex flex-column align-items-center">
     <UserInfoEditForm
       v-if="userInfo && userInfo.userId"
       :userInfo="userInfo"
