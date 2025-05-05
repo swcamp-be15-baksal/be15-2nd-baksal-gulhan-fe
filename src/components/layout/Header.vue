@@ -8,7 +8,8 @@
                 <button class="icon-small" @click="navigate('cart')">
                     <img src="../../assets/icons/cart.svg" alt="cart" />
                 </button>
-                <button @click="navigate('login')">로그인</button>
+                <button @click="navigate('login')" v-if="!authStore.isAuthenticated">로그인</button>
+                <button @click="handleLogout" v-else>로그아웃</button>
                 <button @click="navigate('signup')">회원가입</button>
                 <button @click="navigate('mypage')">마이페이지</button>
             </div>
@@ -66,7 +67,7 @@
     cursor: pointer;
 }
 
-.user-menu img{
+.user-menu img {
     -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;
@@ -112,9 +113,24 @@
 </style>
 
 <script setup>
+import { logoutUser } from '@/features/user/api/user';
+import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const authStore = useAuthStore();
+
+const handleLogout = async () => {
+    try {
+        const accessToken = authStore.accessToken;
+        await logoutUser(accessToken);
+        authStore.clearAuth();
+        console.log('로그아웃!');
+        router.replace('/');
+    } catch (e) {
+        console.log(e);
+    }
+};
 
 function navigate(target) {
     switch (target) {
