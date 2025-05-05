@@ -3,6 +3,8 @@ import { ref, reactive, onMounted } from 'vue';
 import VerifyEmail from '../components/VerifyEmail.vue';
 import { Modal } from 'bootstrap';
 import { useRouter } from 'vue-router';
+import { findPassword, findPasswordEmailVerify } from '../api/user';
+import { useToast } from 'vue-toastification';
 
 const userInput = reactive({
     userId: null,
@@ -11,6 +13,7 @@ const userInput = reactive({
 });
 
 const router = useRouter();
+const toast = useToast();
 
 const modal = ref(null);
 const modalElement = ref(null);
@@ -19,8 +22,12 @@ const sendEmail = async () => {
     try {
         // id 찾기 이메일 요청하기
         console.log('이메일 전송 완료', userInput.email);
+        await findPassword({ userId: userInput.userId, email: userInput.email });
+        return true;
     } catch (e) {
+        toast.error(e.response.data.message);
         console.log('이메일 전송 에러', e);
+        return false;
     }
 };
 
@@ -34,9 +41,15 @@ const findFunction = async () => {
             userInput.verificationCode
         );
 
+        await findPasswordEmailVerify({
+            userId: userInput.userId,
+            email: userInput.email,
+            uuid: userInput.verificationCode,
+        });
+
         modal.value.show();
     } catch (e) {
-        console.log('임시 메일 전송 실패', e);
+        toast.error(e.response.data.message);
     }
 };
 

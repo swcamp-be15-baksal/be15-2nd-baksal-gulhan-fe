@@ -29,32 +29,35 @@ const isButtonDisabled = computed(() => resendTimer.value > 0 || !isEmailValid.v
 const isEmailValid = computed(() => userValid.validateEmail(userInput.value.email));
 
 const clickSendEmail = async () => {
-    // 인증번호 전송
     if (typeof props.sendEmail === 'function') {
-        await props.sendEmail();
+        const success = await props.sendEmail();
+        if (!success) return; // 실패 시 중단
+
         isSendEmail.value = true;
+
+        // 타이머 초기화
+        resendTimer.value = 15;
+        verifyTimer.value = 60 * 10;
+
+        // 기존 타이머 초기화 (선택적)
+        clearInterval(resendIntervalId.value);
+        clearInterval(verifyIntervalId.value);
+
+        // 타이머 시작
+        resendIntervalId.value = setInterval(() => {
+            resendTimer.value -= 1;
+            if (resendTimer.value <= 0) {
+                clearInterval(resendIntervalId.value);
+            }
+        }, 1000);
+
+        verifyIntervalId.value = setInterval(() => {
+            verifyTimer.value -= 1;
+            if (verifyTimer.value <= 0) {
+                clearInterval(verifyIntervalId.value);
+            }
+        }, 1000);
     }
-
-    // 타이머 초기화
-    resendTimer.value = 15; // 재전송
-    verifyTimer.value = 60 * 10; // 인증
-
-    // 타이머 시작
-    // 재전송
-    resendIntervalId.value = setInterval(() => {
-        resendTimer.value -= 1;
-        if (resendTimer.value <= 0) {
-            clearInterval(resendIntervalId.value);
-        }
-    }, 1000);
-
-    // 인증
-    verifyIntervalId.value = setInterval(() => {
-        verifyTimer.value -= 1;
-        if (verifyTimer.value <= 0) {
-            clearInterval(verifyIntervalId.value);
-        }
-    }, 1000);
 };
 
 const findFunction = async () => {

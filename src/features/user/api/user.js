@@ -35,5 +35,5 @@ export function findPassword(data) {
 }
 
 export function findPasswordEmailVerify(data) {
-    return api2.get('/users/find/password/verify', data);
+    return api2.post('/users/find/password/verify', data);
 }
