@@ -1,5 +1,5 @@
 <script setup>
-import UserInfoItem from '../../components/UserInfoItem.vue';
+import UserSummaryItem from '../../components/UserSummaryItem.vue';
 
 const menuList = [
   { label: '구매 내역', to: `/mypage/orderhistory` },
@@ -17,7 +17,7 @@ const menuList = [
     </div>
 
     <div class="mb-4">
-      <UserInfoItem />
+      <UserSummaryItem />
     </div>
 
     <div class="border rounded bg-white shadow-sm overflow-hidden">
