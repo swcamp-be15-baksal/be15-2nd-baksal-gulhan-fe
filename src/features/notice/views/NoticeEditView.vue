@@ -1,8 +1,10 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import notices from '@/features/notice/mock/notice.json'
 import QuillEditor from '@/components/common/QuillEditor.vue'
+import { updateNotice } from '@/features/notice/api/notice'
+import { useAuthStore } from '@/stores/auth'
+import { fetchNoticeDetail } from '@/features/notice/api/notice'
 
 const router = useRouter()
 const route = useRoute()
@@ -10,12 +12,16 @@ const noticeId = Number(route.params.noticeId)
 
 const title = ref('')
 const content = ref('')
+const authStore = useAuthStore()
 
-onMounted(() => {
-  const target = notices.find(n => n.noticeId === noticeId)
-  if (target) {
-    title.value = target.title
-    content.value = target.content
+onMounted(async () => {
+  try {
+    const res = await fetchNoticeDetail(noticeId)
+    title.value = res.noticeDTO.title
+    content.value = res.noticeDTO.content
+  } catch (e) {
+    alert('공지사항 데이터를 불러오지 못했습니다.', e)
+    router.back()
   }
 })
 
@@ -23,9 +29,21 @@ const onCancel = () => {
   router.back()
 }
 
-const onSubmit = () => {
-  alert('수정 완료됨 (실제 저장은 안 됨)')
-  router.push('/notice')
+const onSubmit = async () => {
+  try {
+    await updateNotice(
+      noticeId,
+      {
+        title: title.value,
+        content: content.value
+      },
+      authStore.accessToken
+    )
+    alert('수정 완료!')
+    router.push('/notice')
+  } catch (e) {
+    alert('수정 실패! 다시 시도해 주세요.',e)
+  }
 }
 </script>
 
