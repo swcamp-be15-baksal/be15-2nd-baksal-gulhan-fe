@@ -4,6 +4,7 @@ import PaginationBar from '@/components/common/PaginationBar.vue';
 import { useRoute, useRouter } from 'vue-router';
 import ItemCard from '@/components/common/ItemCard.vue';
 import FilterHeader from '@/features/mypage/components/FilterHeader.vue';
+import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
 
 import likes from '@/features/mypage/mock/likes.json';
 import packages from '@/features/package/mock/packages.json';
@@ -82,6 +83,7 @@ watch(selectedFilter, () => {
 </script>
 
 <template>
+    <MyPageHeader />
     <div class="wrapper">
         <FilterHeader @update:filter="selectedFilter = $event" />
         <div class="grid">
