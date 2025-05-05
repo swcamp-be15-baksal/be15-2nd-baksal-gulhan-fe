@@ -2,11 +2,15 @@
 import { ref, reactive } from 'vue';
 import ShowUserId from '../components/ShowUserId.vue';
 import VerifyEmail from '../components/VerifyEmail.vue';
+import { findId, findIdEmailVerify } from '../api/user';
+import { useToast } from 'vue-toastification';
 
 const userInput = reactive({
     email: null,
     verificationCode: null,
 });
+
+const toast = useToast();
 
 const maskedId = ref(null);
 
@@ -14,7 +18,10 @@ const sendEmail = async () => {
     try {
         // id 찾기 이메일 요청하기
         console.log('아이디 찾기 이메일 전송 완료', userInput.email);
+        const response = await findId({ email: userInput.email });
+        console.log(response);
     } catch (e) {
+        toast.error(e.response);
         console.log('이메일 전송 에러', e);
     }
 };
@@ -23,15 +30,16 @@ const findFunction = async () => {
     try {
         userInput.verificationCode = userInput.verificationCode.trim();
         if (userInput.verificationCode === null || userInput.verificationCode === '') {
-            throw Error('인증번호가 유효하지 않습니다.');
+            toast.error('인증번호가 유효하지 않습니다.');
+            return;
         }
 
-        // TODO response 값으로 채워주기
-        maskedId.value = 'toki****';
-        // 인증 요청하기
-        console.log('인증 요청 완료', userInput.email, userInput.verificationCode);
+        const response = await findIdEmailVerify({
+            uuid: userInput.verificationCode,
+        });
+        maskedId.value = response.data.data.maskedUserId;
     } catch (e) {
-        alert('인증오류');
+        toast.error(e.response.data.message);
     }
 };
 </script>

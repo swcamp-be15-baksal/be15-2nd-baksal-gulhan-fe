@@ -21,3 +21,19 @@ export function logoutUser(accessToken) {
 export function refreshUserToken() {
     return api2.post('/auth/token/reissue');
 }
+
+export function findId(data) {
+    return api2.post('/users/find/id', data);
+}
+
+export function findIdEmailVerify(data) {
+    return api2.get('/users/find/id/verify', { params: data });
+}
+
+export function findPassword(data) {
+    return api2.post('/users/find/password', data);
+}
+
+export function findPasswordEmailVerify(data) {
+    return api2.get('/users/find/password/verify', data);
+}
