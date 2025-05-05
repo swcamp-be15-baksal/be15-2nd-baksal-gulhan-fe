@@ -1,5 +1,5 @@
 <script setup>
-import UserSummaryItem from '../../components/UserSummaryItem.vue';
+import UserSummaryItem from '../../components/common/UserSummaryItem.vue';
 
 const menuList = [
   { label: '구매 내역', to: `/mypage/orderhistory` },

@@ -2,9 +2,9 @@
 import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/features/mypage/stores/user';
-import UserInfoForm from '@/features/mypage/components/UserInfoForm.vue';
+import UserInfoForm from '@/features/mypage/components/form/userinfo/UserInfoForm.vue';
 import { useAuthStore } from '@/stores/auth.js';
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 
 const router = useRouter();

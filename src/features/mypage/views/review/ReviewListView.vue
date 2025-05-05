@@ -1,8 +1,8 @@
 <script setup>
-import ReviewCard from '@/features/mypage/components/ReviewCard.vue';
+import ReviewCard from '@/features/mypage/components/common/ReviewCard.vue';
 import { ref } from 'vue';
 
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 const reviews = ref([
     {

@@ -3,9 +3,9 @@ import { ref, computed } from 'vue';
 import posts from '@/features/travelmatepost/mock/tmp.json';
 import comments from '@/features/travelmatepost/mock/comment.json';
 import { useUserStore } from '@/features/mypage/stores/user';
-import UserPostTable from '@/features/mypage/components/UserPostTable.vue';
+import UserPostTable from '@/features/mypage/components/list/post/UserPostTable.vue';
 import PaginationBar from '@/components/common/PaginationBar.vue';
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 const tab = ref('post');
 const currentPage = ref(1);

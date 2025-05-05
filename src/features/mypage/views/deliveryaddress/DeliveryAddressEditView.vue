@@ -1,6 +1,6 @@
 <script setup>
 
-import DeliveryAddressForm from '@/features/mypage/components/DeliveryAddressForm.vue';
+import DeliveryAddressForm from '@/features/mypage/components/form/delivery/DeliveryAddressForm.vue';
 import { onMounted, ref } from 'vue';
 
 const initialData = ref(null);

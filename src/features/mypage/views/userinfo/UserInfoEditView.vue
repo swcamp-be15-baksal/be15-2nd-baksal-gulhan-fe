@@ -5,9 +5,9 @@ import { useAuthStore } from '@/stores/auth.js';
 import { updateUserInfo } from '@/features/mypage/api.js';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
-import PasswordEditForm from '@/features/mypage/components/PasswordEditForm.vue';
-import UserInfoEditForm from '@/features/mypage/components/UserInfoEditForm.vue';
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import PasswordEditForm from '@/features/mypage/components/form/userinfo/PasswordEditForm.vue';
+import UserInfoEditForm from '@/features/mypage/components/form/userinfo/UserInfoEditForm.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();

@@ -33,7 +33,7 @@ function searchPostcode() {
         <input type="text" class="form-control pe-5" v-model="userInfo.phone"
                @focus="isFocused.phone = true" @blur="isFocused.phone = false"
                style="height: 56px; padding: 8px; border: 1px solid #3E4042;" />
-        <img src="@/assets/icons/edit2.svg" alt="edit"
+        <img src="../../../../../assets/icons/edit2.svg" alt="edit"
              class="position-absolute top-50 end-0 translate-middle-y me-3"
              style="width: 20px; height: 20px; pointer-events: none;"
              :style="{ visibility: isFocused.phone ? 'hidden' : 'visible' }" />
@@ -58,7 +58,7 @@ function searchPostcode() {
         <input type="text" class="form-control pe-5" v-model="userInfo.detailAddress" placeholder="상세 주소"
                @focus="isFocused.address = true" @blur="isFocused.address = false"
                style="height: 56px; padding: 8px; border: 1px solid #3E4042;" />
-        <img src="@/assets/icons/edit2.svg" alt="edit"
+        <img src="../../../../../assets/icons/edit2.svg" alt="edit"
              class="position-absolute top-50 translate-middle-y"
              style="right: 16px; width: 20px; height: 20px; pointer-events: none;"
              :style="{ visibility: isFocused.address ? 'hidden' : 'visible' }" />
