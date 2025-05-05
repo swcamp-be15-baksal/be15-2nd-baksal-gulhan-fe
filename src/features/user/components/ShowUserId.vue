@@ -17,8 +17,8 @@ const gotoLogin = () => {
 <template>
     <div class="container">
         <div class="contianer inner-container">
-            <img class="logo" src="@/assets/logo-black.svg" alt="logo" />
-            <img class="checked-img" src="@/assets/checked.svg" alt="checked" />
+            <img class="logo" src="@/assets/icons/logo-black.svg" alt="logo" />
+            <img class="checked-img" src="@/assets/icons/checked.svg" alt="checked" />
             <div class="signup-finish">
                 <h2>아이디 찾기 완료</h2>
             </div>

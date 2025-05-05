@@ -1,0 +1,712 @@
+[
+    {
+        "commentId": 1,
+        "content": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-25T00:00:00",
+        "updatedAt": "2025-04-21T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 1,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 2,
+        "content": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-11T00:00:00",
+        "updatedAt": "2025-04-16T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 1,
+        "parentCommentId": 1
+    },
+    {
+        "commentId": 3,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-30T00:00:00",
+        "updatedAt": "2025-04-16T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 2,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 4,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 대댓글입니다.",
+        "createdAt": "2025-04-10T00:00:00",
+        "updatedAt": "2025-04-24T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 2,
+        "parentCommentId": 3
+    },
+    {
+        "commentId": 5,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-13T00:00:00",
+        "updatedAt": "2025-04-16T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 2,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 6,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-11T00:00:00",
+        "updatedAt": "2025-04-23T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 2,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 7,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-16T00:00:00",
+        "updatedAt": "2025-04-15T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 3,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 8,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-22T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 3,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 9,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 대댓글입니다.",
+        "createdAt": "2025-04-15T00:00:00",
+        "updatedAt": "2025-04-17T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 3,
+        "parentCommentId": 8
+    },
+    {
+        "commentId": 10,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-15T00:00:00",
+        "updatedAt": "2025-04-15T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 3,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 11,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 대댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 3,
+        "parentCommentId": 10
+    },
+    {
+        "commentId": 12,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-26T00:00:00",
+        "updatedAt": "2025-04-28T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 4,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 13,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-15T00:00:00",
+        "updatedAt": "2025-04-24T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 4,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 14,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 대댓글입니다.",
+        "createdAt": "2025-04-13T00:00:00",
+        "updatedAt": "2025-04-14T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 4,
+        "parentCommentId": 13
+    },
+    {
+        "commentId": 15,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-24T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 4,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 16,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 댓글입니다.",
+        "createdAt": "2025-04-10T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 5,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 17,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 댓글입니다.",
+        "createdAt": "2025-04-22T00:00:00",
+        "updatedAt": "2025-04-24T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 5,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 18,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 댓글입니다.",
+        "createdAt": "2025-04-12T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 5,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 19,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 댓글입니다.",
+        "createdAt": "2025-04-26T00:00:00",
+        "updatedAt": "2025-04-17T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 6,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 20,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-12T00:00:00",
+        "updatedAt": "2025-04-28T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 6,
+        "parentCommentId": 19
+    },
+    {
+        "commentId": 21,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 댓글입니다.",
+        "createdAt": "2025-04-17T00:00:00",
+        "updatedAt": "2025-04-20T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 6,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 22,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 댓글입니다.",
+        "createdAt": "2025-04-17T00:00:00",
+        "updatedAt": "2025-04-26T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 6,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 23,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-10T00:00:00",
+        "updatedAt": "2025-04-25T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 6,
+        "parentCommentId": 22
+    },
+    {
+        "commentId": 24,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 댓글입니다.",
+        "createdAt": "2025-04-13T00:00:00",
+        "updatedAt": "2025-04-14T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 7,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 25,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-25T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 8,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 26,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-13T00:00:00",
+        "updatedAt": "2025-04-23T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 8,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 27,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-19T00:00:00",
+        "updatedAt": "2025-04-21T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 8,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 28,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-27T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 8,
+        "parentCommentId": 27
+    },
+    {
+        "commentId": 29,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 댓글입니다.",
+        "createdAt": "2025-04-24T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 9,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 30,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-29T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 10,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 31,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 대댓글입니다.",
+        "createdAt": "2025-04-18T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 10,
+        "parentCommentId": 30
+    },
+    {
+        "commentId": 32,
+        "content": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-26T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 11,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 33,
+        "content": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-30T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 11,
+        "parentCommentId": 32
+    },
+    {
+        "commentId": 34,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-21T00:00:00",
+        "updatedAt": "2025-04-28T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 12,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 35,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-14T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 12,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 36,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-10T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 12,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 37,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-22T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 13,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 38,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-27T00:00:00",
+        "updatedAt": "2025-04-15T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 13,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 39,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-29T00:00:00",
+        "updatedAt": "2025-04-27T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 14,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 40,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 대댓글입니다.",
+        "createdAt": "2025-04-11T00:00:00",
+        "updatedAt": "2025-04-24T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 14,
+        "parentCommentId": 39
+    },
+    {
+        "commentId": 41,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-28T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 14,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 42,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 대댓글입니다.",
+        "createdAt": "2025-04-29T00:00:00",
+        "updatedAt": "2025-04-24T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 14,
+        "parentCommentId": 41
+    },
+    {
+        "commentId": 43,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 댓글입니다.",
+        "createdAt": "2025-04-29T00:00:00",
+        "updatedAt": "2025-04-30T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 15,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 44,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 댓글입니다.",
+        "createdAt": "2025-04-25T00:00:00",
+        "updatedAt": "2025-04-22T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 16,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 45,
+        "content": "유적지+인솔자 투어 동행 구인 (중년/조용한 분위기 좋아요)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-16T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 16,
+        "parentCommentId": 44
+    },
+    {
+        "commentId": 46,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 댓글입니다.",
+        "createdAt": "2025-04-11T00:00:00",
+        "updatedAt": "2025-04-20T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 17,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 47,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 대댓글입니다.",
+        "createdAt": "2025-04-19T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 17,
+        "parentCommentId": 46
+    },
+    {
+        "commentId": 48,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 댓글입니다.",
+        "createdAt": "2025-04-21T00:00:00",
+        "updatedAt": "2025-04-15T00:00:00",
+        "userNo": 5,
+        "userId": "hanhwa_tae",
+        "travelMatePostId": 17,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 49,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 대댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 17,
+        "parentCommentId": 48
+    },
+    {
+        "commentId": 50,
+        "content": "문화유산 좋아하시는 분, 조용하고 매너 있는 분 환영에 대한 댓글입니다.",
+        "createdAt": "2025-04-29T00:00:00",
+        "updatedAt": "2025-04-11T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 17,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 51,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-22T00:00:00",
+        "updatedAt": "2025-04-22T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 18,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 52,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-18T00:00:00",
+        "updatedAt": "2025-04-26T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 18,
+        "parentCommentId": 51
+    },
+    {
+        "commentId": 53,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-13T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 18,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 54,
+        "content": "혼자보단 둘이! 역사 테마 패키지 동행 찾아요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-14T00:00:00",
+        "updatedAt": "2025-04-10T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 18,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 55,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-25T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 19,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 56,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-25T00:00:00",
+        "updatedAt": "2025-04-12T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 19,
+        "parentCommentId": 55
+    },
+    {
+        "commentId": 57,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 댓글입니다.",
+        "createdAt": "2025-04-23T00:00:00",
+        "updatedAt": "2025-04-28T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 19,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 58,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-26T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 19,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 59,
+        "content": "조선의 숨결 따라 떠날 분 계신가요? (민속촌+박물관 투어)에 대한 대댓글입니다.",
+        "createdAt": "2025-04-21T00:00:00",
+        "updatedAt": "2025-04-30T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 19,
+        "parentCommentId": 58
+    },
+    {
+        "commentId": 60,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 댓글입니다.",
+        "createdAt": "2025-04-16T00:00:00",
+        "updatedAt": "2025-04-17T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 20,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 61,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 대댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-13T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 20,
+        "parentCommentId": 60
+    },
+    {
+        "commentId": 62,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 댓글입니다.",
+        "createdAt": "2025-04-16T00:00:00",
+        "updatedAt": "2025-04-30T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 20,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 63,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 대댓글입니다.",
+        "createdAt": "2025-04-28T00:00:00",
+        "updatedAt": "2025-04-29T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 20,
+        "parentCommentId": 62
+    },
+    {
+        "commentId": 64,
+        "content": "박물관 덕후 모여라! 역사 여행 함께 떠나요 🎫에 대한 댓글입니다.",
+        "createdAt": "2025-04-17T00:00:00",
+        "updatedAt": "2025-04-11T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 20,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 65,
+        "content": "역사 좋아하는 또래 친구와 여행하고 싶어요 :)에 대한 댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-27T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 21,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 66,
+        "content": "📸사진도 찍고 역사도 느끼는 여행 같이 해요!에 대한 댓글입니다.",
+        "createdAt": "2025-04-11T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 1,
+        "userId": "user01",
+        "travelMatePostId": 22,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 67,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 댓글입니다.",
+        "createdAt": "2025-04-17T00:00:00",
+        "updatedAt": "2025-04-29T00:00:00",
+        "userNo": 3,
+        "userId": "user03",
+        "travelMatePostId": 23,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 68,
+        "content": "[5월 초/서울] 역사 여행 패키지, 감성 동행 구해요~에 대한 대댓글입니다.",
+        "createdAt": "2025-04-18T00:00:00",
+        "updatedAt": "2025-04-19T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 23,
+        "parentCommentId": 67
+    },
+    {
+        "commentId": 69,
+        "content": "역사 좋아하시는 분! 박물관+유적지 여행 동행 구합니다에 대한 댓글입니다.",
+        "createdAt": "2025-04-18T00:00:00",
+        "updatedAt": "2025-04-30T00:00:00",
+        "userNo": 2,
+        "userId": "user02",
+        "travelMatePostId": 24,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 70,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 댓글입니다.",
+        "createdAt": "2025-04-26T00:00:00",
+        "updatedAt": "2025-04-15T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 25,
+        "parentCommentId": null
+    },
+    {
+        "commentId": 71,
+        "content": "[서울 출발] 전통과 역사를 함께할 동행 구합니다!에 대한 대댓글입니다.",
+        "createdAt": "2025-04-20T00:00:00",
+        "updatedAt": "2025-04-18T00:00:00",
+        "userNo": 4,
+        "userId": "user04",
+        "travelMatePostId": 25,
+        "parentCommentId": 70
+    }
+]
