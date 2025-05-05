@@ -28,9 +28,5 @@ onMounted(() => {
     <DetailReviewTab
         v-if="packagesData"
         :detail="packagesData.detail"
-        :reviewCount="packagesData.reviewCount">
-        <template #review>
-            <ReviewItem />
-        </template>
-    </DetailReviewTab>
+        :reviewCount="packagesData.reviewCount" />
 </template>
