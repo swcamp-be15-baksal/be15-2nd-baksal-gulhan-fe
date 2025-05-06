@@ -25,7 +25,7 @@ onMounted(async () => {
 })
 
 const isMyPost = computed(() => {
-  return post.value && authStore.userNo === post.value.userNo
+  return post.value && authStore.userId === post.value.userId
 })
 </script>
 
@@ -33,7 +33,7 @@ const isMyPost = computed(() => {
   <div class="tmp-detail-page">
     <TmpDetailContent v-if="post" :post="post" :is-my-post="isMyPost" />
     <TmpCommentList ref="commentListRef" :post-id="postId" />
-    <TmpCommentForm :post-id="postId" :on-refresh="commentListRef?.fetchCommentData" />
+    <TmpCommentForm :post-id="postId" @submit="commentListRef.fetchCommentData()" />
     <div class="button-group">
       <button class="back-btn" @click="router.push('/board')">목록으로</button>
       <RouterLink v-if="authStore.isAuthenticated" to="/board/write" class="write-btn">글쓰기</RouterLink>

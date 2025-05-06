@@ -33,6 +33,7 @@ const onDelete = async () => {
     console.error(err)
   }
 }
+
 </script>
 
 <template>

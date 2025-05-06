@@ -1,14 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth'
-import { createComment } from '@/features/travelmatepost/api/comment.js'
+import { createComment } from '@/features/travelmatepost/api/comment.js';
 
 const props = defineProps({
   postId: Number,
-  parentCommentId: Number, // optional
+  parentCommentId: Number,
 })
 
-const emit = defineEmits(['submitted', 'cancel'])
+const emit = defineEmits(['submit', 'cancel'])
 
 const authStore = useAuthStore()
 const content = ref('')
@@ -25,7 +25,7 @@ const onSubmit = async () => {
       parentCommentId: props.parentCommentId || null,
     })
     content.value = ''
-    emit('submitted')
+    emit('submit')
   } catch (err) {
     console.error('댓글 등록 실패:', err)
   }

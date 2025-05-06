@@ -13,7 +13,6 @@ const comments = ref([])
 const activeDropdownId = ref(null)
 const showReplyForm = ref(null)
 const editingCommentId = ref(null)
-const replyContent = ref('')
 const editContent = ref('')
 
 const fetchCommentData = async () => {
@@ -25,7 +24,19 @@ const fetchCommentData = async () => {
   }
 }
 
+function formatDate(ts) {
+  if (!ts) return '';
+  const date = new Date(ts);
+  const isoString = date.toISOString().split('.')[0]; // "2025-05-06T06:30:21"
+  const [day, time] = isoString.split('T');
+  return `${day} ${time}`;
+}
+
 onMounted(fetchCommentData)
+
+defineExpose({
+  fetchCommentData
+})
 
 const filteredComments = computed(() =>
   comments.value.filter((c) => c.travelMatePostId === travelMatePostId)
@@ -39,8 +50,8 @@ const getChildComments = (parentId) => {
   return filteredComments.value.filter((c) => c.parentCommentId === parentId)
 }
 
-const isMyComment = (commentUserNo) => {
-  return commentUserNo === authStore.userNo
+const isMyComment = (commentUserId) => {
+  return commentUserId === authStore.userId
 }
 
 const toggleDropdown = (commentId) => {
@@ -64,8 +75,8 @@ const onEditSubmit = async (commentId) => {
     await fetchCommentData()
     editingCommentId.value = null
     editContent.value = ''
-  } catch (err) {
-    alert('댓글 수정 실패')
+  } catch (e) {
+    alert('댓글 수정 실패',e)
   }
 }
 
@@ -74,8 +85,8 @@ const onDelete = async (commentId) => {
     try {
       await deleteComment(commentId, authStore.accessToken)
       await fetchCommentData()
-    } catch (err) {
-      alert('댓글 삭제 실패')
+    } catch (e) {
+      alert('댓글 삭제 실패',e)
     }
     activeDropdownId.value = null
   }
@@ -103,13 +114,11 @@ const onReplyCancel = () => {
       <div class="comment-header">
         <div class="left"><strong>{{ comment.userId }}</strong></div>
         <div class="right">
-          <span class="date">{{ comment.createdAt }}</span>
+          <span class="date">{{ formatDate(comment.createdAt) }}</span>
           <button class="reply-button" @click="onReplyClick(comment.commentId)">답글쓰기</button>
-        <!--   v-if="isMyComment(comment.userNo)"        -->
-          <div class="menu-container">
+          <div v-if="isMyComment(comment.userId)" class="menu-container">
             <span class="menu-btn" @click="toggleDropdown(comment.commentId)">⋯</span>
-            <!-- v-if="activeDropdownId === comment.commentId"           -->
-            <div class="dropdown-menu">
+            <div v-if="activeDropdownId === comment.commentId" class="dropdown-menu">
               <button @click="onEditClick(comment)">수정</button>
               <button @click="onDelete(comment.commentId)">삭제</button>
             </div>
@@ -134,8 +143,8 @@ const onReplyCancel = () => {
         <div class="comment-header">
           <div class="left"><strong>{{ child.userId }}</strong></div>
           <div class="right">
-            <span class="date">{{ child.createdAt }}</span>
-            <div v-if="isMyComment(child.userNo)" class="menu-container">
+            <span class="date">{{ formatDate(child.createdAt) }}</span>
+            <div v-if="isMyComment(child.userId)" class="menu-container">
               <span class="menu-btn" @click="toggleDropdown(child.commentId)">⋯</span>
               <div v-if="activeDropdownId === child.commentId" class="dropdown-menu">
                 <button @click="onEditClick(child)">수정</button>
@@ -159,7 +168,7 @@ const onReplyCancel = () => {
         <TmpCommentForm
           :post-id="travelMatePostId"
           :parent-comment-id="comment.commentId"
-          @submitted="fetchCommentData; onReplyCancel()"
+          @submit="fetchCommentData(); onReplyCancel()"
         />
         <button class="cancel-btn" @click="onReplyCancel">종료</button>
       </div>
