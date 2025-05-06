@@ -44,7 +44,7 @@ const goBack = () => router.push('/notice')
 const goToWrite = () => router.push('/notice/write')
 
 // 관리자 여부 확인하는 코드 ( 잘 모르겠음.. )
-const isAdmin = computed(() => authStore.user?.rankId === 1)
+const isAdmin = authStore.userRank === 'SLAVE'
 </script>
 
 <template>
