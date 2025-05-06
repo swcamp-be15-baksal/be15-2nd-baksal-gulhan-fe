@@ -2,6 +2,15 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
+import DropDown from '@/features/goods/components/DropDown.vue';
+
+const props = defineProps({
+    sort: {
+        type: String,
+        default: '가나다순',
+    },
+});
+
 function handleSearch(keyword) {
     console.log('검색어', keyword);
     // fetch(`/s1/goods/list?title={keyword}`)
@@ -65,7 +74,7 @@ const handleWriteGoods = () => {
             </div>
             <div class="d-flex" style="gap: 16px">
                 <SearchBar placeholder="원하는 기념품을 검색해보세요!" @search="handleSearch" />
-                <button class="sort">가나다순순</button>
+                <DropDown :sort="sort" @update:sort="handleSortChange" />
             </div>
         </div>
     </div>

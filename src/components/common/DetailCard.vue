@@ -64,8 +64,7 @@ function formatDate(ts) {
                 </div>
                 <div class="price">{{ data.price.toLocaleString() }}원</div>
                 <div class="buy-button">
-                    <button style="background-color: #2c2c2c">장바구니 담기</button>
-                    <button style="background-color: #e57575">결제하기</button>
+                    <button style="background-color: #e57575">장바구니 담기</button>
                 </div>
             </div>
         </div>

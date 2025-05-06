@@ -1,7 +1,23 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { nextTick } from 'vue';
+import DropDown from '@/features/package/components/DropDown.vue';
 import { ref } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
+
+const props = defineProps({
+    sort: {
+        type: String,
+        default: '시작일 빠른순',
+    },
+});
+
+const emit = defineEmits(['update:sort']);
+
+function handleSortChange(newSort) {
+    emit('update:sort'.newSort);
+}
+
 function handleSearch(keyword) {
     console.log('검색어', keyword);
     // fetch(`/s1/packages/list?title={keyword}`)
@@ -51,9 +67,9 @@ const handleWritePackage = () => {
                     날짜 선택하기
                 </button>
             </div>
-            <div class="d-flex" style="gap: 16px">
+            <div class="d-flex" style="gap: 16px; position: relative">
                 <SearchBar placeholder="원하는 패키지를 검색해보세요!" @search="handleSearch" />
-                <button class="sort">시작일 빠른순</button>
+                <DropDown :sort="sort" @update:sort="handleSortChange" />
             </div>
         </div>
     </div>
@@ -80,15 +96,5 @@ const handleWritePackage = () => {
 .filter-button.active {
     font-weight: 700;
     border-bottom: 4px solid #000000;
-}
-
-.sort {
-    height: 48px;
-    width: 100px;
-    word-break: keep-all;
-    border: 1px solid #cac4d0;
-    border-radius: 10px;
-    background-color: #fff;
-    line-height: 1;
 }
 </style>

@@ -5,6 +5,23 @@ import goods from '@/features/goods/mock/goods.json';
 import PaginationBar from '@/components/common/PaginationBar.vue';
 import { useRoute, useRouter } from 'vue-router';
 
+const props = defineProps({
+    sort: {
+        type: String,
+        default: '가나다순',
+    },
+});
+
+// const sortedPackages = computed(() => {
+//     if (props.sort === '좋아요순') {
+//         return
+//     } else if (props.sort === '리뷰순') {
+
+//     } else {
+
+//     }
+// });
+
 const route = useRoute();
 const router = useRouter();
 
