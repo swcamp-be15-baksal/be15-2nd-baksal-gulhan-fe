@@ -2,20 +2,40 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import QuillEditor from '@/components/common/QuillEditor.vue'
+import { useAuthStore } from '@/stores/auth'
+import { createNotice } from '@/features/notice/api/notice'
 
 const router = useRouter()
 const title = ref('')
 const content = ref('')
 
+const authStore = useAuthStore()
+
 const onCancel = () => {
   router.back()
 }
 
-const onSubmit = () => {
-  alert('등록 완료 (실제 저장은 안 됨)')
-  console.log('제목:', title.value)
-  console.log('내용:', content.value)
-  router.push('/notice')
+const onSubmit = async () => {
+  if (!title.value.trim() || !content.value.trim()) {
+    alert('제목과 내용을 모두 입력해주세요.')
+    return
+  }
+
+  try {
+    const accessToken = authStore.accessToken
+    const payload = {
+      title: title.value,
+      content: content.value,
+    }
+
+    await createNotice(accessToken, payload)
+
+    alert('등록 완료')
+    router.push('/notice')
+  } catch (err) {
+    console.error(err)
+    alert('공지사항 등록에 실패했습니다.')
+  }
 }
 </script>
 
@@ -25,17 +45,13 @@ const onSubmit = () => {
       <h2>공지사항</h2>
     </div>
     <div class="editor-page">
-      <!-- 제목 입력 -->
       <input
         v-model="title"
         type="text"
         placeholder="제목을 입력하세요."
         class="title-input"
       />
-
-      <!-- 공통 에디터 -->
       <QuillEditor v-model="content" />
-
       <div class="button-wrapper">
         <button class="cancel-btn" @click="onCancel">취소</button>
         <button class="submit-btn" @click="onSubmit">등록</button>
@@ -92,13 +108,13 @@ const onSubmit = () => {
 }
 
 .cancel-btn {
-  background-color: #E57575;
+  background-color: #e57575;
   color: white;
   margin-right: 10px;
 }
 
 .submit-btn {
-  background-color: #75A9FF;
+  background-color: #75a9ff;
   color: white;
 }
 
