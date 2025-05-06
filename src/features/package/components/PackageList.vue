@@ -9,7 +9,7 @@ import PaginationBar from '@/components/common/PaginationBar.vue';
 
 const props = defineProps({
     sort: String,
-    area: String,
+    area: Object,
     date: Object,
     keyword: String,
 });
@@ -44,15 +44,21 @@ async function loadPackages() {
     const mappedSort = mapSortKeyword(props.sort);
     if (mappedSort) params.sort = mappedSort;
 
-    if (props.area?.child) {
-        params.area = props.area.child;
+    if (props.area?.child && props.area?.parent) {
+        const fullArea = `${props.area.parent} ${props.area.child}`;
+        params.area = fullArea;
+
+        console.log(params.area);
+        console.log(fullArea);
     }
 
-    if (props.date?.startDate)
+    if (props.date?.startDate && dayjs(props.date.startDate).isValid()) {
         params.startDate = dayjs(props.date.startDate).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+    }
 
-    if (props.date?.endDate)
+    if (props.date?.endDate && dayjs(props.date.endDate).isValid()) {
         params.endDate = dayjs(props.date.endDate).endOf('day').format('YYYY-MM-DD HH:mm:ss');
+    }
 
     if (props.keyword) {
         params.title = props.keyword;

@@ -10,12 +10,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+    sort: {
+        type: String,
+        default: '가나다순',
+    },
+});
 
 const emit = defineEmits(['update:sort']);
-const show = ref(false);
 
-const selectedSort = ref('가나다순');
+const show = ref(false);
+const selectedSort = ref(props.sort);
+
+watch(
+    () => props.sort,
+    (newVal) => {
+        selectedSort.value = newVal;
+    }
+);
 
 function selectSort(label) {
     selectedSort.value = label;

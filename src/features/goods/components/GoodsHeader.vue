@@ -1,29 +1,38 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ref, watch } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
 import DropDown from '@/features/goods/components/DropDown.vue';
 
 const props = defineProps({
-    sort: {
-        type: String,
-        default: '가나다순',
-    },
+    sort: String,
+    category: String,
+    keyword: String,
 });
 
-function handleSearch(keyword) {
-    console.log('검색어', keyword);
-    // fetch(`/s1/goods/list?title={keyword}`)
-}
+const emit = defineEmits(['update:sort', 'update:category', 'update:keyword']);
 
-const selectedFilter = ref('전체');
+const selectedFilter = ref(props.category || '전체');
+const selectedSort = ref(props.sort || '가나다순');
+const searchKeyword = ref(props.keyword || '');
 
-function selectFilter(filter) {
+watch(selectedFilter, (val) => emit('update:category', val));
+watch(selectedSort, (val) => emit('update:sort', val));
+watch(searchKeyword, (val) => emit('update:keyword', val));
+
+const selectFilter = (filter) => {
     selectedFilter.value = filter;
-}
+};
+
+const handleSortChange = (newSort) => {
+    selectedSort.value = newSort;
+};
+
+const handleSearch = (keyword) => {
+    searchKeyword.value = keyword;
+};
 
 const router = useRouter();
-
 const handleWriteGoods = () => {
     router.push('/goods/write');
 };
@@ -42,39 +51,24 @@ const handleWriteGoods = () => {
         <div class="d-flex align-items-center justify-content-between border-bottom border-black">
             <div>
                 <button
+                    v-for="category in [
+                        '전체',
+                        '사무문구',
+                        '생활잡화',
+                        '악세서리',
+                        '디지털전자',
+                        '주방식품',
+                    ]"
+                    :key="category"
                     class="filter-button"
-                    :class="{ active: selectedFilter === '전체' }"
-                    @click="selectFilter('전체')">
-                    전체
-                </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter === '사무문구' }"
-                    @click="selectFilter('사무문구')">
-                    사무문구
-                </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter == '악세서리' }"
-                    @click="selectFilter('악세서리')">
-                    악세서리
-                </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter == '디지털전자' }"
-                    @click="selectFilter('디지털전자')">
-                    디지털전자
-                </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter == '주방식품' }"
-                    @click="selectFilter('주방식품')">
-                    주방식품
+                    :class="{ active: selectedFilter === category }"
+                    @click="selectFilter(category)">
+                    {{ category }}
                 </button>
             </div>
             <div class="d-flex" style="gap: 16px">
                 <SearchBar placeholder="원하는 기념품을 검색해보세요!" @search="handleSearch" />
-                <DropDown :sort="sort" @update:sort="handleSortChange" />
+                <DropDown :sort="selectedSort" @update:sort="handleSortChange" />
             </div>
         </div>
     </div>

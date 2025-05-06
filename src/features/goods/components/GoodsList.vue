@@ -1,56 +1,103 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import GoodsItem from '@/components/common/ItemCard.vue';
-import goods from '@/features/goods/mock/goods.json';
 import PaginationBar from '@/components/common/PaginationBar.vue';
 import { useRoute, useRouter } from 'vue-router';
+import { fetchGoodsList } from '@/features/goods/api.js';
+
+const route = useRoute();
+const router = useRouter();
+
+const currentPage = ref(Number(route.query.page) || 1);
+const itemsPerPage = 20;
 
 const props = defineProps({
     sort: {
         type: String,
         default: '가나다순',
     },
+    category: {
+        type: String,
+        default: '전체',
+    },
+    keyword: {
+        type: String,
+        default: '',
+    },
 });
-
-// const sortedPackages = computed(() => {
-//     if (props.sort === '좋아요순') {
-//         return
-//     } else if (props.sort === '리뷰순') {
-
-//     } else {
-
-//     }
-// });
-
-const route = useRoute();
-const router = useRouter();
-
-const currentPage = ref(Number(route.query.page) || 1);
-
-const itemsPerPage = 20;
-
-const totalPages = computed(() => Math.ceil(goods.length / itemsPerPage));
-
-const paginatedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    return goods.slice(start, start + itemsPerPage);
-});
-
-function updatePage(page) {
-    router.push({
-        query: { ...route.query, page: page },
-    });
-    currentPage.value = page;
+function mapCategoryKey(label) {
+    const map = {
+        사무문구: 1,
+        생활잡화: 2,
+        악세서리: 3,
+        디지털전자: 4,
+        주방식품: 5,
+    };
+    return map[label] || null;
 }
 
-// 여기 pagination 로직 나중에 싹 다 수정해야 됨
+function mapSortKey(label) {
+    const map = {
+        가나다순: 'title',
+        리뷰순: 'review',
+        좋아요순: 'like',
+        가격높은순: 'highPrice',
+        가격낮은순: 'lowPrice',
+    };
+    return map[label] || 'title';
+}
+
+const goodsList = ref([]);
+const totalPages = ref(1);
+
+async function loadGoods() {
+    try {
+        const params = {
+            sort: mapSortKey(props.sort),
+            page: currentPage.value,
+            size: itemsPerPage,
+        };
+
+        if (props.category && props.category !== '전체') {
+            params.categoryFilter = mapCategoryKey(props.category);
+        }
+
+        if (props.keyword) {
+            params.title = props.keyword;
+        }
+
+        const response = await fetchGoodsList(params);
+        goodsList.value = response.data.data.goods;
+        totalPages.value = response.data.data.pagination.totalPage;
+    } catch (err) {
+        console.error('기념품 목록 조회 실패:', err);
+    }
+}
+
+function updatePage(page) {
+    router.push({ query: { ...route.query, page: page } });
+    currentPage.value = page;
+    loadGoods();
+}
+
+onMounted(() => {
+    loadGoods();
+});
+
+watch(
+    () => [props.sort, props.category, props.keyword],
+    () => {
+        currentPage.value = 1;
+        loadGoods();
+    }
+);
 </script>
 
 <template>
     <div class="goods-list-wrapper">
         <div class="grid">
             <GoodsItem
-                v-for="item in paginatedItems"
+                v-for="item in goodsList"
                 :key="item.goodsId"
                 :data="item"
                 :linkPrefix="'/goods'"

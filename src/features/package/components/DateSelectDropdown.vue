@@ -12,7 +12,7 @@
                 종료일:
                 <input type="date" :value="endDate" @change="onEndChange" />
             </label>
-            <button class="close-btn" @click="hidePicker">닫기</button>
+            <button class="reset-btn" @click="resetDate">날짜 초기화</button>
         </div>
     </div>
 </template>
@@ -51,7 +51,7 @@ function onStartChange(e) {
     const raw = e.target.value;
     startDate.value = raw;
     emit('update:date', {
-        startDate: formatDateForSQL(raw, true), // 시작일이므로 true
+        startDate: raw > formatDateForSQL(raw, true), // 시작일이므로 true
         endDate: formatDateForSQL(endDate.value, false),
     });
 }
@@ -64,7 +64,11 @@ function onEndChange(e) {
         endDate: formatDateForSQL(raw, false), // 종료일이므로 false
     });
 }
-
+function resetDate() {
+    startDate.value = '';
+    endDate.value = '';
+    emit('update:date', { startDate: null, endDate: null });
+}
 function convertToISOString(localDateStr) {
     const localDate = new Date(localDateStr);
     return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
