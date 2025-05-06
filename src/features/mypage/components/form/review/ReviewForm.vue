@@ -178,7 +178,7 @@ onMounted(() => {
             @mouseover="$event.currentTarget.style.boxShadow = '0 0 6px rgba(62,123,250,0.3)'"
             @mouseleave="$event.currentTarget.style.boxShadow = 'none'"
           >
-            <img src="@/assets/icons/camera.svg" alt="camera" />
+            <img src="../../../../../assets/icons/camera.svg" alt="camera" />
           </div>
         </label>
         <input
