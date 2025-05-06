@@ -1,30 +1,41 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import TmpTable from '../components/TmpTable.vue'
 import PaginationBar from '@/components/common/PaginationBar.vue'
 import SearchBar from '@/components/common/SearchBar.vue'
-import postsData from '@/features/travelmatepost/mock/tmp.json'
+import { fetchTmpList } from '@/features/travelmatepost/api/travelmatepost.js'
 
-const posts = ref(postsData)
+const posts = ref([])
+const pagination = ref({ currentPage: 1, totalPage: 1, size: 20 })
 const currentPage = ref(1)
-const pageSize = 10
+const searchKeyword = ref('')
 
-const totalPages = computed(() =>
-  Math.ceil(posts.value.length / pageSize)
-)
-
-const pagedPosts = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return posts.value.slice(start, start + pageSize)
-})
-
-function updatePage(page) {
-  currentPage.value = page
+const getPosts = async () => {
+  try {
+    const params = {
+      title: searchKeyword.value || null,
+      page: currentPage.value,
+      size: pagination.value.size
+    }
+    const data = await fetchTmpList(params)
+    posts.value = data.tmpList
+    pagination.value = data.pagination
+  } catch (error) {
+    console.error('동행글 목록 조회 실패:', error)
+  }
 }
 
-function handleSearch(keyword) {
-  console.log('검색어:', keyword)
-  // 나중에 검색 기능 붙일 때 여기에 구현
+onMounted(getPosts)
+
+const updatePage = (page) => {
+  currentPage.value = page
+  getPosts()
+}
+
+const handleSearch = (keyword) => {
+  searchKeyword.value = keyword
+  currentPage.value = 1
+  getPosts()
 }
 </script>
 
@@ -38,13 +49,13 @@ function handleSearch(keyword) {
       <SearchBar placeholder="검색어를 입력하세요." @search="handleSearch" />
     </div>
 
-    <TmpTable :posts="pagedPosts" />
+    <TmpTable :posts="posts" />
 
     <div class="footer">
       <div class="pagination-wrapper">
         <PaginationBar
-          :current-page="currentPage"
-          :total-pages="totalPages"
+          :current-page="pagination.currentPage"
+          :total-pages="pagination.totalPage"
           @update:page="updatePage"
         />
       </div>

@@ -1,30 +1,42 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router';
-import posts from '@/features/travelmatepost/mock/tmp.json'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { fetchTmpDetail } from '@/features/travelmatepost/api/travelmatepost.js'
 import TmpDetailContent from '../components/TmpDetailContent.vue'
 import TmpCommentList from '../components/TmpCommentList.vue'
 import TmpCommentForm from '../components/TmpCommentForm.vue'
 
+const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 const postId = Number(route.params.id)
 
 const post = ref(null)
+const commentListRef = ref(null)
 
-onMounted(() => {
-  post.value = posts.find(p => p.travelMatePostId === postId)
+onMounted(async () => {
+  try {
+    const res = await fetchTmpDetail(postId)
+    post.value = res.tmpDetailDTO
+  } catch (err) {
+    console.error('게시글 상세 조회 실패:', err)
+  }
+})
+
+const isMyPost = computed(() => {
+  return post.value && authStore.userId === post.value.userId
 })
 </script>
 
 <template>
   <div class="tmp-detail-page">
-    <TmpDetailContent v-if="post" :post="post" />
-    <TmpCommentList :postId="postId" />
-    <TmpCommentForm :postId="postId" />
+    <TmpDetailContent v-if="post" :post="post" :is-my-post="isMyPost" />
+    <TmpCommentList ref="commentListRef" :post-id="postId" />
+    <TmpCommentForm :post-id="postId" @submit="commentListRef.fetchCommentData()" />
     <div class="button-group">
       <button class="back-btn" @click="router.push('/board')">목록으로</button>
-      <button class="write-btn" @click="router.push('/board/write')">글쓰기</button>
+      <RouterLink v-if="authStore.isAuthenticated" to="/board/write" class="write-btn">글쓰기</RouterLink>
     </div>
   </div>
 </template>
@@ -65,5 +77,4 @@ onMounted(() => {
 .write-btn:hover {
   background-color: #fef0f0;
 }
-
 </style>
