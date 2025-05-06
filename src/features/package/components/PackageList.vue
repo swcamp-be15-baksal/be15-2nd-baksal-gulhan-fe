@@ -10,7 +10,15 @@ const props = defineProps({
         type: String,
         default: '시작일 빠른순',
     },
+
+    area: String,
 });
+
+const emit = defineEmits(['update:area']);
+
+function handleAreaChange(newArea) {
+    emit('update:area', newArea);
+}
 
 // const sortedPackages = computed(() => {
 //     if (props.sort === '좋아요순') {
