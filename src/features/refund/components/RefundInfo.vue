@@ -227,7 +227,7 @@ const refundReason = ref('');
 }
 
 .refund-button:hover {
-  background-color: #d16464;
+  background-color: #5D857D;
 }
 </style>
 

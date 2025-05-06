@@ -114,6 +114,6 @@ const goToOrderHistory = () => {
 }
 
 .confirmation-button:hover {
-  background-color: #2a2c2e;
+  background-color: #5D857D;
 }
 </style>

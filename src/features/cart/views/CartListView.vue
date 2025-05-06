@@ -192,7 +192,7 @@ const goToPayInfo = () => {
 }
 
 .delete-all-btn:hover {
-  background-color: #e63636;
+  background-color: #5D857D;
 }
 
 .select-all-wrapper {
@@ -305,6 +305,6 @@ const goToPayInfo = () => {
 }
 
 .modal-btn:hover {
-  background-color: #e63636;
+  background-color: #5D857D;
 }
 </style>

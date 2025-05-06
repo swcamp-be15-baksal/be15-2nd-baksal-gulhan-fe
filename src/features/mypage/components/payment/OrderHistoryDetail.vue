@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+
 defineProps({
   order: {
     type: Object,
@@ -8,10 +10,25 @@ defineProps({
     type: Object,
     required: true
   }
-})
+});
+
+const showModal = ref(false);
+const itemToConfirm = ref(null);
 
 const confirmPurchase = (item) => {
-  item.status = 'confirmed'
+  itemToConfirm.value = item;
+  showModal.value = true;  // 모달을 표시
+}
+
+const handleConfirm = () => {
+  if (itemToConfirm.value) {
+    itemToConfirm.value.status = 'confirmed';  // 구매 확정
+  }
+  showModal.value = false;  // 모달 닫기
+}
+
+const handleCancel = () => {
+  showModal.value = false;  // 모달 닫기
 }
 </script>
 
@@ -36,9 +53,10 @@ const confirmPurchase = (item) => {
       </div>
     </div>
 
+    <!-- 상품 정보 및 목록 -->
     <div class="items">
-      <h5>상품 정보</h5>
-
+      <p>상품 정보</p>
+      <div class="items-divider"></div>
       <div v-for="item in order.items" :key="item.id" class="item">
         <div class="status">{{ item.status === 'waiting' ? '구매 대기' : '구매 확정' }}</div>
 
@@ -71,6 +89,17 @@ const confirmPurchase = (item) => {
         </button>
       </div>
     </div>
+
+    <!-- 모달 -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <p>구매 확정하시겠습니까?</p>
+        <div class="modal-buttons">
+          <button @click="handleConfirm" class="confirm-btn">구매 확정</button>
+          <button @click="handleCancel" class="cancel-btn">취소</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,7 +112,9 @@ const confirmPurchase = (item) => {
 
 /* 상품 정보 스타일 */
 .product-info {
-  margin-bottom: 1rem; /* 간격을 조금 줄였습니다 */
+  width: 52rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 .product-info h3 {
@@ -100,8 +131,8 @@ const confirmPurchase = (item) => {
 
 /* 배송지 정보 스타일 */
 .shipping-info {
-  margin-bottom: 1.5rem;
   width: 52rem;
+  margin: 0 auto;
 }
 
 .shipping-title {
@@ -129,14 +160,28 @@ const confirmPurchase = (item) => {
 .items {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* 간격을 줄였습니다 */
+  gap: 1rem;
+  width: 52rem;
+  margin-top: 0.5rem;
+}
+
+.items p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.items-divider {
+  border-top: 1px solid #ccc;
+  margin-bottom: 1rem;
 }
 
 .item {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
-  padding: 1.5rem;
   background-color: #fafafa;
+  padding: 1rem;
 }
 
 .status {
@@ -210,7 +255,7 @@ const confirmPurchase = (item) => {
 }
 
 .confirm-button:hover {
-  background-color: #333;
+  background-color: #5D857D;
 }
 
 .review-button {
@@ -225,6 +270,61 @@ const confirmPurchase = (item) => {
 }
 
 .review-button:hover {
-  background-color: #c05252;
+  background-color: #5D857D;
+}
+
+/* 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 20rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 1rem;
+  width: 48%;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #000;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #5D857D;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #5D857D;
 }
 </style>
