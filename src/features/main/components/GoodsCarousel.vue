@@ -20,7 +20,7 @@ function goToGoods() {
 <template>
     <div style="display: flex; flex-direction: column">
         <div class="header">
-            <span style="font-size: 2.2rem; color: black; font-weight: 700">패키지</span>
+            <span style="font-size: 2.2rem; color: black; font-weight: 700">기념품</span>
             <button @click="goToGoods">+ 더보기</button>
         </div>
         <div class="wrapper">

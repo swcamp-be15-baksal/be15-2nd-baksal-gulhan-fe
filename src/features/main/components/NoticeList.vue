@@ -1,38 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
-const notices = ref([
-    {
-        noticeId: 1,
-        title: '문화유산 보호를 위한 방문객 행동 지침',
-        userId: 'admin1',
-        createdAt: '2025.04.22',
+const props = defineProps({
+    noticeList: {
+        type: Array,
+        required: true,
     },
-    {
-        noticeId: 2,
-        title: '전국 역사 여행지 할인 프로모션 안내',
-        userId: 'admin1',
-        createdAt: '2025.04.22',
+});
+
+const router = useRouter();
+
+const notices = ref([]);
+
+watch(
+    () => props.noticeList,
+    (newList) => {
+        notices.value = [...newList];
     },
-    {
-        noticeId: 3,
-        title: '고대 유적지 탐방 일정 변경 안내',
-        userId: 'admin2',
-        createdAt: '2025.04.22',
-    },
-    {
-        noticeId: 4,
-        title: '새로운 역사 기념품 라인업 출시!',
-        userId: 'admin2',
-        createdAt: '2025.04.22',
-    },
-    {
-        noticeId: 5,
-        title: '2025년 역사 여행 시즌 특별 이벤트 안내',
-        userId: 'admin1',
-        createdAt: '2025.04.22',
-    },
-]);
+    { immediate: true }
+);
+console.log(notices.value);
+
+const onClickNotice = (noticeId) => {
+    router.push(`/notice/${noticeId}`);
+};
 </script>
 
 <template>
@@ -51,11 +43,14 @@ const notices = ref([
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="notice in notices" :key="notice.noticeId">
+                <tr
+                    v-for="notice in props.noticeList"
+                    :key="notice.noticeId"
+                    @click="onClickNotice(notice.noticeId)">
                     <td>{{ notice.noticeId }}</td>
                     <td>{{ notice.title }}</td>
                     <td>{{ notice.userId }}</td>
-                    <td>{{ notice.createdAt }}</td>
+                    <td>{{ notice.createdAt.split(' ')[0] }}</td>
                 </tr>
             </tbody>
         </table>
@@ -70,6 +65,7 @@ const notices = ref([
     table-layout: fixed;
     margin: 0 auto;
 }
+
 .notice-table th,
 .notice-table td {
     padding: 14px 10px;
@@ -78,21 +74,38 @@ const notices = ref([
     font-size: 1.2rem;
     word-break: break-word;
 }
-/* 열 너비 비율 조정 */
+
+.notice-table tbody tr{
+  cursor: pointer;
+}
+  /* 열 너비 비율 조정 */
 .notice-table th:nth-child(1),
 .notice-table td:nth-child(1) {
-    width: 8%;
+    width: 10%;
 }
+
 .notice-table th:nth-child(2),
 .notice-table td:nth-child(2) {
-    width: 60%;
+    width: 50%;
 }
+
 .notice-table th:nth-child(3),
 .notice-table td:nth-child(3) {
     width: 17%;
 }
+
 .notice-table th:nth-child(4),
 .notice-table td:nth-child(4) {
-    width: 15%;
+    width: 18%;
+}
+
+.notice-table td:nth-child(4) {
+    font-size: 1rem;
+}
+
+.notice-table td:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
