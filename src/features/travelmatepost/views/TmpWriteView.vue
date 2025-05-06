@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import QuillEditor from '@/components/common/QuillEditor.vue';
+import QuillEditor from '@/components/common/QuillEditor.vue'
+import { useAuthStore } from '@/stores/auth'
+import { createTmpPost } from '@/features/travelmatepost/api/travelmatepost.js'
 
 const router = useRouter()
+const authStore = useAuthStore()
+
 const title = ref('')
 const content = ref('')
 
@@ -11,13 +15,23 @@ const onCancel = () => {
   router.back()
 }
 
-const onSubmit = () => {
-  if (!title.value || !content.value) {
+const onSubmit = async () => {
+  if (!title.value.trim() || !content.value.trim()) {
     alert('제목과 내용을 모두 입력해주세요.')
     return
   }
-  alert('동행글이 등록되었습니다 (임시 구현)')
-  router.push('/board')
+
+  try {
+    const postData = {
+      title: title.value,
+      content: content.value
+    }
+    const id = await createTmpPost(authStore.accessToken, postData)
+    alert('게시글이 등록되었습니다!')
+    router.push(`/board/${id}`)
+  } catch (e) {
+    alert('로그인 후 게시글 등록 가능합니다.', e)
+  }
 }
 </script>
 
