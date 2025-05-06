@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "훈민정음 메모지",
+      "quantity": 2,
+      "price": 3800,
+      "image": "https://d152i3f1t56z95.cloudfront.net/test/image.png",
+      "type": "기념품"
+    },
+    {
+      "id": 2,
+      "title": "조선지도 마스킹 테이프",
+      "quantity": 3,
+      "price": 4200,
+      "image": "https://d152i3f1t56z95.cloudfront.net/test/image.png",
+      "type" : "기념품"
+
+    }
+  ]
+}
