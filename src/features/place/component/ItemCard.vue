@@ -38,7 +38,6 @@ const toggleLike = (event) => {
   likeCount.value = isLiked.value
     ? likeCount.value + 1
     : Math.max(0, likeCount.value - 1);
-  // TODO: API 호출
 };
 </script>
 
