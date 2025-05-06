@@ -6,6 +6,7 @@ import { mypageRoutes } from '@/features/mypage/router.js';
 import { goodsRoutes } from '@/features/goods/router.js';
 import { travelMatePostRoutes } from '@/features/travelmatepost/router.js';
 import { noticeRoutes } from '@/features/notice/router.js';
+import { placeRoutes } from '@/features/place/router.js';
 
 const router = createRouter({
     history: createWebHistory(),
