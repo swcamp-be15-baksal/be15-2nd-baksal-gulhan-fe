@@ -37,3 +37,32 @@ export function findPassword(data) {
 export function findPasswordEmailVerify(data) {
     return api2.post('/users/find/password/verify', data);
 }
+
+export function requestKakaoLogin(code) {
+  return api2.get(`/oauth/kakao/callback?code=${code}`);
+}
+
+export function addKakaoAdditionalInfo(data) {
+  return api2.post('/oauth/kakao/additional-info', data);
+}
+
+export function refreshKakaoToken(refreshToken) {
+  return api2.post('/oauth/kakao/refresh', { refreshToken });
+}
+
+export function logoutKakaoUser({ userId, accessToken, refreshToken }) {
+  return api2.post('/oauth/kakao/logout', {
+    userId,
+    accessToken,
+    refreshToken
+  });
+}
+
+export function withdrawKakaoUser({ userId, accessToken }) {
+  return api2.post('/oauth/kakao/withdraw', {
+    userId,
+    accessToken
+  });
+}
+
+
