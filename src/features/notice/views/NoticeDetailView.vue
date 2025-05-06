@@ -1,47 +1,48 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { computed, ref } from 'vue'
-import noticeList from '@/features/notice/mock/notice.json' // 배열 import
+import { ref, onMounted } from 'vue';
+import { fetchNoticeDetail, deleteNotice } from '@/features/notice/api/notice'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
 const noticeId = Number(route.params.id)
-
-// 🔥 배열에서 해당 noticeId를 가진 항목 찾기
-const notice = computed(() =>
-  noticeList.find((n) => n.noticeId === noticeId)
-)
-
-const goBack = () => router.push('/notice')
-
+const authStore = useAuthStore()
 const showMenu = ref(false)
+const notice = ref(null)
+
+onMounted(async () => {
+  try {
+    const res = await fetchNoticeDetail(noticeId)
+    notice.value = res.noticeDTO
+  } catch (e) {
+    alert('공지사항 상세 조회 실패',e)
+  }
+})
+
 const toggleMenu = () => {
   showMenu.value = !showMenu.value
 }
 
 const goToEdit = () => {
-  console.log('click')
   router.push(`/notice/edit/${noticeId}`)
 }
 
-  const goToWrite = () => {
-    console.log('clicked')
-    router.push(`/notice/write`)
-  }
-
-const deleteNotice = async (id) => {
-  alert(`예시 데이터에서 noticeId ${id} 삭제됨 (실제 삭제 아님)`)
-}
-
 const onDelete = async () => {
+  if (!confirm('정말 삭제하시겠습니까?')) return
   try {
-    await deleteNotice(noticeId)
-    router.push('/notice')
-  } catch (error) {
-    console.error('삭제 실패:', error)
-    alert('삭제 중 오류 발생')
+    await deleteNotice(noticeId, authStore.accessToken)
+    alert('삭제되었습니다.')
+    await router.push('/notice')
+  } catch (e) {
+    alert('삭제 실패',e)
   }
 }
+
+const goBack = () => router.push('/notice')
+const goToWrite = () => router.push('/notice/write')
+
+const isAdmin = authStore.userRank === 'SLAVE'
 </script>
 
 <template>
@@ -55,7 +56,8 @@ const onDelete = async () => {
         <div class="badge">공지</div>
         <h3>{{ notice.title }}</h3>
 
-        <div class="menu-wrapper">
+        <!-- 관리자만 메뉴 노출 -->
+        <div class="menu-wrapper" v-if="isAdmin">
           <button @click="toggleMenu" class="menu-btn">⋯</button>
           <div v-show="showMenu" class="dropdown-menu">
             <button @click="goToEdit">수정</button>
@@ -76,7 +78,9 @@ const onDelete = async () => {
 
     <div class="notice-buttons">
       <button @click="goBack" class="btn">목록으로</button>
-      <button @click="goToWrite" class="btn red">글쓰기</button>
+
+      <!-- 관리자만 글쓰기 노출 -->
+      <button v-if="isAdmin" @click="goToWrite" class="btn red">글쓰기</button>
     </div>
   </div>
 </template>
