@@ -150,7 +150,7 @@ function navigate(target) {
             router.push('/place');
             break;
         case 'packages':
-            router.push('/board');
+            router.push('/packages');
             break;
         case 'goods':
             router.push('/goods');
