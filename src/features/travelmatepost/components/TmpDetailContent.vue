@@ -1,3 +1,40 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { deleteTmpPost } from '@/features/travelmatepost/api/travelmatepost.js'
+
+const props = defineProps({
+  post: Object,
+  isMyPost: Boolean
+})
+
+const router = useRouter()
+const menuVisible = ref(false)
+const authStore = useAuthStore()
+
+const toggleMenu = () => {
+  menuVisible.value = !menuVisible.value
+}
+
+const onEdit = () => {
+  router.push(`/board/edit/${props.post.travelMatePostId}`)
+}
+
+const onDelete = async () => {
+  if (!confirm('정말 삭제하시겠습니까?')) return
+
+  try {
+    await deleteTmpPost(props.post.travelMatePostId, authStore.accessToken)
+    alert('삭제가 완료되었습니다.')
+    router.push('/board')
+  } catch (err) {
+    alert('삭제 실패')
+    console.error(err)
+  }
+}
+</script>
+
 <template>
   <div class="detail-container">
     <div class="breadcrumb">
@@ -8,7 +45,7 @@
       <div class="post-header">
         <h2 class="post-title">{{ post.title }}</h2>
 
-        <div class="menu-container">
+        <div v-if="isMyPost" class="menu-container">
           <button class="menu-btn" @click="toggleMenu">⋯</button>
           <div v-show="menuVisible" class="dropdown-menu">
             <button @click="onEdit">수정</button>
@@ -20,46 +57,14 @@
       <div class="post-info">
         <span class="author">{{ post.userId }}</span>
         <span class="date">{{ post.createdAt }}</span>
-      </div> <hr>
-
-      <div class="post-content">
-        <p>{{ post.content }}</p>
       </div>
+
+      <hr />
+
+      <div class="post-content" v-html="post.content" />
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import posts from '@/features/travelmatepost/mock/tmp.json'
-
-const route = useRoute()
-const router = useRouter()
-const postId = Number(route.params.id)
-const post = ref({})
-const menuVisible = ref(false)
-
-onMounted(() => {
-  const data = posts.find(p => p.travelMatePostId === postId)
-  if (data) post.value = data
-})
-
-const toggleMenu = () => {
-  menuVisible.value = !menuVisible.value
-}
-
-const onEdit = () => {
-  router.push(`/board/edit/${postId}`)
-}
-
-const onDelete = () => {
-  if (confirm('정말 삭제하시겠습니까?')) {
-    alert('삭제 완료 (실제 삭제는 아님)')
-    router.push('/board')
-  }
-}
-</script>
 
 <style scoped>
 .post-box {
@@ -87,7 +92,7 @@ const onDelete = () => {
   border-radius: 8px;
   padding: 24px;
   position: relative;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .post-header {
@@ -134,6 +139,7 @@ const onDelete = () => {
   cursor: pointer;
   text-align: center;
 }
+
 .dropdown-menu button:hover {
   background-color: #f5f5f5;
 }
