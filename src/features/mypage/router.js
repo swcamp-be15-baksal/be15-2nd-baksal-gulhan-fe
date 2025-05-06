@@ -21,7 +21,14 @@ export const mypageRoutes = [
   {
     path : '/mypage/orderhistory',
     name : 'OrderHistory',
-    component : () => import('@/features/mypage/views/orderhistory/OrderHistoryView.vue')
+    component : () => import('@/features/mypage/views/payment/OrderHistoryView.vue')
+  },
+  // 구매 내역 상세 조회
+  {
+    path : '/mypage/orderhistory/Detail/:id',
+    name : 'OrderHistoryDetail',
+    component : () => import('@/features/mypage/views/payment/OrderHistoryDetailView.vue')
+
   },
   // 리뷰 조회
   {
