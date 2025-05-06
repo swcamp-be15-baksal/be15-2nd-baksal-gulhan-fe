@@ -34,7 +34,12 @@ export const useAuthStore = defineStore('auth', () => {
         expirationTime.value = null;
     }
 
-    return {
+  function logout() {
+    clearAuth();
+    router.push({ name: 'login' });
+  }
+
+  return {
         accessToken,
         userId,
         userRank,
@@ -42,6 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated,
         setAuth,
         clearAuth,
+        logout,
     };
 });
 

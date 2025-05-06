@@ -1,5 +1,4 @@
 import { api2 } from '@/plugins/axios.js';
-import data from 'bootstrap/js/src/dom/data.js';
 
 // 회원 정보 조회
 export function fetchUserInfo(accessToken) {
@@ -17,6 +16,15 @@ export function updateUserInfo(data, accessToken) {
       Authorization: `Bearer ${accessToken}`,
     }
   });
+}
+
+// 회원 탈퇴
+export function withdrawUser(accessToken) {
+  return api2.get( `/users/withdraw`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
 }
 
 // 배송지 목록 조회
