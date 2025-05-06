@@ -1,4 +1,5 @@
 import { api2 } from '@/plugins/axios.js';
+import data from 'bootstrap/js/src/dom/data.js';
 
 // 회원 정보 조회
 export function fetchUserInfo(accessToken) {
@@ -15,6 +16,54 @@ export function updateUserInfo(data, accessToken) {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     }
+  });
+}
+
+// 배송지 목록 조회
+ export function getDeliveryAddress(accessToken) {
+   return api2.get('/users/me/delivery-address', {
+     headers: {
+       Authorization: `Bearer ${accessToken}`,
+     }
+   });
+ }
+
+// 배송지 등록
+export function createDeliveryAddress(accessToken, payload) {
+  return api2.post('/users/delivery-address/register',
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+  });
+}
+
+// 배송지 수정
+export function getDeliveryAddressById(accessToken, deliveryAddressId) {
+  return api2.get(`/users/me/delivery-address/${deliveryAddressId}`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+}
+
+export function updateDeliveryAddress(accessToken, deliveryAddressId, data) {
+  return api2.put(`/users/delivery-address/update/${deliveryAddressId}`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+}
+
+// 배송지 삭제
+export function deleteDeliveryAddress(accessToken, deliveryAddressId) {
+  return api2.post( `/users/delivery-address/delete/${deliveryAddressId}`,
+    null,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
   });
 }
 
