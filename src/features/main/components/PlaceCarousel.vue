@@ -117,7 +117,7 @@ function moveSlide(direction) {
 }
 
 .title {
-    font-size: 3.2rem;
+    font-size: 2rem;
     color: white;
 }
 

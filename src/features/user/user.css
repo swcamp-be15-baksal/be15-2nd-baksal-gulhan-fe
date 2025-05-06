@@ -1,0 +1,27 @@
+button {
+  width: 100%;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  transition: filter 0.2s ease;
+}
+
+button:hover {
+  filter: brightness(95%);
+}
+
+button:active {
+  filter: brightness(90%);
+}
+
+.kakao-logo {
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+button[class='login'] {
+  background-color: #3e4042;
+  color: #ededed;
+}

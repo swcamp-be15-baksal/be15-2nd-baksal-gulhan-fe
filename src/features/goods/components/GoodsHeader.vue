@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
 function handleSearch(keyword) {
@@ -11,6 +12,12 @@ const selectedFilter = ref('전체');
 function selectFilter(filter) {
     selectedFilter.value = filter;
 }
+
+const router = useRouter();
+
+const handleWriteGoods = () => {
+    router.push('/goods/write');
+};
 </script>
 
 <template>
@@ -19,7 +26,7 @@ function selectFilter(filter) {
             class="d-flex align-items-center"
             style="gap: 10px; margin-left: 33px; margin-bottom: 41px">
             <span style="font-size: 1.5rem; font-weight: 700"> 기념품 </span>
-            <button class="text-white add-package-button" @click="navigate('')">
+            <button class="text-white add-package-button" @click="handleWriteGoods">
                 기념품 등록하기
             </button>
         </div>

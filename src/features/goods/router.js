@@ -1,6 +1,6 @@
 import GoodsListView from '@/features/goods/views/GoodsListView.vue';
 import GoodsDetailView from '@/features/goods/views/GoodsDetailView.vue';
-
+import GoodsWriteView from '@/features/goods/views/GoodsWriteView.vue';
 export const goodsRoutes = [
     {
         path: '/goods/:id',
@@ -11,5 +11,10 @@ export const goodsRoutes = [
         path: '/goods',
         name: 'goods-list',
         component: GoodsListView,
+    },
+    {
+        path: '/goods/write',
+        name: 'goods-write',
+        component: GoodsWriteView,
     },
 ];

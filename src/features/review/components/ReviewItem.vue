@@ -1,17 +1,41 @@
 <script setup>
-import editIcon from '@/assets/edit.svg';
-import deleteIcon from '@/assets/delete.svg';
+import { computed } from 'vue';
+import editIcon from '@/assets/icons/edit.svg';
+import deleteIcon from '@/assets/icons/delete.svg';
 import RatingIcon from './RatingIcon.vue';
 
-const rating = 4; // 예시 값임 나중에 값 가져올 거임
-
 const stars = Array.from({ length: 5 }, (_, i) => i);
+
+const props = defineProps({
+    review: {
+        type: Object,
+        required: true,
+    },
+    showName: {
+        type: Boolean,
+        default: true,
+    },
+});
+const rating = props.review.rating;
+
+const createdAt = new Date(props.review.createdAt);
+const updatedAt = new Date(props.review.updatedAt);
+
+const displayDateInfo = computed(() => {
+    const dateToShow = updatedAt.getTime() > createdAt.getTime() ? updatedAt : createdAt;
+    const label = updatedAt.getTime() > createdAt.getTime() ? '수정' : '작성';
+
+    const formattedDate = dateToShow.toISOString().split('T')[0].replace(/-/g, '.');
+    return { formattedDate, label };
+});
 </script>
 
 <template>
     <div>
         <div class="review-header">
-            <div>윤*영</div>
+            <!-- 이거 나중에는 userNo의 이름으로 불러와야 됨 -->
+            <div v-if="!showName"></div>
+            <div v-if="showName">User {{ review.userNo }}</div>
             <div>
                 <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
                 <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
@@ -21,15 +45,11 @@ const stars = Array.from({ length: 5 }, (_, i) => i);
             <RatingIcon v-for="i in stars" :key="i" :fill="i < rating ? '#FFDC3E' : 'none'" />
         </div>
         <div class="review-text">
-            생각보다 색상이 너무 누런데 생각했던 이미지랑 맞아서 잘 쓰고 있음. 친구들이 뭐 이런 걸
-            쓰냐고 했지만 제 취향인 걸 어쩌겠나요? 근데 리뷰 쓰면 포인트 안 주나요? 얼른 평민
-            탈출하고 싶음 ㅋ
+            {{ review.detail }}
         </div>
-        <div class="upload-date">
-            <span>2025.04.23</span>
-            <!-- 수정일 -->
-            <span>업로드</span>
-            <!-- 수정일이랑 생성일 같으면 업로드? 다르면 수정일?-->
+        <div class="upload-date" style="gap: 4px">
+            <span>{{ displayDateInfo.formattedDate }} </span>
+            <span>{{ displayDateInfo.label }}</span>
         </div>
     </div>
 </template>
