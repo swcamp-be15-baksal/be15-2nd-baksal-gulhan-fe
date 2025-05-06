@@ -56,7 +56,7 @@ function formatDate(ts) {
                     </div>
                     <div class="like-review" style="margin-bottom: 16px">
                         <img :src="starIcon" />
-                        <span style="color: #ffdc3e">{{ data.avgRating }}</span>
+                        <span style="color: #ffdc3e">{{ data.avgRating ?? 0 }}</span>
                     </div>
                     <div style="font-size: 1.3rem; color: #adadad; font-weight: 400">
                         잔여수량 {{ data.remaining }}

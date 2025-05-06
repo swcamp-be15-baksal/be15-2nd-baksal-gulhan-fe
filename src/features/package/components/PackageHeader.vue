@@ -10,9 +10,10 @@ const props = defineProps({
     sort: String,
     area: String,
     date: Object,
+    keyword: String,
 });
 
-const emit = defineEmits(['update:sort', 'update:area', 'update:date']);
+const emit = defineEmits(['update:sort', 'update:area', 'update:date', 'update:keyword']);
 
 function handleSortChange(newSort) {
     emit('update:sort', newSort);
@@ -27,13 +28,17 @@ function handleDateChange(newDate) {
 }
 
 function handleSearch(keyword) {
-    console.log('검색어', keyword);
-    // fetch(`/s1/packages/list?title={keyword}`)
+    emit('update:keyword', keyword);
 }
 
 const selectedFilter = ref('전체');
+
 function selectFilter(filter) {
     selectedFilter.value = filter;
+    if (filter === '전체') {
+        emit('update:area', '');
+        emit('update:date', '');
+    }
 }
 
 const router = useRouter();

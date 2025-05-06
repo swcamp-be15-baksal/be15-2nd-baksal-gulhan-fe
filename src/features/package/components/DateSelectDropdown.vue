@@ -21,7 +21,7 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps({
-    date: Object, // { startDate: string, endDate: string }
+    date: Object,
 });
 
 const emit = defineEmits(['update:date']);
@@ -38,14 +38,36 @@ function hidePicker() {
     showPicker.value = false;
 }
 
+function formatDateForSQL(dateStr, isStart) {
+    const date = new Date(dateStr);
+    const yyyy = date.getFullYear();
+    const MM = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const time = isStart ? '00:00:00' : '23:59:59'; // 시작이면 00시, 종료면 23시
+    return `${yyyy}-${MM}-${dd} ${time}`;
+}
+
 function onStartChange(e) {
-    startDate.value = e.target.value;
-    emit('update:date', { startDate: startDate.value, endDate: endDate.value });
+    const raw = e.target.value;
+    startDate.value = raw;
+    emit('update:date', {
+        startDate: formatDateForSQL(raw, true), // 시작일이므로 true
+        endDate: formatDateForSQL(endDate.value, false),
+    });
 }
 
 function onEndChange(e) {
-    endDate.value = e.target.value;
-    emit('update:date', { startDate: startDate.value, endDate: endDate.value });
+    const raw = e.target.value;
+    endDate.value = raw;
+    emit('update:date', {
+        startDate: formatDateForSQL(startDate.value, true),
+        endDate: formatDateForSQL(raw, false), // 종료일이므로 false
+    });
+}
+
+function convertToISOString(localDateStr) {
+    const localDate = new Date(localDateStr);
+    return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
 }
 
 const displayText = computed(() => {

@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import ReviewList from '@/features/review/components/ReviewList.vue';
-import reviews from '@/features/review/mock/reviews.json';
+import { fetchReviews } from '@/features/review/api.js';
 
 const props = defineProps({
     detail: {
@@ -20,6 +20,7 @@ const props = defineProps({
 });
 
 const activeTab = ref('detail');
+const reviews = ref([]);
 const route = useRoute();
 
 const targetType = computed(() => {
@@ -27,17 +28,15 @@ const targetType = computed(() => {
     if (route.path.startsWith('/goods/')) return 'GOODS';
     return null;
 });
-
 const targetId = computed(() => Number(route.params.id));
 
-const filteredReviews = computed(() =>
-    reviews.filter((r) => r.targetType === targetType.value && r.targetId === targetId.value)
-);
-
-watchEffect(() => {
-    console.log('[ReviewTab] targetType:', targetType.value);
-    console.log('[ReviewTab] targetId:', targetId.value);
-    console.log('[ReviewTab] filteredReviews:', filteredReviews.value);
+onMounted(async () => {
+    try {
+        const res = await fetchReviews(targetType.value, targetId.value);
+        reviews.value = res.data.review;
+    } catch (err) {
+        console.error('[리뷰 조회 실패]', err);
+    }
 });
 </script>
 
@@ -65,7 +64,7 @@ watchEffect(() => {
                             : 'background-color: #e6e6e6'
                     "
                     @click="activeTab = 'review'">
-                    리뷰 ({{ filteredReviews.length }})
+                    리뷰 ({{ reviews.length }})
                 </button>
             </div>
 
@@ -74,8 +73,8 @@ watchEffect(() => {
                     {{ detail }}
                 </div>
                 <div v-else>
-                    <template v-if="filteredReviews.length > 0">
-                        <ReviewList :reviews="filteredReviews" />
+                    <template v-if="reviews.length > 0">
+                        <ReviewList :reviews="reviews" />
                     </template>
                     <template v-else>
                         <div style="text-align: center; color: gray">
