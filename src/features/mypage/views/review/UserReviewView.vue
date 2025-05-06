@@ -7,7 +7,7 @@ import reviews from '@/features/review/mock/reviews.json';
 import packages from '@/features/package/mock/packages.json';
 import goods from '@/features/goods/mock/goods.json';
 
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 function getTargetName(review) {
     if (review.targetType === 'PACKAGE') {

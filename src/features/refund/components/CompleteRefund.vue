@@ -8,6 +8,7 @@ const goToOrderHistory = () => {
 </script>
 
 <template>
+
   <div class="complete-refund-container">
     <div class="complete-refund">
       <h2 class="refund-completed">환불 신청이 완료되었습니다.</h2>
@@ -17,7 +18,6 @@ const goToOrderHistory = () => {
           환불 상태에 대한 확인은 구매내역 페이지에서 확인하실 수 있습니다.
         </p>
       </div>
-
       <div class="order-history-link">
         <button @click="goToOrderHistory" class="go-to-order-history">
           구매내역 바로가기

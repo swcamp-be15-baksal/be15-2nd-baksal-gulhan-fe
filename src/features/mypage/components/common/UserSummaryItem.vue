@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import RankList from '@/features/mypage/components/RankList.vue';
+import RankList from '@/features/mypage/components/list/rank/RankList.vue';
 
 const showRankList = ref(false);
 
