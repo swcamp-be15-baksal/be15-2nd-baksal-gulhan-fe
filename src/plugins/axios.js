@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { refreshUserToken } from '@/features/user/api/user.js';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,

@@ -1,0 +1,262 @@
+[
+  {
+    "placeId": 1,
+    "title": "종묘",
+    "detail": "경운박물관은 2003년 경기여고 동문이 뜻을 모아 2003년에 설립하였다. 개관 전 ‘근세복식과 우리 문화’를 시작으로 40회의 기획전을 통해 근세 왕실복식과 근·현대복식 및 직물 소장품의 아름다움과 학술적 역사적 가치를 알리려 노력해 왔다. 기획전시와 도록 발간 외에도 수준 높은 아카데미 강좌, 전시와 연계된 체험학습 교육, 대한제국 황제 12장복과 적의, 황룡포, 흑단령 재현 작업 등은 동문으로 구성된 자원봉사자들의 재능기부 결과물이다. 이처럼 경기여고 경운박물관은 역사와 전통이 숨 쉬고 세대 간 대화와 소통이 이루어지는 아름다운 문화공간이다.",
+    "address": "경기도 고양시 00번지",
+    "restDate": "매주 월요일 / 공휴일",
+    "category": "유적지",
+    "areaId": 23,
+    "likeCount": 103
+  },
+  {
+    "placeId": 2,
+    "title": "국립중앙박물관",
+    "detail": "국립중앙박물관은 서울 용산구에 위치한 박물관입니다.",
+    "address": "서울특별시 용산구 137-7",
+    "restDate": "매주 월요일",
+    "category": "박물관",
+    "areaId": 11,
+    "likeCount": 241
+  },
+  {
+    "placeId": 3,
+    "title": "남한산성",
+    "detail": "남한산성은 경기도 광주시에 위치한 유적지입니다.",
+    "address": "경기도 광주시 중부면 산성리",
+    "restDate": "없음",
+    "category": "유적지",
+    "areaId": 24,
+    "likeCount": 87
+  },
+  {
+    "placeId": 4,
+    "title": "한국민속촌",
+    "detail": "한국민속촌은 경기도 용인시에 위치한 민속촌입니다.",
+    "address": "경기도 용인시 기흥구 민속촌로 90",
+    "restDate": "연중무휴",
+    "category": "민속촌",
+    "areaId": 24,
+    "likeCount": 312
+  },
+  {
+    "placeId": 5,
+    "title": "덕수궁",
+    "detail": "덕수궁은 서울 중구에 위치한 유적지입니다.",
+    "address": "서울특별시 중구 세종대로 99",
+    "restDate": "매주 월요일",
+    "category": "유적지",
+    "areaId": 11,
+    "likeCount": 154
+  },
+  {
+    "placeId": 6,
+    "title": "서울역사박물관",
+    "detail": "서울역사박물관은 서울 종로구에 위치한 박물관입니다.",
+    "address": "서울특별시 종로구 새문안로 55",
+    "restDate": "매주 월요일",
+    "category": "박물관",
+    "areaId": 11,
+    "likeCount": 198
+  },
+  {
+    "placeId": 7,
+    "title": "경복궁",
+    "detail": "경복궁은 서울 종로구에 위치한 유적지입니다.",
+    "address": "서울특별시 종로구 사직로 161",
+    "restDate": "화요일 휴무",
+    "category": "유적지",
+    "areaId": 11,
+    "likeCount": 329
+  },
+  {
+    "placeId": 8,
+    "title": "부산시립박물관",
+    "detail": "부산시립박물관은 부산 남구에 위치한 박물관입니다.",
+    "address": "부산광역시 남구 유엔평화로 63",
+    "restDate": "월요일",
+    "category": "박물관",
+    "areaId": 21,
+    "likeCount": 132
+  },
+  {
+    "placeId": 9,
+    "title": "수원화성",
+    "detail": "수원화성은 경기도 수원시에 위치한 유적지입니다.",
+    "address": "경기도 수원시 팔달구 정조로 910",
+    "restDate": "없음",
+    "category": "유적지",
+    "areaId": 24,
+    "likeCount": 274
+  },
+  {
+    "placeId": 10,
+    "title": "제주민속촌",
+    "detail": "제주민속촌은 제주도 서귀포시에 위치한 민속촌입니다.",
+    "address": "제주특별자치도 서귀포시 표선면 민속해안로 631-34",
+    "restDate": "연중무휴",
+    "category": "민속촌",
+    "areaId": 39,
+    "likeCount": 301
+  },
+  {
+    "placeId": 11,
+    "title": "경주국립박물관",
+    "detail": "경주국립박물관은 경상북도 경주시에 위치한 박물관입니다.",
+    "address": "경상북도 경주시 일정로 186",
+    "restDate": "월요일",
+    "category": "박물관",
+    "areaId": 31,
+    "likeCount": 256
+  },
+  {
+    "placeId": 12,
+    "title": "안동 하회마을",
+    "detail": "하회마을은 경상북도 안동시에 위치한 민속촌입니다.",
+    "address": "경상북도 안동시 풍천면 하회리",
+    "restDate": "없음",
+    "category": "민속촌",
+    "areaId": 31,
+    "likeCount": 220
+  },
+  {
+    "placeId": 13,
+    "title": "창덕궁",
+    "detail": "창덕궁은 서울 종로구에 위치한 유적지입니다.",
+    "address": "서울특별시 종로구 율곡로 99",
+    "restDate": "월요일",
+    "category": "유적지",
+    "areaId": 11,
+    "likeCount": 200
+  },
+  {
+    "placeId": 14,
+    "title": "양동마을",
+    "detail": "양동마을은 경상북도 경주시에 위치한 민속촌입니다.",
+    "address": "경상북도 경주시 강동면 양동마을길",
+    "restDate": "없음",
+    "category": "민속촌",
+    "areaId": 31,
+    "likeCount": 149
+  },
+  {
+    "placeId": 15,
+    "title": "독립기념관",
+    "detail": "독립기념관은 충청남도 천안시에 위치한 박물관입니다.",
+    "address": "충청남도 천안시 동남구 목천읍 독립기념관로 1",
+    "restDate": "월요일",
+    "category": "박물관",
+    "areaId": 32,
+    "likeCount": 230
+  },
+  {
+    "placeId": 16,
+    "title": "한산모시관",
+    "detail": "한산모시관은 충청남도 서천군에 위치한 민속촌입니다.",
+    "address": "충청남도 서천군 한산면 한산모시길 135",
+    "restDate": "월요일",
+    "category": "민속촌",
+    "areaId": 32,
+    "likeCount": 78
+  },
+  {
+    "placeId": 17,
+    "title": "청주고인쇄박물관",
+    "detail": "청주고인쇄박물관은 충청북도 청주시에 위치한 박물관입니다.",
+    "address": "충청북도 청주시 흥덕구 직지대로 713",
+    "restDate": "월요일",
+    "category": "박물관",
+    "areaId": 33,
+    "likeCount": 97
+  },
+  {
+    "placeId": 18,
+    "title": "공산성",
+    "detail": "공산성은 충청남도 공주시에 위치한 유적지입니다.",
+    "address": "충청남도 공주시 금성동 53",
+    "restDate": "없음",
+    "category": "유적지",
+    "areaId": 32,
+    "likeCount": 183
+  },
+  {
+    "placeId": 19,
+    "title": "화성행궁",
+    "detail": "화성행궁은 경기도 수원시에 위치한 유적지입니다.",
+    "address": "경기도 수원시 팔달구 정조로 825",
+    "restDate": "월요일",
+    "category": "유적지",
+    "areaId": 24,
+    "likeCount": 162
+  },
+  {
+    "placeId": 20,
+    "title": "국립민속박물관",
+    "detail": "국립민속박물관은 서울 종로구에 위치한 박물관입니다.",
+    "address": "서울특별시 종로구 삼청로 37",
+    "restDate": "화요일",
+    "category": "박물관",
+    "areaId": 11,
+    "likeCount": 210
+  },
+  {
+    "placeId": 21,
+    "title": "보은 법주사",
+    "detail": "법주사는 충청북도 보은군 속리산 국립공원 내 위치한 유적지입니다.",
+    "address": "충청북도 보은군 속리산면 사내리 209",
+    "restDate": "없음",
+    "category": "유적지",
+    "areaId": 33,
+    "likeCount": 112
+  },
+  {
+    "placeId": 22,
+    "title": "전주한옥마을",
+    "detail": "전주한옥마을은 전라북도 전주시의 대표적인 민속촌입니다.",
+    "address": "전라북도 전주시 완산구 기린대로 99",
+    "restDate": "없음",
+    "category": "민속촌",
+    "areaId": 35,
+    "likeCount": 388
+  },
+  {
+    "placeId": 23,
+    "title": "국립광주박물관",
+    "detail": "국립광주박물관은 광주광역시에 위치한 박물관입니다.",
+    "address": "광주광역시 북구 하서로 110",
+    "restDate": "월요일",
+    "category": "박물관",
+    "areaId": 26,
+    "likeCount": 145
+  },
+  {
+    "placeId": 24,
+    "title": "경상감영공원",
+    "detail": "경상감영공원은 대구광역시에 위치한 유적지입니다.",
+    "address": "대구광역시 중구 경상감영길 99",
+    "restDate": "없음",
+    "category": "유적지",
+    "areaId": 22,
+    "likeCount": 129
+  },
+  {
+    "placeId": 25,
+    "title": "나주목문화관",
+    "detail": "나주목문화관은 전라남도 나주시에 위치한 민속촌입니다.",
+    "address": "전라남도 나주시 금성관길 8",
+    "restDate": "월요일",
+    "category": "민속촌",
+    "areaId": 36,
+    "likeCount": 90
+  },
+  {
+    "placeId": 26,
+    "title": "칠지도박물관",
+    "detail": "칠지도박물관은 전라남도 영광군에 위치한 박물관입니다.",
+    "address": "전라남도 영광군 군서면 백수로 17",
+    "restDate": "화요일",
+    "category": "박물관",
+    "areaId": 36,
+    "likeCount": 74
+  }
+]
