@@ -75,3 +75,21 @@ export function deleteDeliveryAddress(accessToken, deliveryAddressId) {
   });
 }
 
+// 내 게시글 조회
+export function fetchUserBoard(accessToken) {
+  return api2.get('/users/me/board', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  });
+}
+
+// 내 댓글 조회
+export function fetchUserComment(accessToken) {
+  return api2.get('/users/me/comment', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  });
+}
+
