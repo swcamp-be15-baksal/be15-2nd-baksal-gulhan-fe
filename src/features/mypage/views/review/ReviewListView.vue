@@ -42,9 +42,10 @@ onMounted(async () => {
   try {
     const authStore = useAuthStore();
     const response = await fetchUserReview(authStore.accessToken, { targetType: 'GOODS' });
-    console.log(response.data.data.userReviewList);
+    const response2 = await fetchUserReview(authStore.accessToken, { targetType: 'PACKAGE' });
+    const responseList = [...response.data.data.userReviewList, ...response2.data.data.userReviewList]
     const reviewList = [];
-    for(let review of response.data.data.userReviewList){
+    for(let review of responseList){
       const obj ={
         id: review.reviewId,
         targetId: "",
