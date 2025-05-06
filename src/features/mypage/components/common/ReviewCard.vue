@@ -33,13 +33,13 @@ function handleDelete() {
   >
     <div class="position-absolute top-0 end-0 p-3 d-flex gap-2">
       <img
-        src="@/assets/icons/edit.svg"
+        src="../../../../assets/icons/edit.svg"
         alt="edit"
         style="cursor: pointer; width: 35px; height: 35px;"
         @click="goToEdit"
       />
       <img
-        src="@/assets/icons/delete.svg"
+        src="../../../../assets/icons/delete.svg"
         alt="delete"
         style="cursor: pointer; width: 35px; height: 35px;"
         @click="handleDelete"
