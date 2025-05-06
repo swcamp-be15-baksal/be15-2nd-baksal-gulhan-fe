@@ -45,10 +45,10 @@ function handleDelete(index) {
             params : { deliveryAddressId : item.deliveryAddressId }
           })"
       >
-        <img src="../../../assets/icons/edit.svg" alt="edit" class="icon" />
+        <img src="../../../../../assets/icons/edit.svg" alt="edit" class="icon" />
       </button>
       <button @click="handleDelete(idx)">
-        <img src="../../../assets/icons/delete.svg" alt="delete" class="icon" />
+        <img src="../../../../../assets/icons/delete.svg" alt="delete" class="icon" />
       </button>
     </div>
     <div class="info">

@@ -7,6 +7,8 @@ import reviews from '@/features/review/mock/reviews.json';
 import packages from '@/features/package/mock/packages.json';
 import goods from '@/features/goods/mock/goods.json';
 
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
+
 function getTargetName(review) {
     if (review.targetType === 'PACKAGE') {
         const pkg = packages.find((p) => p.packageId === review.targetId);
@@ -57,6 +59,7 @@ function selectFilter(filter) {
 </script>
 
 <template>
+    <MyPageHeader />
     <div class="wrapper">
         <div class="d-flex" style="gap: 8px">
             <button
