@@ -10,6 +10,12 @@ const cartItems = computed(() => cartStore.cartItems);
 const selectedItems = computed(() => cartStore.selectedItems);
 const showSelectAll = ref(true);
 
+// Modal 상태 관리
+const showDeleteModal = ref(false);
+const showCancelModal = ref(false);
+const itemToDelete = ref(null);
+
+// 전체 선택 및 선택된 항목 관리
 const selectAll = computed({
   get() {
     return selectedItems.value.length === cartItems.value.length;
@@ -23,6 +29,7 @@ const selectAll = computed({
   }
 });
 
+// 가격 계산
 const totalPrice = computed(() => {
   return cartItems.value
     .filter(item => selectedItems.value.some(selectedItem => selectedItem.id === item.id))
@@ -40,11 +47,39 @@ const packagePrice = computed(() => {
     .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
+// 전체 삭제
 const deleteAllItems = () => {
+  showDeleteModal.value = true;
+};
+
+// 개별 삭제 확인
+const deleteItem = (item) => {
+  itemToDelete.value = item;
+  showCancelModal.value = true;
+};
+
+// 삭제 확정
+const confirmDeleteAll = () => {
   cartStore.clearCart();
+  showDeleteModal.value = false;
   showSelectAll.value = false;
 };
 
+// 삭제 취소
+const cancelDeleteAll = () => {
+  showDeleteModal.value = false;
+};
+
+const cancelDeleteItem = () => {
+  showCancelModal.value = false;
+};
+
+const confirmDeleteItem = () => {
+  cartStore.removeItem(itemToDelete.value.id);
+  showCancelModal.value = false;
+};
+
+// 가격 세부사항
 const priceDetails = computed(() => [
   { label: '총 금액', value: totalPrice.value },
   { label: '기념품 금액', value: souvenirPrice.value },
@@ -54,14 +89,11 @@ const priceDetails = computed(() => [
 const goToPayInfo = () => {
   // priceDetails를 sessionStorage에 저장
   sessionStorage.setItem('priceDetails', JSON.stringify(priceDetails.value));
-  console.log(sessionStorage.getItem('priceDetails'))
   // 결제 정보 페이지로 이동
   router.push({
     name:'beforePayment'
   });
 };
-
-
 </script>
 
 <template>
@@ -84,6 +116,7 @@ const goToPayInfo = () => {
       <CartItemList
         :items="cartItems"
         :selectedItems="selectedItems"
+        @delete-item="deleteItem"
       />
 
       <div class="paymentInfo" v-if="selectedItems.length > 0">
@@ -102,6 +135,20 @@ const goToPayInfo = () => {
       </div>
       <button class="complete-purchase" @click="goToPayInfo" v-if="showSelectAll">구매하기</button>
     </div>
+
+    <!-- Modal Section -->
+    <div v-if="showDeleteModal || showCancelModal" class="modal-overlay">
+      <div class="modal-content">
+        <p v-if="showDeleteModal">모두 삭제하시겠습니까?</p>
+        <p v-else>정말 삭제하시겠습니까?</p>
+        <div class="modal-actions">
+          <button class="modal-btn" @click="confirmDeleteAll" v-if="showDeleteModal">전체 삭제</button>
+          <button class="modal-btn" @click="cancelDeleteAll" v-if="showDeleteModal">취소</button>
+          <button class="modal-btn" @click="confirmDeleteItem" v-if="showCancelModal">삭제</button>
+          <button class="modal-btn" @click="cancelDeleteItem" v-if="showCancelModal">취소</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -110,14 +157,14 @@ const goToPayInfo = () => {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-top: 2rem; /* 스크롤 시 위 공간 확보 */
+  padding-top: 2rem;
 }
 
 .cart-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem; /* 간격을 줄임 */
+  gap: 1rem;
   min-height: 35rem;
   min-width: 50rem;
 }
@@ -142,7 +189,6 @@ const goToPayInfo = () => {
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .delete-all-btn:hover {
@@ -170,7 +216,6 @@ const goToPayInfo = () => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 1rem;
 }
 
 .total-price {
@@ -217,5 +262,49 @@ const goToPayInfo = () => {
   align-items: center;
   justify-content: center;
   margin-top: auto;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경을 어둡게 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* 모달이 화면 위로 오도록 설정 */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 20rem;
+  text-align: center;
+  z-index: 1000; /* 모달 내용이 배경 위에 뜨게 설정 */
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.modal-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #ff4747;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  width: 45%; /* 동등한 너비 설정 */
+}
+
+.modal-btn:hover {
+  background-color: #e63636;
 }
 </style>

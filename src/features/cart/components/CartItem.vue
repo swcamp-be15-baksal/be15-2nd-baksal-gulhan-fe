@@ -1,6 +1,6 @@
 <script setup>
 import { useCartStore } from '@/stores/cart.js'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   item: Object
@@ -26,8 +26,19 @@ const decreaseCount = () => {
   }
 }
 
+const showModal = ref(false) // 모달 표시 상태
+
 const removeFromCart = () => {
-  cartStore.removeItem(props.item.id)
+  showModal.value = true // X 버튼 클릭 시 모달 표시
+}
+
+const closeModal = () => {
+  showModal.value = false // 모달 닫기
+}
+
+const confirmDelete = () => {
+  cartStore.removeItem(props.item.id) // 항목 삭제
+  showModal.value = false // 삭제 후 모달 닫기
 }
 </script>
 
@@ -73,9 +84,17 @@ const removeFromCart = () => {
         </div>
       </div>
     </div>
+
+    <!-- 모달 -->
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>이 항목을 삭제하시겠습니까?</h3>
+        <button @click="confirmDelete">삭제</button>
+        <button @click="closeModal">취소</button>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <style scoped>
 .cart-container {
@@ -145,8 +164,6 @@ const removeFromCart = () => {
   min-width: 0;
 }
 
-
-
 .item-info {
   display: flex;
   flex-direction: column;
@@ -210,6 +227,8 @@ const removeFromCart = () => {
   height: 100%;
   object-fit: cover;
 }
+
+/* X 버튼 스타일 */
 .cancel-btn{
   background-color: red;
   color: white;
@@ -221,5 +240,37 @@ const removeFromCart = () => {
   top: -0.8rem; /* 구분선 위로 올리기 */
   z-index: 2;
 }
-</style>
 
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-content button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px;
+}
+</style>

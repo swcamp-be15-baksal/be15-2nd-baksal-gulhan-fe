@@ -1,9 +1,11 @@
 <script setup>
 
 import OrderHistory from '@/features/mypage/components/payment/OrderHistory.vue';
+import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
 </script>
 
 <template>
+  <MyPageHeader />
   <div class="purchase-list-view">
     <OrderHistory />
   </div>
@@ -15,8 +17,5 @@ import OrderHistory from '@/features/mypage/components/payment/OrderHistory.vue'
   max-width: 60rem;
   margin: 0 auto;
 }
-h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
+
 </style>
