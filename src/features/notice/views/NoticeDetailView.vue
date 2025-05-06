@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { fetchNoticeDetail, deleteNotice } from '@/features/notice/api/notice'
 import { useAuthStore } from '@/stores/auth'
 
@@ -13,7 +13,6 @@ const notice = ref(null)
 
 onMounted(async () => {
   try {
-    console.log(authStore.setAuth())
     const res = await fetchNoticeDetail(noticeId)
     notice.value = res.noticeDTO
   } catch (e) {
@@ -43,7 +42,6 @@ const onDelete = async () => {
 const goBack = () => router.push('/notice')
 const goToWrite = () => router.push('/notice/write')
 
-// 관리자 여부 확인하는 코드 ( 잘 모르겠음.. )
 const isAdmin = authStore.userRank === 'SLAVE'
 </script>
 

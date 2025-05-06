@@ -40,7 +40,7 @@ const onSubmit = async () => {
       authStore.accessToken
     )
     alert('수정 완료!')
-    router.push('/notice')
+    router.push(`/notice/${noticeId}`)
   } catch (e) {
     alert('수정 실패! 다시 시도해 주세요.',e)
   }

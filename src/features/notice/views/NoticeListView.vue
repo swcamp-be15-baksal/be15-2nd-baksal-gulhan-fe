@@ -42,7 +42,7 @@ const handleSearch = (keyword) => {
 }
 
 // 관리자 여부 확인하는 코드 ( 잘 모르겠음.. )
-const isAdmin = authStore.userRank === 1
+const isAdmin = authStore.userRank === 'SLAVE'
 </script>
 
 <template>
