@@ -1,22 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue'
-import { fetchUserBoard, fetchUserComment } from '@/features/mypage/api.js';
-import UserPostList from '@/features/mypage/components/post/UserPostList.vue';
-import UserCommentList from '@/features/mypage/components/post/UserCommentList.vue';
-
-
+import { fetchUserBoard, fetchUserComment } from '@/features/mypage/api.js'
+import UserPostList from '@/features/mypage/components/post/UserPostList.vue'
+import UserCommentList from '@/features/mypage/components/post/UserCommentList.vue'
+import PaginationBar from '@/components/common/PaginationBar.vue'
 
 const tab = ref('post')
 const boardList = ref([])
 const commentList = ref([])
+const currentPage = ref(1)
+const pageSize = 20
+
 const authStore = useAuthStore()
 const accessToken = authStore.accessToken
 
 const fetchData = async () => {
   if (!accessToken) return
-
   try {
     const [boardRes, commentRes] = await Promise.all([
       fetchUserBoard(accessToken),
@@ -33,7 +34,19 @@ onMounted(fetchData)
 
 const changeTab = (type) => {
   tab.value = type
+  currentPage.value = 1
 }
+
+const currentItems = computed(() => {
+  const items = tab.value === 'post' ? boardList.value : commentList.value
+  const start = (currentPage.value - 1) * pageSize
+  return items.slice(start, start + pageSize)
+})
+
+const totalPages = computed(() => {
+  const total = tab.value === 'post' ? boardList.value.length : commentList.value.length
+  return Math.ceil(total / pageSize)
+})
 </script>
 
 <template>
@@ -48,10 +61,19 @@ const changeTab = (type) => {
       <button :class="{ active: tab === 'comment' }" @click="changeTab('comment')">댓글</button>
     </div>
 
-    <UserPostList v-if="tab === 'post'" :items="boardList" />
-    <UserCommentList v-else :items="commentList" />
+    <UserPostList v-if="tab === 'post'" :items="currentItems" />
+    <UserCommentList v-else :items="currentItems" />
+
+    <div class="pagination-bar">
+      <PaginationBar
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @update:page="(p) => (currentPage.value = p)"
+      />
+    </div>
   </div>
 </template>
+
 
 <style scoped>
 .user-post-view {
@@ -79,5 +101,38 @@ const changeTab = (type) => {
 .tab-buttons .active {
   background-color: #333;
   color: white;
+}
+
+.user-post-view {
+  background: #fdfbf5;
+  padding: 32px 60px;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tab-buttons button {
+  padding: 6px 14px;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #eee;
+  color: #555;
+}
+
+.tab-buttons .active {
+  background-color: #333;
+  color: white;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 </style>
