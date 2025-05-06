@@ -3,16 +3,21 @@ import { ref, computed } from 'vue';
 import QuillEditor from '@/components/common/QuillEditor.vue';
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router';
+
 const router = useRouter();
+
 const props = defineProps({
   itemId: {
     type: [String, Number],
     required: true,
   }
 });
+
 const goToRefundConfirm = () => {
   router.push(`/refund/${props.itemId}/confirm`);
 };
+
+const showModal = ref(false);
 
 const purchases = ref([
   {
@@ -90,10 +95,13 @@ const refundReason = ref('');
         <p>2. 취소는 요청 후 영업일 기준 3~4일이 소요됩니다.</p>
       </div>
 
-      <!-- 구매일 + 주문번호 영역 -->
       <div class="meta-info">
         <p class="purchase-date">
-          {{ new Date(purchases.find(p => p.items.some(i => i.id === targetItem.id)).purchasedAt).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '') }}
+          {{
+            new Date(purchases.find(p => p.items.some(i => i.id === targetItem.id)).purchasedAt)
+              .toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+              .replace(/\. /g, '.').replace('.', '')
+          }}
         </p>
         <p class="order-id">(구매내역 주문 번호: {{ targetItem.id }})</p>
       </div>
@@ -115,13 +123,23 @@ const refundReason = ref('');
       </div>
 
       <div class="submit-refund">
-        <button class="refund-button" @click="goToRefundConfirm">환불 신청</button>
+        <button class="refund-button" @click="showModal = true">환불 신청</button>
       </div>
     </div>
 
-
     <div v-else>
       <p>해당 상품 정보를 찾을 수 없습니다.</p>
+    </div>
+
+    <!-- ✅ 환불 확인 모달 -->
+    <div class="modal-overlay" v-if="showModal">
+      <div class="modal-content">
+        <p class="modal-message">정말 환불하시겠습니까?</p>
+        <div class="modal-buttons">
+          <button class="modal-button confirm" @click="goToRefundConfirm">환불하기</button>
+          <button class="modal-button cancel" @click="showModal = false">취소</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -147,11 +165,10 @@ const refundReason = ref('');
   margin: 1rem 0;
 }
 
-/* 환불 상세 정보 영역 */
 .refund-details {
-  background-color: white; /* 배경색 흰색 */
-  border: 1px solid #ddd; /* 경계선 */
-  border-radius: 8px; /* 경계선 둥글게 */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -196,7 +213,7 @@ const refundReason = ref('');
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  gap: 1rem; /* ✅ 이 부분이 포인트: 날짜와 주문번호 간격 */
+  gap: 1rem;
   font-size: 0.95rem;
 }
 
@@ -229,5 +246,58 @@ const refundReason = ref('');
 .refund-button:hover {
   background-color: #5D857D;
 }
-</style>
 
+/* ✅ 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 28rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-message {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-button {
+  flex: 1;
+  height: 3rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-button.confirm {
+  background-color: #E57575;
+  color: white;
+}
+
+.modal-button.cancel {
+  background-color: #ccc;
+  color: #333;
+}
+</style>

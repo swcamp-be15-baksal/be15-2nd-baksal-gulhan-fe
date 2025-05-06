@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: import.meta.env.VITE_COMMERCE_SERVER_LOCAL_URL,
+    headers: {'Content-Type': 'application/json'},
+    withCredentials: true,
 });
 
 const api2 = axios.create({
@@ -10,6 +12,7 @@ const api2 = axios.create({
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true, // HttpOnly Cookie 사용 시 설정하기!
 });
+
 
 api2.interceptors.response.use(
     (res) => res,

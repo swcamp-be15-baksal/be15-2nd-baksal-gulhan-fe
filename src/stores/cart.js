@@ -4,12 +4,10 @@ import { computed, ref } from 'vue';
 export const useCartStore = defineStore('cart', () => {
   const cartItems = ref(mockData.items)
   const selectedItems = ref([])
-  // Getter: 선택된 아이템들의 총 금액 계산
   const totalPrice = computed(() => {
     return selectedItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
   })
 
-  // Actions
   const addItem = (item) => {
     cartItems.value.push(item)
   }

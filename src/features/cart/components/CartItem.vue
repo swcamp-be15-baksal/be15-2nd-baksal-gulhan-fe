@@ -7,7 +7,6 @@ const props = defineProps({
 })
 const cartStore = useCartStore()
 
-// id 기준으로 선택 여부 확인
 const isSelected = computed(() =>
   cartStore.selectedItems.some((selectedItem) => selectedItem.id === props.item.id)
 )
@@ -26,31 +25,27 @@ const decreaseCount = () => {
   }
 }
 
-const showModal = ref(false) // 모달 표시 상태
+const showModal = ref(false)
 
 const removeFromCart = () => {
-  showModal.value = true // X 버튼 클릭 시 모달 표시
+  showModal.value = true
 }
 
 const closeModal = () => {
-  showModal.value = false // 모달 닫기
+  showModal.value = false
 }
 
 const confirmDelete = () => {
-  cartStore.removeItem(props.item.id) // 항목 삭제
-  showModal.value = false // 삭제 후 모달 닫기
+  cartStore.removeItem(props.item.id)
+  showModal.value = false
 }
 </script>
 
 <template>
   <div class="cart-container">
     <div class="cart-item">
-      <!-- 상자 내 구분선과 체크박스 배치 -->
       <div class="cart-item-header">
-        <!-- 구분선 -->
         <div class="item-line"></div>
-
-        <!-- 체크박스 -->
         <input
           type="checkbox"
           :checked="isSelected"
@@ -60,9 +55,7 @@ const confirmDelete = () => {
         <button class="cancel-btn" @click="removeFromCart">X</button>
       </div>
 
-      <!-- 본문 내용 -->
       <div class="cart-item-body">
-        <!-- 왼쪽 영역 -->
         <div class="item-left">
           <div class="cart-item-image">
             <img :src="item.image" alt="상품이미지"/>
@@ -73,7 +66,6 @@ const confirmDelete = () => {
           </div>
         </div>
 
-        <!-- 오른쪽 영역 -->
         <div class="item-right">
           <div class="item-price">{{ item.price * item.quantity }}원</div>
           <div class="item-controls">
@@ -89,8 +81,10 @@ const confirmDelete = () => {
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-content">
         <h3>이 항목을 삭제하시겠습니까?</h3>
-        <button @click="confirmDelete">삭제</button>
-        <button @click="closeModal">취소</button>
+        <div class="modal-buttons">
+          <button class="delete-btn" @click="confirmDelete">삭제</button>
+          <button class="cancel-btn-modal" @click="closeModal">취소</button>
+        </div>
       </div>
     </div>
   </div>
@@ -237,7 +231,7 @@ const confirmDelete = () => {
   border-radius: 0.25rem;
   position: absolute;
   right: 1rem;
-  top: -0.8rem; /* 구분선 위로 올리기 */
+  top: -0.8rem;
   z-index: 2;
 }
 
@@ -264,13 +258,30 @@ const confirmDelete = () => {
   text-align: center;
 }
 
-.modal-content button {
-  background-color: #f0f0f0;
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.delete-btn {
+  background-color: #E57575;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  margin: 10px;
+  color: white;
+}
+
+.cancel-btn-modal {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>

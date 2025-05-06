@@ -1,7 +1,7 @@
 <script setup>
 
 import OrderHistory from '@/features/mypage/components/payment/OrderHistory.vue';
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 </script>
 
 <template>
