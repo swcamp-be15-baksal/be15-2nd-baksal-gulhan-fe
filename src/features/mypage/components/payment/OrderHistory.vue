@@ -152,9 +152,12 @@ const toggleDelivery = (item) => (item.showDelivery = !item.showDelivery)
             </div>
           </div>
           <div class="actions">
-            <button @click="toggleDelivery(item)">배송조회</button>
-            <button>결제취소</button>
+            <button class="action-button" @click="toggleDelivery(item)">배송조회</button>
+            <router-link :to="'/refund/' + item.id" class="action-button-link">
+              결제취소
+            </router-link>
           </div>
+
           <button v-if="item.status === 'waiting'" @click="confirmPurchase(item)" class="confirm-button">구매 확정</button>
           <button v-if="item.status === 'confirmed'" class="review-button">리뷰 쓰기</button>
           <div v-if="item.showDelivery" class="delivery">송장번호: 1234567890</div>
@@ -313,19 +316,28 @@ const toggleDelivery = (item) => (item.showDelivery = !item.showDelivery)
 
 .actions {
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
 }
 
-.actions button {
+.action-button,
+.action-button-link {
   flex: 1;
+  text-align: center;
+  background-color: #ffffff;
+  color: black;
   padding: 0.75rem;
-  border: none;
+  border: 1px solid #000000;
   border-radius: 0.375rem;
-  background-color: #f2f2f2;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
 }
+
+.action-button-link:hover,
+.action-button:hover {
+  background-color: #218838;
+}
+
 
 .delivery {
   margin-top: 0.5rem;
@@ -349,7 +361,7 @@ const toggleDelivery = (item) => (item.showDelivery = !item.showDelivery)
 
 .review-button {
   width: 100%;
-  background-color: #E57575;
+  background-color: #28a745;
   color: white;
   padding: 1rem;
   border: none;
@@ -359,6 +371,6 @@ const toggleDelivery = (item) => (item.showDelivery = !item.showDelivery)
 }
 
 .review-button:hover {
-  background-color: #c05252;
+  background-color: #218838;
 }
 </style>
