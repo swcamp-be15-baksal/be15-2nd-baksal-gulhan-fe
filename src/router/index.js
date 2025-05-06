@@ -9,7 +9,7 @@ import { noticeRoutes } from '@/features/notice/router.js';
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [...mainRoutes, ...packageRoutes, ...userRoutes, ...mypageRoutes, ...goodsRoutes, ...noticeRoutes, ...travelMatePostRoutes],
+    routes: [...mainRoutes, ...packageRoutes, ...userRoutes, ...mypageRoutes, ...goodsRoutes, ...noticeRoutes, ...travelMatePostRoutes, ...placeRoutes],
     scrollBehavior() {
         return { left: 0, top: 0 }; // 모든 라우트 변경시 페이지의 최상단으로 스크롤
     },
