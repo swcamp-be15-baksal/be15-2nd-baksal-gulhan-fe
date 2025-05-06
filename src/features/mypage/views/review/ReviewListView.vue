@@ -1,8 +1,8 @@
 <script setup>
-import ReviewCard from '@/features/mypage/components/ReviewCard.vue';
+import ReviewCard from '@/features/mypage/components/common/ReviewCard.vue';
 import { ref } from 'vue';
 
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 const reviews = ref([
     {
@@ -28,8 +28,9 @@ const reviews = ref([
 </script>
 
 <template>
-    <MyPageHeader />
-    <div class="container">
-        <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
-    </div>
+  <MyPageHeader />
+  <div class="d-flex flex-column align-items-center">
+    <h2 class="text-center fw-bold fs-3 mb-5">내가 쓴 리뷰</h2>
+    <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
+  </div>
 </template>

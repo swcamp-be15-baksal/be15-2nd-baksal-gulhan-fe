@@ -21,7 +21,7 @@ export const mypageRoutes = [
   {
     path : '/mypage/orderhistory',
     name : 'OrderHistory',
-    component : () => import('@/features/mypage/views/OrderHistoryView.vue')
+    component : () => import('@/features/mypage/views/orderhistory/OrderHistoryView.vue')
   },
   // 리뷰 조회
   {
@@ -69,6 +69,6 @@ export const mypageRoutes = [
   {
     path : '/mypage/like',
     name : 'mypage',
-    component : () => import('@/features/mypage/views/LikeListView.vue')
+    component : () => import('@/features/mypage/views/like/LikeListView.vue')
   }
 ]

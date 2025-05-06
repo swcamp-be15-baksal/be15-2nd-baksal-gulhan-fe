@@ -1,7 +1,7 @@
 <script setup>
 import router from '@/router/index.js';
-import DeliveryAddressList from '@/features/mypage/components/DeliveryAddressList.vue';
-import MyPageHeader from '@/features/mypage/components/MyPageHeader.vue';
+import DeliveryAddressList from '@/features/mypage/components/list/deliveryaddress/DeliveryAddressList.vue';
+import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 </script>
 
 <template>
