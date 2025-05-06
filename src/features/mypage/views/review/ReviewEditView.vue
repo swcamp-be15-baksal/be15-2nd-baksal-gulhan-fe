@@ -1,17 +1,25 @@
 <script setup>
 import ReviewForm from '@/features/mypage/components/form/review/ReviewForm.vue';
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const initialData = ref(null);
 
 onMounted(async () => {
+  const route = useRoute();
+
+  /* api로 패키지 or 기념품 정보 불러오기*/
   // 테스트용
   initialData.value = {
-    detail: '대체적으로 좋았다네용',
-    rating: 4,
+    reviewId: route.query.reviewId,
+    detail: route.query.content,
+    rating: route.query.rating,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP6ecgsNy1Qi0qVOlD3jfeWg6IDW89ZV8chA&s'
   };
+
 });
+
+console.log(initialData.value)
 </script>
 
 <template>
