@@ -1,5 +1,5 @@
 <script setup>
-import ReviewForm from '@/features/mypage/components/ReviewForm.vue';
+import ReviewForm from '@/features/mypage/components/form/review/ReviewForm.vue';
 import { onMounted, ref } from 'vue';
 
 const initialData = ref(null);
