@@ -22,13 +22,16 @@ export function fetchPackageDetail(id) {
     return api.get(`/s1/packages/list/${id}`);
 }
 
+import { api, api2 } from '@/plugins/axios.js';
+import { useAuthStore } from '@/stores/auth';
+
 export async function createPackage(payload) {
     try {
-        // 1. accessToken 확인
-        const accessToken = localStorage.getItem('accessToken');
+        const authStore = useAuthStore();
+        const accessToken = authStore.accessToken;
         if (!accessToken) throw new Error('로그인이 필요합니다.');
 
-        // 2. 사용자 정보 조회
+        // 사용자 정보 조회
         const userRes = await api2.get('/users/info', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -40,7 +43,7 @@ export async function createPackage(payload) {
             throw new Error('관리자만 패키지를 등록할 수 있습니다.');
         }
 
-        // 3. 패키지 등록 요청 (토큰 자동 포함됨)
+        // 패키지 등록 요청
         return await api.post('/s1/packages', payload);
     } catch (err) {
         console.error('[createPackage] 등록 실패:', err.message || err);

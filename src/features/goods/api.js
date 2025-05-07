@@ -13,10 +13,11 @@ export function fetchGoodsDetail(id) {
 
 export async function createGoods(payload) {
     try {
-        // 1. 사용자 정보 확인 (api2는 자동 토큰 설정 X)
-        const accessToken = localStorage.getItem('accessToken');
+        const authStore = useAuthStore();
+        const accessToken = authStore.accessToken;
         if (!accessToken) throw new Error('로그인이 필요합니다.');
 
+        // 1. 사용자 정보 확인 (api2는 자동 토큰 설정 X)
         const userRes = await api2.get('/users/info', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
