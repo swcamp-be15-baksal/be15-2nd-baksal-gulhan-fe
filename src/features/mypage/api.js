@@ -105,3 +105,13 @@ export async function toggleLike(targetId, targetType) {
         withCredentials: true,
     });
 }
+
+// 관심 목록 조회
+export function fetchLikes(accessToken, params) {
+  return api.get('/like/likes', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params
+  });
+}
