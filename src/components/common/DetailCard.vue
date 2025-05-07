@@ -78,7 +78,7 @@ async function deleteItem() {
             await deletePackage(id);
         }
         alert('삭제가 완료되었습니다.');
-        location.reload();
+        router.go(-1);
     } catch (err) {
         console.error('[삭제 실패]', err);
 
@@ -94,7 +94,7 @@ async function deleteItem() {
 <template>
     <div v-if="data" class="d-flex justify-content-center">
         <div class="d-flex" style="gap: 47px">
-            <img src="https://placehold.co/555x416" alt="data-image" class="main-img" />
+            <img :src="data.firstImage" alt="data-image" class="main-img" />
 
             <div class="info-box d-flex flex-column">
                 <div class="d-flex justify-content-end" style="position: relative; width: 353px">
