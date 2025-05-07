@@ -27,6 +27,7 @@ const handleLogin = async () => {
         authStore.setAuth(at);
         await router.replace('/');
     } catch (e) {
+      console.log(e)
         toast.error(e.response.data.message);
         // console.log(e);
     }

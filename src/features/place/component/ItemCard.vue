@@ -1,13 +1,12 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { getPlaces } from '@/features/place/api.js';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
-  data: Object,
-  linkPrefix: { type: String, default: '/place' },
-  idKey: { type: String, default: 'placeId' },
-  categoryKey: { type: String, default: 'category' },
-  targetTypeKey: { type: String, default: null }, // 👈 추가
+    data: Object,
+    linkPrefix: { type: String, default: '/place' },
+    idKey: { type: String, default: 'placeId' },
+    categoryKey: { type: String, default: 'category' },
+    targetTypeKey: { type: String, default: null }, // 👈 추가
 });
 
 // onMounted(async () => {
@@ -22,16 +21,15 @@ const props = defineProps({
 const place = ref({ ...props.data });
 
 watch(
-  () => props.data,
-  (newData) => {
-    if (newData) {
-      place.value = { ...newData };
-      console.log('place 데이터 변경 감지:', newData);
-    }
-  },
-  { immediate: true }
+    () => props.data,
+    (newData) => {
+        if (newData) {
+            place.value = { ...newData };
+            console.log('place 데이터 변경 감지:', newData);
+        }
+    },
+    { immediate: true }
 );
-
 </script>
 
 <template>
@@ -54,10 +52,9 @@ watch(
                 <div class="category-label">{{ props.data[categoryKey] }}</div>
             </div>
             <div class="card-content">
-                <div class="main-info">{{ place.value }}</div>
+                <div class="main-info">{{ props.data.title }}</div>
                 <div class="address">{{ props.data.address }}</div>
-                <div class="card-bottom">
-                </div>
+                <div class="card-bottom"></div>
             </div>
         </router-link>
     </div>
@@ -81,7 +78,7 @@ watch(
 
 .data-img img {
     width: 100%;
-    height: auto;
+    height: 200px;
     object-fit: cover;
     border-radius: 20px 20px 0 0;
 }
@@ -109,6 +106,9 @@ watch(
     font-size: 1.5rem;
     font-weight: 700;
     color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .address {

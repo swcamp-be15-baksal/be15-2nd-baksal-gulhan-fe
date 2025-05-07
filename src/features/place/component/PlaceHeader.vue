@@ -143,7 +143,6 @@ async function selectParentArea(parentArea) {
   }catch (e) {
 
   }
-  selectedArea.value = '시/군/구';
 }
 
 function selectArea(area) {
