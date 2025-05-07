@@ -81,6 +81,7 @@ import QuillResize from 'quill-resize-module';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchGoodsDetail, updateGoods } from '@/features/goods/api';
 import { nextTick } from 'vue';
+import { uploadTempImage } from '@/apis/image.js';
 
 onMounted(async () => {
     initQuill();
@@ -120,28 +121,32 @@ const sold = ref('');
 const remaining = ref('');
 let quill;
 
-onMounted(async () => {
-    initQuill();
+function imageHandler() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
 
-    if (goodsId) {
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        console.log('파일 정보 : ', file);
+
         try {
-            const res = await fetchGoodsDetail(goodsId);
-            const data = res.data.data;
+            const response = await uploadTempImage(formData);
+            console.log(response);
+            const imageUrl = response.data.data.imageUrl;
 
-            title.value = data.title;
-            category.value = reverseMapCategoryIdToName(data.goodsCategoryId);
-            price.value = data.price.toString();
-            quantity.value = data.quantity.toString();
-            sold.value = data.sold.toString();
-            remaining.value = data.remaining.toString();
-
-            await nextTick();
-            quill.root.innerHTML = data.detail || '';
+            const range = quill.getSelection();
+            quill.insertEmbed(range.index, 'image', imageUrl);
         } catch (err) {
-            console.error('[수정모드] 불러오기 실패:', err);
+            console.error('이미지 업로드 실패:', err);
         }
-    }
-});
+    };
+}
 
 function initQuill() {
     if (quill) return;
@@ -158,7 +163,12 @@ function initQuill() {
 
     quill = new Quill('#editor', {
         modules: {
-            toolbar: toolbarOptions,
+            toolbar: {
+                container: toolbarOptions,
+                handlers: {
+                    image: imageHandler,
+                },
+            },
             resize: {
                 parchment: {
                     image: {
@@ -180,16 +190,22 @@ function initQuill() {
 const onCancel = () => router.back();
 
 const onSubmit = async () => {
-    const content = quill.root.innerText.trim();
+    const content = quill.root.innerHTML.trim();
+
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map((img) => img.getAttribute('src'));
 
     const payload = {
         title: title.value.trim(),
-        detail: content,
+        detail: fixedContent,
         quantity: Number(quantity.value) || 0,
         sold: Number(sold.value) || 0,
         remaining: Number(remaining.value) || 0,
         price: Number(price.value) || 0,
         goodsCategoryId: mapCategoryNameToId(category.value),
+        imageUrls: imageUrls,
     };
 
     try {

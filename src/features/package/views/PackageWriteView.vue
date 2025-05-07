@@ -157,6 +157,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
 import dayjs from 'dayjs';
+import { uploadTempImage } from '@/apis/image.js';
 Quill.register('modules/resize', QuillResize);
 
 const route = useRoute();
@@ -184,6 +185,33 @@ const guide = ref({
 
 let quill;
 
+function imageHandler() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        console.log('파일 정보 : ', file);
+
+        try {
+            const response = await uploadTempImage(formData);
+            console.log(response);
+            const imageUrl = response.data.data.imageUrl;
+
+            const range = quill.getSelection();
+            quill.insertEmbed(range.index, 'image', imageUrl);
+        } catch (err) {
+            console.error('이미지 업로드 실패:', err);
+        }
+    };
+}
+
 onMounted(() => {
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
@@ -197,7 +225,12 @@ onMounted(() => {
 
     quill = new Quill('#editor', {
         modules: {
-            toolbar: toolbarOptions,
+            toolbar: {
+                container: toolbarOptions,
+                handlers: {
+                    image: imageHandler,
+                },
+            },
             resize: {
                 parchment: {
                     image: {
@@ -258,12 +291,17 @@ onMounted(async () => {
 const disabled = ref(false);
 
 const onSubmit = async () => {
-    const content = quill.root.innerText.trim();
+    const content = quill.root.innerHTML.trim();
     const genderCode = guide.value.gender === '남' ? 'M' : 'F';
+
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map((img) => img.getAttribute('src'));
 
     const payload = {
         title: title.value.trim(),
-        detail: quill.root.innerHTML.trim(), // 기존 innerText → innerHTML
+        detail: fixedContent, // 기존 innerText → innerHTML
         area: formData.value.address.split(' ').slice(0, 2).join(' '),
         price: Number(price.value) || 0,
         capacity: Number(quantity.value) || 0,
@@ -275,6 +313,7 @@ const onSubmit = async () => {
         guideEmail: guide.value.email?.trim() || '',
         guidePhone: guide.value.phone,
         guideGender: guide.value.gender === '남' ? 'M' : 'F',
+        imageUrls: imageUrls,
     };
 
     try {
