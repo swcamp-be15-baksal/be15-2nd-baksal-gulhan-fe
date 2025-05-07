@@ -3,6 +3,29 @@ import editIcon from '@/assets/icons/edit.svg';
 import deleteIcon from '@/assets/icons/delete.svg';
 import heartIcon from '@/assets/icons/heart.svg';
 import starIcon from '@/assets/icons/star.svg';
+import heartFilledIcon from '@/assets/icons/heartFilled.svg';
+import heartEmptyIcon from '@/assets/icons/heartEmpty.svg';
+import { computed } from 'vue';
+import { deletePackage } from '@/features/package/api';
+import { deleteGoods } from '@/features/goods/api';
+import { useRouter } from 'vue-router';
+import { toggleLike } from '@/features/mypage/api.js';
+import { ref } from 'vue';
+
+const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
+const isLiked = ref(false);
+
+const router = useRouter();
+
+function goToEditPage() {
+    const path = isGoods.value ? '/goods/write' : '/packages/write';
+    const queryKey = isGoods.value ? 'goodsId' : 'packageId';
+
+    router.push({
+        path,
+        query: { [queryKey]: props.data[queryKey] || props.data.packageId },
+    });
+}
 
 const props = defineProps({
     data: {
@@ -28,16 +51,59 @@ function formatDate(ts) {
     const date = new Date(ts);
     return date.toISOString().split('T')[0];
 }
+
+const onLikeClick = async () => {
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+    const type = isGoods.value ? 'GOODS' : 'PACKAGE';
+
+    try {
+        const res = await toggleLike(id, type);
+        isLiked.value = res.data.liked;
+        alert('좋아요가 반영되었습니다.');
+    } catch (err) {
+        console.error('[좋아요 실패]', err);
+        alert('좋아요 요청 중 오류 발생');
+    }
+};
+
+async function deleteItem() {
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+
+    try {
+        if (isGoods.value) {
+            await deleteGoods(id);
+        } else {
+            await deletePackage(id);
+        }
+        alert('삭제가 완료되었습니다.');
+        location.reload();
+    } catch (err) {
+        console.error('[삭제 실패]', err);
+
+        if (err.response?.status === 401 || err.response?.data?.errorCode === '11003') {
+            alert('로그인이 필요합니다. 다시 로그인해주세요.');
+        } else {
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    }
+}
 </script>
 
 <template>
     <div v-if="data" class="d-flex justify-content-center">
         <div class="d-flex" style="gap: 47px">
             <img src="https://placehold.co/555x416" alt="data-image" class="main-img" />
+
             <div class="info-box d-flex flex-column">
                 <div class="d-flex justify-content-end" style="position: relative; width: 353px">
-                    <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
-                    <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
+                    <button class="edit-icon" @click="goToEditPage">
+                        <img :src="editIcon" alt="edit-icon" />
+                    </button>
+                    <button class="edit-icon" @click="deleteItem">
+                        <img :src="deleteIcon" alt="delete-icon" />
+                    </button>
                 </div>
                 <div class="data-info">
                     <button class="category" style="margin-bottom: 8px">
@@ -56,16 +122,18 @@ function formatDate(ts) {
                     </div>
                     <div class="like-review" style="margin-bottom: 16px">
                         <img :src="starIcon" />
-                        <span style="color: #ffdc3e">{{ data.avgRating }}</span>
+                        <span style="color: #ffdc3e">{{ data.avgRating ?? 0 }}</span>
                     </div>
                     <div style="font-size: 1.3rem; color: #adadad; font-weight: 400">
                         잔여수량 {{ data.remaining }}
                     </div>
                 </div>
+                <button @click="onLikeClick" class="like-btn">
+                    <img :src="isLiked ? heartFilledIcon : heartEmptyIcon" alt="like" />
+                </button>
                 <div class="price">{{ data.price.toLocaleString() }}원</div>
                 <div class="buy-button">
-                    <button style="background-color: #2c2c2c">장바구니 담기</button>
-                    <button style="background-color: #e57575">결제하기</button>
+                    <button style="background-color: #e57575">장바구니 담기</button>
                 </div>
             </div>
         </div>
@@ -73,6 +141,21 @@ function formatDate(ts) {
 </template>
 
 <style scoped>
+.like-btn {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.like-btn img {
+    width: 32px;
+    height: 32px;
+}
+
 .main-img {
     width: 555px;
     height: 416px;

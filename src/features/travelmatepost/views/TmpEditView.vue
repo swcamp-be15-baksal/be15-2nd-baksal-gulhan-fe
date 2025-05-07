@@ -1,27 +1,52 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import posts from '@/features/travelmatepost/mock/tmp.json'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import QuillEditor from '@/components/common/QuillEditor.vue'
+import { fetchTmpDetail, updateTmpPost } from '@/features/travelmatepost/api/travelmatepost.js'
 
-const router = useRouter()
 const route = useRoute()
-const postId = Number(route.params.id)
+const router = useRouter()
+const authStore = useAuthStore()
 
+const postId = Number(route.params.id)
 const title = ref('')
 const content = ref('')
 
-onMounted(() => {
-  const post = posts.find(p => p.travelMatePostId === postId)
-  if (post) {
-    title.value = post.title
-    content.value = post.content
+onMounted(async () => {
+  try {
+    const res = await fetchTmpDetail(postId)
+    title.value = res.tmpDetailDTO.title
+    content.value = res.tmpDetailDTO.content
+  } catch (err) {
+    alert('게시글 불러오기 실패')
+    console.error(err)
   }
 })
 
-const onSubmit = () => {
-  alert('수정 완료 (실제 저장은 API 연동 필요)')
-  router.push('/board')
+const onSubmit = async () => {
+  if (!title.value || !content.value) {
+    alert('제목과 내용을 모두 입력해주세요.')
+    return
+  }
+
+  try {
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.value.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map(img => img.getAttribute('src'));
+    await updateTmpPost(postId, {
+      title: title.value,
+      content: fixedContent,
+      imageUrls: imageUrls
+    }, authStore.accessToken)
+
+    alert('수정이 완료되었습니다.')
+    router.push(`/board/${postId}`)
+  } catch (err) {
+    alert('수정 실패')
+    console.error(err)
+  }
 }
 
 const onCancel = () => {

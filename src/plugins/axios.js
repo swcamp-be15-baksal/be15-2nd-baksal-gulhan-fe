@@ -11,7 +11,15 @@ const api = axios.create({
 const api2 = axios.create({
     baseURL: import.meta.env.VITE_AUTH_SERVER_LOCAL_URL,
     headers: { 'Content-Type': 'application/json' },
-    withCredentials: true, // HttpOnly Cookie 사용 시 설정하기!
+    withCredentials: true, // HttpOnly Cookie 사용 시 d설정하기!
+});
+
+const imageApi = axios.create({
+    baseURL: import.meta.env.VITE_AUTH_SERVER_LOCAL_URL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
 });
 
 
@@ -58,4 +66,4 @@ api2.interceptors.response.use(
     }
 );
 
-export { api, api2 };
+export { api, api2, imageApi };

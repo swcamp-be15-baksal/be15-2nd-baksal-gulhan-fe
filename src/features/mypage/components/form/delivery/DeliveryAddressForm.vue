@@ -1,6 +1,85 @@
+<script setup>
+import { computed, nextTick, ref, watch } from 'vue';
+
+const emit = defineEmits(['submit']);
+
+const {submitLabel, disabled, initialData } = defineProps({
+  submitLabel: { type: String, default: '제출' },
+  disabled:    { type: Boolean, default: false },
+  initialData: { type: Object, default: null }
+});
+
+const formData = ref({
+  receiver : '',
+  receiverPhone : '',
+  zipcode: '',
+  address : '',
+  detailAddress : '',
+  defaultAddress: false
+});
+
+// 수정 모드일 때 사용
+watch(
+  () => initialData,
+  data => {
+    console.log(data);
+    if (data) {
+      Object.assign(formData.value, {
+        receiver:       data.receiver || '',
+        receiverPhone:          data.receiverPhone || '',
+        zipcode:       data.zipcode || '',
+        address:        data.address || '',
+        detailAddress:  data.detailAddress|| '',
+        defaultAddress:      data.defaultAddress === 'Y'
+      });
+    }
+  },
+  { immediate: true }
+);
+
+const isFormValid = computed(() => {
+  const f = formData.value;
+  return (
+    f.receiver &&
+    f.receiverPhone &&
+    f.zipcode &&
+    f.address &&
+    f.detailAddress
+  );
+});
+
+function submitForm() {
+  const { defaultAddress, receiverPhone, ...rest } = formData.value;
+
+  emit('submit', {
+    ...rest,
+    receiverPhone: receiverPhone,
+    defaultAddress: defaultAddress ? 'Y' : 'N'
+  });
+  console.log('폼 제출 : ', {
+    ...rest,
+    receiverPhone: receiverPhone,
+    defaultAddress: defaultAddress ? 'Y' : 'N'
+  });
+}
+
+function searchZipcode() {
+  new window.daum.Postcode({
+    oncomplete: function (data) {
+      formData.value.zipcode = data.zonecode;
+      formData.value.address = data.roadAddress !== '' ? data.roadAddress : data.jibunAddress;
+      nextTick(() => {
+        document.getElementById('detail-address')?.focus();
+      });
+    }
+  }).open();
+}
+</script>
+
 <template>
   <div class="container">
     <form @submit.prevent="submitForm" class="delivery-address-form">
+      <label for="receiver" class="form-label fw-bold text-secondary mb-0">수령인</label>
       <input
         type="text"
         placeholder="수령인"
@@ -8,29 +87,33 @@
         v-model="formData.receiver"
         :disabled="disabled"
       />
+      <label for="receiverPhone" class="form-label fw-bold text-secondary mb-0">전화번호</label>
       <input
         type="text"
         placeholder="전화번호"
-        id="phone"
-        v-model="formData.phone"
+        id="receiverPhone"
+        v-model="formData.receiverPhone"
         :disabled="disabled"
       />
-      <div class="postcode-box">
+      <label for="zipcode" class="form-label fw-bold text-secondary mb-0">우편번호</label>
+      <div class="zipcode-box">
         <input
           type="text"
           placeholder="우편번호"
-          id="postcode"
-          v-model="formData.postcode"
+          id="zipcode"
+          v-model="formData.zipcode"
           :disabled="disabled"
         />
-        <button type="button" @click="searchPostcode">검색</button>
+        <button type="button" @click="searchZipcode">검색</button>
       </div>
+      <label for="address" class="form-label fw-bold text-secondary mb-0">주소</label>
       <input
         type="text"
         v-model="formData.address"
         placeholder="기본 주소"
         :disabled="disabled"
       />
+      <label for="detailAddress" class="form-label fw-bold text-secondary mb-0">상세 주소</label>
       <input type="text"
              id="detail-address"
              v-model="formData.detailAddress"
@@ -42,7 +125,7 @@
           type="checkbox"
           id="default-address"
           class="default-address"
-          v-model="formData.isDefault"
+          v-model="formData.defaultAddress"
         />
         <label for="default-address">기본 배송지로 설정</label>
       </div>
@@ -50,79 +133,6 @@
     </form>
   </div>
 </template>
-
-<script setup>
-import { computed, nextTick, ref, watch } from 'vue';
-
-const {initialData, submitLabel, disabled } = defineProps({
-  initialData: { type: Object, default: null },
-  submitLabel: { type: String, default: '제출' },
-  disabled:    { type: Boolean, default: false }
-});
-
-const formData = ref({
-  receiver : '',
-  phone : '',
-  postcode: '',
-  address : '',
-  detailAddress : '',
-  isDefault: false
-});
-
-// 수정 모드이면 initialData 주입
-watch(
-  () => initialData,
-  data => {
-    if (data) {
-      Object.assign(formData.value, {
-        receiver:       data.receiver,
-        phone:          data.phone,
-        postcode:       data.postcode,
-        address:        data.address,
-        detailAddress:  data.detailAddress,
-        isDefault:      data.isDefault === 'Y'
-      });
-    }
-  },
-  { immediate: true }
-);
-
-const isFormValid = computed(() => {
-  const f = formData.value;
-  return (
-    f.receiver &&
-    f.phone &&
-    f.postcode &&
-    f.address &&
-    f.detailAddress
-  );
-});
-
-function submitForm() {
-  const { isDefault, ...rest } = formData.value;
-  // 백엔드 연동 후 주석 해제
-  // emit(
-  //   'submit',
-  //   { payload: { ...rest, isDefault: isDefault ? 'Y' : 'N' }
-  //   });
-  console.log('제출 테스트 입니다 :', {
-    ...rest,
-    isDefault: isDefault ? 'Y' : 'N'
-  });
-}
-
-function searchPostcode() {
-  new window.daum.Postcode({
-    oncomplete: function (data) {
-      formData.value.postcode = data.zonecode;
-      formData.value.address = data.roadAddress !== '' ? data.roadAddress : data.jibunAddress;
-      nextTick(() => {
-        document.getElementById('detail-address')?.focus();
-      });
-    }
-  }).open();
-}
-</script>
 
 <style scoped>
 .container {
@@ -145,13 +155,13 @@ function searchPostcode() {
   background: white;
 }
 
-.postcode-box {
+.zipcode-box {
   display: flex;
   gap: 8px;
   width: 440px;
 }
-.postcode-box input,
-.postcode-box button {
+.zipcode-box input,
+.zipcode-box button {
   height: 56px;
   padding: 0 16px;
   line-height: 1.2;
@@ -161,10 +171,10 @@ function searchPostcode() {
   cursor: pointer;
   box-sizing: border-box;
 }
-.postcode-box input {
+.zipcode-box input {
   flex : 5;
 }
-.postcode-box button {
+.zipcode-box button {
   flex: 1;
   display: flex;
   align-items: center;
@@ -192,5 +202,4 @@ function searchPostcode() {
   margin-bottom: 15px;
   cursor: pointer;
 }
-
 </style>
