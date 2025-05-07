@@ -59,11 +59,4 @@ function nextStep() {
   color: #ededed;
 }
 
-.kakao-signup{
-  background-color: #fee500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 </style>
