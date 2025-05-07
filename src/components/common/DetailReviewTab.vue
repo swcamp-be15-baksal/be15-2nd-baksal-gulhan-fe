@@ -73,7 +73,8 @@ onMounted(async () => {
 
             <div class="main">
                 <div v-if="activeTab === 'detail'">
-                    {{ detail }}
+                    <!-- {{ detail }} -->
+                    <div v-html="detail" />
                 </div>
                 <div v-else>
                     <template v-if="reviews.length > 0">
