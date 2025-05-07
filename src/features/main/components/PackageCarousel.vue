@@ -1,13 +1,26 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import PackageItem from '@/features/main/components/PackageItem.vue';
-import packages from '@/features/package/mock/packages.json';
+import { fetchPackageList } from '@/features/package/api.js';
+import { useToast } from 'vue-toastification';
+
 const router = useRouter();
+const toast = useToast();
+const packages = ref([]);
 
 function goToPackages() {
     router.push('/packages');
 }
+
+onMounted(async () => {
+    try {
+        const res = await fetchPackageList({ page: 1, size: 4 });
+        packages.value = res.data.data.packages;
+    } catch (err) {
+        toast.error('패키지 불러오기 실패: ' + (err.response?.data?.message || err.message));
+    }
+});
 </script>
 
 <template>
@@ -17,10 +30,7 @@ function goToPackages() {
             <button @click="goToPackages">+ 더보기</button>
         </div>
         <div class="grid">
-            <PackageItem
-                v-for="item in packages.slice(0, 4)"
-                :key="item.packageId"
-                :packages="item" />
+            <PackageItem v-for="item in packages" :key="item.packageId" :packages="item" />
         </div>
     </div>
 </template>
