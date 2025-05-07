@@ -12,8 +12,8 @@ export function getPlaces(params){
   return api.get(`/place/places?`, {params: params})
 }
 
-export function getPlaceDetail(placeId){
-  return api.get(`/place/${placeId}`)
+export function getPlaceDetail(placeId) {
+  return api.get(`/place/placeDetail/${placeId}`);
 }
 
 export function getLike(params){

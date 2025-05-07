@@ -45,7 +45,6 @@
           placeholder="원하는 장소를 검색해보세요!"
           @search="handleSearch"
         />
-        <button class="sort">시작일 빠른순</button>
       </div>
     </div>
     <div class="d-flex align-items-center gap-2" style="margin-top: 20px">
@@ -106,7 +105,7 @@ import SearchBar from '@/components/common/SearchBar.vue';
 import { getChildArea, getParentArea } from '@/features/place/api.js';
 
 // 필터 이벤트 emit을 위한 defineEmits
-const emit = defineEmits(['filter-change', 'areaId-change']);
+const emit = defineEmits(['filter-change', 'areaId-change', 'title-change']);
 
 // 내부 필터 상태
 const selectedFilter = ref('전체');
@@ -119,7 +118,7 @@ const areaList = ref([]);
 
 
 function handleSearch(keyword) {
-  console.log('검색어', keyword);
+  emit('title-change', keyword); // 🔥 검색어를 상위로 전달
 }
 
 function selectFilter(filter) {
@@ -136,6 +135,10 @@ function selectAreaId(areaId){
 async function selectParentArea(parentArea) {
   console.log("??",parentArea.areaId)
   selectedParentArea.value = parentArea.areaName;
+  // 2) 시/군/구 초기화
+  selectedArea.value = { areaName: '시/군/구' };
+  // 3) 상위에 areaId 변경(null) 알림
+  emit('areaId-change', null);
   try{
     const response = await getChildArea(parentArea.areaId)
     console.log('response', response)

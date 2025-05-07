@@ -33,9 +33,9 @@ const toggleLike = () => {
 </script>
 
 <template>
-  <div v-if="props.data" class="wrapper">
+  <div class="wrapper">
     <img
-      src="https://placehold.co/1166x421"
+      :src="props.data.image || 'https://placehold.co/1166x421'"
       alt="data-image"
       class="main-img"
     />

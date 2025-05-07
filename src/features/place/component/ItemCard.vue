@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
     data: Object,
@@ -7,6 +7,15 @@ const props = defineProps({
     idKey: { type: String, default: 'placeId' },
     categoryKey: { type: String, default: 'category' },
     targetTypeKey: { type: String, default: null }, // 👈 추가
+});
+
+const categoryLabel = computed(() => {
+  switch (props.data[props.categoryKey]) {
+    case 'MUSEUM': return '박물관';
+    case 'FOLK_VILLAGE': return '민속촌';
+    case 'HISTORIC_SITE': return '유적지';
+    default: return '';
+  }
 });
 
 // onMounted(async () => {
@@ -49,7 +58,7 @@ watch(
                         props.data.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'
                     "
                     alt="place image" />
-                <div class="category-label">{{ props.data[categoryKey] }}</div>
+                <div class="category-label">{{ categoryLabel }}</div>
             </div>
             <div class="card-content">
                 <div class="main-info">{{ props.data.title }}</div>
