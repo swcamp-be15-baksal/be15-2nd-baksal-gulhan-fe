@@ -1,12 +1,21 @@
 import {defineStore} from 'pinia';
-import mockData from '@/features/cart/mock/items.json'
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
+import { getCarts } from '@/features/cart/api/cart.js';
+import { useAuthStore } from '@/stores/auth.js';
 export const useCartStore = defineStore('cart', () => {
-  const cartItems = ref(mockData.items)
+  const cartItems = ref([]);
+  const authStore = useAuthStore();
+  const fetchCartItems = async () => {
+    try {
+      const response = await getCarts(authStore.accessToken)
+      cartItems.value = response.data.data.carts
+    } catch (error) {
+      console.error('장바구니 불러오기 실패:', error)
+    }
+  }
+  const imageSrc = 'https://placehold.co/555x416';
+
   const selectedItems = ref([])
-  const totalPrice = computed(() => {
-    return selectedItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
-  })
 
   const addItem = (item) => {
     cartItems.value.push(item)
@@ -17,9 +26,9 @@ export const useCartStore = defineStore('cart', () => {
     if (item) item.quantity = quantity
   }
 
-  const removeItem = (id) => {
-    cartItems.value = cartItems.value.filter((item) => item.id !== id)
-    selectedItems.value = selectedItems.value.filter((item) => item.id !== id) // 선택목록에서도 제거
+  const removeItem = (cartId) => {
+    cartItems.value = cartItems.value.filter((item) => item.cartId !== cartId)
+    selectedItems.value = selectedItems.value.filter((item) => item.cartId !== cartId) // 선택목록에서도 제거
   }
 
   const clearCart = () => {
@@ -28,7 +37,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const toggleSelection = (item) => {
-    const index = selectedItems.value.findIndex(selected => selected.id === item.id)
+    const index = selectedItems.value.findIndex(selected => selected.cartId === item.cartId)
     if (index !== -1) {
       selectedItems.value.splice(index, 1)
     } else {
@@ -47,12 +56,13 @@ export const useCartStore = defineStore('cart', () => {
   return {
     cartItems,
     selectedItems,
-    totalPrice,
     addItem,
     updateItemQuantity,
     removeItem,
     clearCart,
     toggleSelection,
-    toggleSelectAll
+    toggleSelectAll,
+    fetchCartItems,
+    imageSrc
   }
 })

@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import DatePicker from 'vue3-datepicker'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const now = new Date()
 const selectedDate = ref(null)
@@ -92,7 +95,7 @@ const filteredPurchases = computed(() =>
   })
 )
 
-const setCategory = (cat) => selectedCategory.value = cat
+const setCategory = (keyword) => selectedCategory.value = keyword
 const setDateRange = (range) => {
   selectedDateRange.value = range
   selectedDate.value = null
@@ -115,6 +118,8 @@ const openCancelModal = (item) => {
 const cancelPurchase = () => {
   if (itemToCancel.value) {
     itemToCancel.value.status = 'canceled' // 상태 변경
+    // 'refund/id'로 리다이렉트, 해당 품목의 id를 함께 전달
+    router.push(`/refund/${itemToCancel.value.id}`)
   }
   showModal.value = false
   itemToCancel.value = null

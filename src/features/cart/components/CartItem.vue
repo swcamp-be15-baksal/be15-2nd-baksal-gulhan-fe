@@ -1,14 +1,15 @@
 <script setup>
 import { useCartStore } from '@/stores/cart.js'
 import { computed, ref } from 'vue'
-
 const props = defineProps({
   item: Object
 })
+
 const cartStore = useCartStore()
 
+const imageSrc = cartStore.imageSrc;
 const isSelected = computed(() =>
-  cartStore.selectedItems.some((selectedItem) => selectedItem.id === props.item.id)
+  cartStore.selectedItems.some((selectedItem) => selectedItem.cartId === props.item.cartId),
 )
 
 const toggleSelection = () => {
@@ -16,12 +17,12 @@ const toggleSelection = () => {
 }
 
 const increaseCount = () => {
-  cartStore.updateItemQuantity(props.item.id, props.item.quantity + 1)
+  cartStore.updateItemQuantity(props.item.cartId, props.item.quantity + 1)
 }
 
 const decreaseCount = () => {
   if (props.item.quantity > 1) {
-    cartStore.updateItemQuantity(props.item.id, props.item.quantity - 1)
+    cartStore.updateItemQuantity(props.item.cartId, props.item.quantity - 1)
   }
 }
 
@@ -36,7 +37,7 @@ const closeModal = () => {
 }
 
 const confirmDelete = () => {
-  cartStore.removeItem(props.item.id)
+  cartStore.removeItem(props.item.cartId)
   showModal.value = false
 }
 </script>
@@ -58,10 +59,10 @@ const confirmDelete = () => {
       <div class="cart-item-body">
         <div class="item-left">
           <div class="cart-item-image">
-            <img :src="item.image" alt="상품이미지"/>
+            <img :src="imageSrc" alt="상품이미지"/>
           </div>
           <div class="item-info">
-            <div class="item-type">{{ item.type }}</div>
+            <div class="item-type">{{ item.targetType }}</div>
             <div class="item-name">{{ item.title }}</div>
           </div>
         </div>

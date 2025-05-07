@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useCartStore } from '@/stores/cart.js';
 
 const props = defineProps({
   orderItems: {
@@ -12,6 +13,8 @@ const shippingInfo = ref({
   address: '서울특별시 은평구 응암동 1010 번지 109동 3202호',
   phone: '010-1234-5678'
 })
+const cartStore = useCartStore();
+const imageSrc = cartStore.imageSrc;
 </script>
 
 <template>
@@ -27,10 +30,10 @@ const shippingInfo = ref({
     <div class="order-items">
       <div v-for="(item, index) in orderItems" :key="index" class="order-item">
         <div class="item-image">
-          <img :src="item.image" alt="상품이미지"/>
+          <img :src="imageSrc" alt="상품이미지"/>
         </div>
         <div class="item-info">
-          <span class="item-type">{{ item.type }}</span>
+          <span class="item-type">{{ item.targetType }}</span>
           <span class="item-name">{{ item.title }}</span>
         </div>
         <div class="item-quantity">{{ item.quantity }}개</div>

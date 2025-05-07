@@ -1,0 +1,305 @@
+body {
+  background-color: #e8f3ff;
+}
+
+.p {
+  padding: 0;
+  margin: 0;
+  font-family: Toss Product Sans, -apple-system, BlinkMacSystemFont, Bazier Square, Noto Sans KR, Segoe UI, Apple SD Gothic Neo, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji,
+  Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  color: #4e5968;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #4e5968;
+}
+
+.box_section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 1%), 0 6px 6px rgb(0 0 0 / 6%);
+  padding: 50px 50px 50px 50px;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  color: #333d4b;
+  align-items: center;
+  text-align: center;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.button {
+  color: #f9fafb;
+  background-color: #3182f6;
+  margin: 30px 15px 0px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  border: 0 solid transparent;
+  user-select: none;
+  transition: background 0.2s ease, color 0.1s ease;
+  text-decoration: none;
+  border-radius: 7px;
+  padding: 11px 16px;
+  width: 250px;
+}
+
+.button2 {
+  color: #000000;
+  background-color: #ffffff;
+  margin: 30px 15px 0px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #000000;
+  user-select: none;
+  transition: background 0.2s ease, color 0.1s ease;
+  text-decoration: none;
+  border-radius: 7px;
+  padding: 11px 16px;
+  width: 125px;
+}
+
+.button:hover {
+  color: #fff;
+  background-color: #1b64da;
+}
+
+button:disabled,
+input:disabled {
+  opacity: 80%;
+  cursor: not-allowed;
+}
+
+button,
+input,
+textarea {
+  font-family: Toss Product Sans, -apple-system, BlinkMacSystemFont, Bazier Square, Noto Sans KR, Segoe UI, Apple SD Gothic Neo, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji,
+  Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+.color--grey800 {
+  color: #333d4b;
+}
+
+.color--grey700 {
+  color: #4e5968;
+}
+
+.color--grey600 {
+  color: #6b7684;
+}
+
+.color--grey500 {
+  color: #8b95a1;
+}
+
+.color--blue500 {
+  color: #3182f6;
+}
+
+.color--blue700 {
+  color: #1b64da;
+}
+
+.bg--white {
+  background-color: #fff;
+}
+
+.bg--grey100 {
+  background-color: #f2f4f6;
+}
+
+.bg--greyOpacity100 {
+  background-color: rgba(2, 32, 71, 0.05);
+}
+
+.bg--blue50 {
+  background-color: #e8f3ff;
+}
+
+.padding--base {
+  padding: 11px 16px;
+}
+
+.padding--t {
+  padding: 4px 8px;
+}
+
+.padding--s {
+  padding: 7px 12px;
+}
+
+.padding--l {
+  padding: 11px 22px;
+}
+
+.padding--xl {
+  padding: 18px 24px;
+}
+
+.text--left {
+  text-align: left;
+}
+
+.text--right {
+  text-align: right;
+}
+
+.text--center {
+  text-align: center;
+}
+
+.text--justify {
+  text-align: justify;
+}
+
+.typography {
+  margin: 0;
+  padding: 0;
+}
+
+.typography--h1,
+.typography--h2,
+.typography--h3,
+.typography--h4 {
+  line-height: 1.3;
+}
+
+.typography--h1 {
+  font-size: 56px;
+}
+
+.typography--h2 {
+  font-size: 48px;
+}
+
+.typography--h3 {
+  font-size: 36px;
+}
+
+.typography--h4 {
+  font-size: 32px;
+}
+
+.typography--p {
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.checkable {
+  position: relative;
+  display: flex;
+}
+
+.checkable + .checkable {
+  margin-top: 12px;
+}
+
+.checkable--inline {
+  display: inline-block;
+}
+
+.checkable--inline + .checkable--inline {
+  margin-top: 0;
+  margin-left: 18px;
+}
+
+.checkable__label {
+  display: inline-block;
+  max-width: 100%;
+  min-height: 24px;
+  line-height: 1.6;
+  padding-left: 24px;
+  margin-bottom: 0;
+  color: #4e5968;
+  cursor: pointer;
+}
+
+.checkable__input {
+  position: absolute;
+  margin: 0 0 0 -24px;
+  top: 4px;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+}
+
+.checkable__input:before {
+  top: -4px;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #d1d6db;
+  background-color: #fff;
+  transition: border-color 0.1s ease, background-color 0.1s ease;
+}
+
+.checkable__input:after {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  top: 3px;
+  left: 5px;
+  width: 14px;
+  height: 10px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.343 4.574l4.243 4.243 7.07-7.071' fill='transparent' stroke-width='2' stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.checkable__input:checked:before {
+  border-color: #3182f6;
+  background-color: #3182f6;
+}
+
+.checkable__input:checked:after {
+  opacity: 1;
+}
+
+.w-600 {
+  width: 600px;
+}
+
+.w-250 {
+  width: 250px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.ws-normal {
+  white-space: normal;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.btn-discord {
+  background-color: #e8f3ff;
+  color: #1b64da;
+}

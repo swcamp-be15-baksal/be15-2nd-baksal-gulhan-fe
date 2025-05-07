@@ -1,20 +1,24 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import CartItemList from '@/features/cart/components/CartItemList.vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cart.js';
+import { useToast} from 'vue-toastification';
 
 const router = useRouter()
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.cartItems);
 const selectedItems = computed(() => cartStore.selectedItems);
 const showSelectAll = ref(true);
+const toast = useToast();
 
 // Modal 상태 관리
 const showDeleteModal = ref(false);
 const showCancelModal = ref(false);
 const itemToDelete = ref(null);
-
+onMounted(() => {
+  cartStore.fetchCartItems();
+});
 // 전체 선택 및 선택된 항목 관리
 const selectAll = computed({
   get() {
@@ -32,18 +36,18 @@ const selectAll = computed({
 // 가격 계산
 const totalPrice = computed(() => {
   return cartItems.value
-    .filter(item => selectedItems.value.some(selectedItem => selectedItem.id === item.id))
+    .filter(item => selectedItems.value.some(selectedItem => selectedItem.cartId === item.cartId))
     .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
 const souvenirPrice = computed(() => {
   return cartItems.value
-    .filter(item => selectedItems.value.some(selectedItem => selectedItem.id === item.id) && item.type === '기념품')
+    .filter(item => selectedItems.value.some(selectedItem => selectedItem.cartId === item.cartId) && item.targetType === 'GOODS')
     .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 const packagePrice = computed(() => {
   return cartItems.value
-    .filter(item => selectedItems.value.some(selectedItem => selectedItem.id === item.id) && item.type === '패키지')
+    .filter(item => selectedItems.value.some(selectedItem => selectedItem.cartId === item.cartId) && item.targetType === 'PACKAGE')
     .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
@@ -75,7 +79,7 @@ const cancelDeleteItem = () => {
 };
 
 const confirmDeleteItem = () => {
-  cartStore.removeItem(itemToDelete.value.id);
+  cartStore.removeItem(itemToDelete.value.cartId);
   showCancelModal.value = false;
 };
 
@@ -87,6 +91,10 @@ const priceDetails = computed(() => [
 ]);
 
 const goToPayInfo = () => {
+  if (selectedItems.value.length === 0) {
+    toast.warning('상품 한 개 이상은 선택해주세요');
+    return;
+  }
   // priceDetails를 sessionStorage에 저장
   sessionStorage.setItem('priceDetails', JSON.stringify(priceDetails.value));
   // 결제 정보 페이지로 이동
@@ -131,7 +139,13 @@ const goToPayInfo = () => {
           </div>
         </div>
       </div>
-      <button class="complete-purchase" @click="goToPayInfo" v-if="showSelectAll">구매하기</button>
+      <button
+        class="complete-purchase"
+        @click="goToPayInfo"
+        v-if="showSelectAll"
+      >
+        구매하기
+      </button>
     </div>
 
     <!-- Modal Section -->

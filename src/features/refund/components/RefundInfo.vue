@@ -1,87 +1,24 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import QuillEditor from '@/components/common/QuillEditor.vue';
-import { defineProps } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   itemId: {
     type: [String, Number],
     required: true,
+  },
+  targetItem: {
+    type: Object,
+    required: true,
   }
 });
 
-const goToRefundConfirm = () => {
-  router.push(`/refund/${props.itemId}/confirm`);
-};
+console.log(props.targetItem);
+
+const emit = defineEmits(['goToRefundConfirm']);
 
 const showModal = ref(false);
-
-const purchases = ref([
-  {
-    id: 1,
-    category: '기념품',
-    purchasedAt: new Date('2025-04-01'),
-    recipient: {
-      name: '홍길동',
-      address: '서울특별시 종로구 세종대로 175',
-      phone: '010-1234-5678'
-    },
-    items: [
-      {
-        id: 101,
-        image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png',
-        name: '기념품 A',
-        description: '한국 전통 기념품',
-        quantity: 2,
-        price: 20000,
-        status: 'waiting',
-        showDelivery: false
-      },
-      {
-        id: 102,
-        image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png',
-        name: '기념품 B',
-        description: '전통 부채',
-        quantity: 1,
-        price: 15000,
-        status: 'waiting',
-        showDelivery: false
-      }
-    ]
-  },
-  {
-    id: 2,
-    category: '패키지',
-    purchasedAt: new Date('2024-12-15'),
-    recipient: {
-      name: '이순신',
-      address: '부산광역시 해운대구 해운대로 123',
-      phone: '010-9876-5432'
-    },
-    items: [
-      {
-        id: 201,
-        image: 'https://d152i3f1t56z95.cloudfront.net/test/image.png',
-        name: '패키지 여행 B',
-        description: '제주도 3박 4일',
-        quantity: 1,
-        price: 1200000,
-        status: 'waiting',
-        showDelivery: false
-      }
-    ]
-  }
-]);
-
-const targetItem = computed(() => {
-  return purchases.value
-    .flatMap(p => p.items)
-    .find(i => i.id === Number(props.itemId));
-});
-
 const refundReason = ref('');
 </script>
 
@@ -97,11 +34,10 @@ const refundReason = ref('');
 
       <div class="meta-info">
         <p class="purchase-date">
-          {{
-            new Date(purchases.find(p => p.items.some(i => i.id === targetItem.id)).purchasedAt)
-              .toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
-              .replace(/\. /g, '.').replace('.', '')
-          }}
+          {{ new Date(targetItem.purchasedAt)
+          .toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+          .replace(/\. /g, '.')
+          .replace(/\.$/, '') }}
         </p>
         <p class="order-id">(구매내역 주문 번호: {{ targetItem.id }})</p>
       </div>
@@ -109,9 +45,10 @@ const refundReason = ref('');
       <div class="purchase-summary">
         <img :src="targetItem.image" alt="상품 이미지" class="product-image" />
         <div class="item-info">
-          <p class="item-name">{{ targetItem.description }} | {{ targetItem.name }}</p>
-          <p class="item-quantity">{{ targetItem.quantity }}개</p>
+          <p class="item-description">{{ targetItem.category }}</p>
+          <p class="item-name">{{ targetItem.name }}</p>
         </div>
+        <p class="item-quantity">{{ targetItem.quantity }}개</p>
         <p class="item-price">{{ targetItem.price.toLocaleString() }}원</p>
       </div>
 
@@ -131,12 +68,12 @@ const refundReason = ref('');
       <p>해당 상품 정보를 찾을 수 없습니다.</p>
     </div>
 
-    <!-- ✅ 환불 확인 모달 -->
+    <!-- 환불 확인 모달 -->
     <div class="modal-overlay" v-if="showModal">
       <div class="modal-content">
         <p class="modal-message">정말 환불하시겠습니까?</p>
         <div class="modal-buttons">
-          <button class="modal-button confirm" @click="goToRefundConfirm">환불하기</button>
+          <button class="modal-button confirm" @click="emit('goToRefundConfirm')">환불하기</button>
           <button class="modal-button cancel" @click="showModal = false">취소</button>
         </div>
       </div>
@@ -179,33 +116,41 @@ const refundReason = ref('');
   border: 1px solid #ddd;
   padding: 1rem;
   margin-bottom: 1rem;
+  gap: 1.5rem;
+  font-size: 0.95rem;
 }
 
 .product-image {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  margin-right: 1rem;
   flex-shrink: 0;
 }
 
 .item-info {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+}
+
+.item-description {
+  font-weight: 500;
+  color: #555;
 }
 
 .item-name {
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-top: 0.3rem;
 }
 
 .item-quantity {
   color: #666;
+  margin-right: 1rem;
+  white-space: nowrap;
 }
 
 .item-price {
   font-weight: bold;
-  margin-left: auto;
-  padding-left: 1rem;
   white-space: nowrap;
 }
 
@@ -247,7 +192,7 @@ const refundReason = ref('');
   background-color: #5D857D;
 }
 
-/* ✅ 모달 스타일 */
+/* 모달 스타일 */
 .modal-overlay {
   position: fixed;
   top: 0;
