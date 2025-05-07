@@ -18,9 +18,21 @@ export function getPlaceDetail(placeId) {
 }
 
 // 좋아요 여부 단건 확인
-export const checkLike = (params) => api.get('/like/check', { params });
+export async function checkLike(targetId, targetType) {
+  const authStore = useAuthStore();
+  const token = authStore.accessToken;
 
-export const getLike = (params) => api.get('/like/likes', { params });
+  if (!token) throw new Error('로그인이 필요합니다.');
+
+  const payload = { targetId, targetType };
+
+  return api.get('/like/check', payload, {
+    headers: {
+      Authorization: `Bearer ${token}`, // ✅ 명확히 추가
+    },
+    withCredentials: true,
+  });
+}
 
 // 좋아요 토글
 export async function toggleLike(targetId, targetType) {
@@ -40,3 +52,9 @@ export async function toggleLike(targetId, targetType) {
     withCredentials: true,
   });
 }
+
+// 3. 특정 대상의 좋아요 수 조회
+export const getTargetLikeCount = (params) =>
+  api.get('/like/count', {
+    params, // { targetId, targetType }
+  });

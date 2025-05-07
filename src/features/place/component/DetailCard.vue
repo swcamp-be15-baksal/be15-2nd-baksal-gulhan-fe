@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import filledHeartIcon from '@/assets/icons/heart-filled.svg';
 import emptyHeartIcon from '@/assets/icons/heart-empty.svg';
-import { checkLike, getLike, toggleLike } from '@/features/place/api.js'; // 추가
+import { checkLike, toggleLike, getTargetLikeCount } from '@/features/place/api.js'; // 추가
 
 const props = defineProps({
   data: {
@@ -21,16 +21,22 @@ const likeCount = ref(0);
 const TARGET_TYPE = 'PLACE';
 
 onMounted(async () => {
-  likeCount.value = props.data.likeCount || 0;
-
   try {
-    const response = await checkLike({
-      targetId: props.data.placeId,
-      targetType: TARGET_TYPE,
-    });
-    isLiked.value = response.data.data === true;
+    const [countResponse, checkResponse] = await Promise.all([
+      getTargetLikeCount({
+        targetId: props.data.placeId,
+        targetType: TARGET_TYPE,
+      }),
+      checkLike({
+        targetId: props.data.placeId,
+        targetType: TARGET_TYPE,
+      }),
+    ]);
+
+    likeCount.value = countResponse.data.data || 0;
+    isLiked.value = checkResponse.data.data === true;
   } catch (e) {
-    console.error('좋아요 상태 확인 실패', e);
+    console.error('좋아요 정보 초기화 실패', e);
   }
 });
 
