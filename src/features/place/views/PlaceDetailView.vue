@@ -12,6 +12,13 @@ const placesData = ref(null);
 onMounted(() => {
   const id = Number(route.params.id);
   placesData.value = places.find(p => p.placeId === id);
+
+  const placeId = ref(route.query.placeId || '');
+  const targetType = ref(route.query.targetType || 'PLACE');
+
+// 확인용
+  console.log('placeId:', placeId.value);
+  console.log('targetType:', targetType.value);
 });
 
 function goToPlaceList() {

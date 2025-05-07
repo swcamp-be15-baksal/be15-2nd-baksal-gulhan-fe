@@ -20,22 +20,22 @@
         </button>
         <button
           class="filter-button"
-          :class="{ active: selectedFilter === '박물관' }"
-          @click="selectFilter('박물관')"
+          :class="{ active: selectedFilter === 'MUSEUM' }"
+          @click="selectFilter('MUSEUM')"
         >
           박물관
         </button>
         <button
           class="filter-button"
-          :class="{ active: selectedFilter === '민속촌' }"
-          @click="selectFilter('민속촌')"
+          :class="{ active: selectedFilter === 'FOLK_VILLAGE' }"
+          @click="selectFilter('FOLK_VILLAGE')"
         >
           민속촌
         </button>
         <button
           class="filter-button"
-          :class="{ active: selectedFilter === '유적지' }"
-          @click="selectFilter('유적지')"
+          :class="{ active: selectedFilter === 'HISTORIC_SITE' }"
+          @click="selectFilter('HISTORIC_SITE')"
         >
           유적지
         </button>
@@ -60,13 +60,14 @@
           {{ selectedParentArea }}
         </button>
         <ul class="dropdown-menu">
-          <li v-for="parentArea in parentAreaList" :key="parentArea">
+          <li v-for="parentArea in parentAreaList" :key="parentArea.areaId">
             <a
+              :id="parentArea.areaId"
               class="dropdown-item"
               href="#"
               @click.prevent="selectParentArea(parentArea)"
             >
-              {{ parentArea }}
+              {{ parentArea.areaName }}
             </a>
           </li>
         </ul>
@@ -78,7 +79,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ selectedArea }}
+          {{ selectedArea.areaName }}
         </button>
         <ul class="dropdown-menu">
           <li v-if="areaList.length === 0">
@@ -90,7 +91,7 @@
               href="#"
               @click.prevent="selectArea(area)"
             >
-              {{ area }}
+              {{ area.areaName }}
             </a>
           </li>
         </ul>
@@ -100,24 +101,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
+import { getChildArea, getParentArea } from '@/features/place/api.js';
 
 // 필터 이벤트 emit을 위한 defineEmits
-const emit = defineEmits(['filter-change']);
+const emit = defineEmits(['filter-change', 'areaId-change']);
 
 // 내부 필터 상태
 const selectedFilter = ref('전체');
 
 // 지역 드롭다운 상태
 const selectedParentArea = ref('시/도');
-const parentAreaList = ['서울특별시', '경기도'];
-const selectedArea = ref('시/군/구');
-const areaData = {
-  '서울특별시': ['동작구', '관악구', '중구', '강남구', '서초구'],
-  '경기도': ['수원시', '성남시', '고양시', '용인시'],
-};
-const areaList = computed(() => areaData[selectedParentArea.value] || []);
+const parentAreaList = ref([]);
+const selectedArea = ref({areaName: '시/군/구'});
+const areaList = ref([]);
+
 
 function handleSearch(keyword) {
   console.log('검색어', keyword);
@@ -129,14 +128,38 @@ function selectFilter(filter) {
   emit('filter-change', filter);
 }
 
-function selectParentArea(parentArea) {
-  selectedParentArea.value = parentArea;
+function selectAreaId(areaId){
+  console.log("selectAreaId 호출 : ", areaId)
+  emit('areaId-change', areaId);
+}
+
+async function selectParentArea(parentArea) {
+  console.log("??",parentArea.areaId)
+  selectedParentArea.value = parentArea.areaName;
+  try{
+    const response = await getChildArea(parentArea.areaId)
+    console.log('response', response)
+    areaList.value = response.data.data.areas
+  }catch (e) {
+
+  }
   selectedArea.value = '시/군/구';
 }
 
 function selectArea(area) {
   selectedArea.value = area;
+  selectAreaId(area.areaId);
 }
+
+onMounted(async() => {
+  try{
+    const res = await getParentArea();
+    console.log(res.data.data.areas);
+    parentAreaList.value = res.data.data.areas
+  }catch (e) {
+
+  }
+})
 </script>
 
 <style scoped>

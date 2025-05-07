@@ -4,8 +4,9 @@
     <PlaceHeader
       :active-filter="selectedFilter"
       @filter-change="handleFilterChange"
+      @areaId-change="handleAreaIdChange"
     />
-    <PlaceList :filter="selectedFilter" />
+    <PlaceList :filter="selectedFilter" :childAreaId="childAreaId" />
   </div>
 </template>
 
@@ -16,10 +17,17 @@ import PlaceList from '@/features/place/component/PlaceList.vue';
 
 // 선택된 필터 상태
 const selectedFilter = ref('전체');
+const childAreaId = ref(null);
+
 
 // 헤더에서 필터 변경 이벤트 처리
 function handleFilterChange(filter) {
   selectedFilter.value = filter;
+}
+
+function handleAreaIdChange(areaId){
+  childAreaId.value = areaId;
+  console.log(childAreaId.value);
 }
 </script>
 

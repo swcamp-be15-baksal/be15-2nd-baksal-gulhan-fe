@@ -3,7 +3,9 @@ import { useAuthStore } from '@/stores/auth';
 import { refreshUserToken } from '@/features/user/api/user.js';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: import.meta.env.VITE_COMMERCE_SERVER_LOCAL_URL,
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
 });
 
 const api2 = axios.create({
