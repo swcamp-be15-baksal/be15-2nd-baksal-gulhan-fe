@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import filledHeartIcon from '@/assets/heart-filled.svg'; // 채워진 하트
-import emptyHeartIcon from '@/assets/heart-empty.svg';   // 빈 하트
+import filledHeartIcon from '@/assets/icons/heart-filled.svg'; // 채워진 하트
+import emptyHeartIcon from '@/assets/icons/heart-empty.svg';   // 빈 하트
 
 const props = defineProps({
   data: {

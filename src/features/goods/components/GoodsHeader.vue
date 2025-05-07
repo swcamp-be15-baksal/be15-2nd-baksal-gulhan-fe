@@ -65,7 +65,7 @@ const handleWriteGoods = () => {
             </div>
             <div class="d-flex" style="gap: 16px">
                 <SearchBar placeholder="원하는 기념품을 검색해보세요!" @search="handleSearch" />
-                <button class="sort">가나다순순</button>
+                <button class="sort">가나다순</button>
             </div>
         </div>
     </div>

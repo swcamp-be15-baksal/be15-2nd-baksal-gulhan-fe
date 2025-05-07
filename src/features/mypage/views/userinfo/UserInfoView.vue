@@ -5,9 +5,13 @@ import { useUserStore } from '@/features/mypage/stores/user';
 import UserInfoForm from '@/features/mypage/components/form/userinfo/UserInfoForm.vue';
 import { useAuthStore } from '@/stores/auth.js';
 import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
+import { withdrawUser } from '@/features/mypage/api.js';
+import { useToast } from 'vue-toastification';
 
 
 const router = useRouter();
+const toast = useToast();
+
 const userStore = useUserStore();
 const authStore = useAuthStore();
 
@@ -45,12 +49,20 @@ const maskedInfo = computed(() => ({
   address: userInfo.value.address?.replace(/^(.{9}).+/, '$1***') || ''
 }));
 
-function handleDelete() {
-  const confirmed = confirm('정말 탈퇴 하시겠습니까?');
-  if (confirmed) {
-    console.log('탈퇴 처리');
+const handleDelete = async () => {
+  const confirmed = confirm(`정말 탈퇴하시겠습니까?`);
+  if (!confirmed) return;
+
+  try {
+    const token = authStore.accessToken;
+    await withdrawUser(token);
+    toast.success('탈퇴가 완료되었습니다..');
+    authStore.logout();
+  } catch (e) {
+    console.error('탈퇴 실패:', e?.response?.data || e.message);
+    toast.error('탈퇴에 실패했습니다.');
   }
-}
+};
 
 function handleEdit() {
   router.push(`/mypage/userinfo/edit`);
