@@ -23,7 +23,7 @@
       <nav class="nav-menu">
         <button @click="navigate('place')">관람 정보</button>
         <div class="dropdown">
-          <button>패키지</button>
+          <button @click="navigate('packages')">패키지</button>
           <div class="dropdown-menu">
             <button @click="navigate('packages')">패키지</button>
             <button @click="navigate('travelpost')">동행글</button>
