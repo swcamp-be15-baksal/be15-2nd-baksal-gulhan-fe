@@ -12,35 +12,13 @@ const api2 = axios.create({
     withCredentials: true, // HttpOnly Cookie 사용 시 d설정하기!
 });
 
-api.interceptors.response.use(
-    (res) => res,
-    async (err) => {
-        const authStore = useAuthStore();
-        const { config, response } = err;
-
-        if (config.url.includes('/auth/token/reissue')) {
-            await authStore.clearAuth();
-            return Promise.reject(err);
-        }
-
-        if (response?.status === 401 && !config._retry) {
-            config._retry = true;
-            try {
-                console.log('[api] 토큰 재발급 시도');
-                const refreshRes = await refreshUserToken();
-                const newToken = refreshRes.data.data.accessToken;
-                authStore.setAuth(newToken);
-                config.headers.Authorization = `Bearer ${newToken}`;
-                return api(config);
-            } catch (refreshErr) {
-                await authStore.clearAuth();
-                return Promise.reject(refreshErr);
-            }
-        }
-
-        return Promise.reject(err);
-    }
-);
+const imageApi = axios.create({
+    baseURL: import.meta.env.VITE_AUTH_SERVER_LOCAL_URL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    },
+    withCredentials: true,
+});
 
 api2.interceptors.response.use(
     (res) => res,
@@ -85,4 +63,4 @@ api2.interceptors.response.use(
     }
 );
 
-export { api, api2 };
+export { api, api2, imageApi };
