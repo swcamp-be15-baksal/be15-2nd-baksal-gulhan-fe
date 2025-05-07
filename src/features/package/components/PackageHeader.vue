@@ -1,16 +1,44 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import SortDropdown from '@/features/package/components/SortDropdown.vue';
 import { ref } from 'vue';
 import SearchBar from '@/components/common/SearchBar.vue';
+import AreaSelectDropdown from '@/features/package/components/AreaSelectDropdown.vue';
+import DateSelectDropdown from '@/features/package/components/DateSelectDropdown.vue';
+
+const props = defineProps({
+    sort: String,
+    area: Object,
+    date: Object,
+    keyword: String,
+});
+
+const emit = defineEmits(['update:sort', 'update:area', 'update:date', 'update:keyword']);
+
+function handleSortChange(newSort) {
+    emit('update:sort', newSort);
+}
+
+function handleAreaChange(newArea) {
+    emit('update:area', newArea);
+}
+
+function handleDateChange(newDate) {
+    emit('update:date', newDate);
+}
+
 function handleSearch(keyword) {
-    console.log('검색어', keyword);
-    // fetch(`/s1/packages/list?title={keyword}`)
+    emit('update:keyword', keyword);
 }
 
 const selectedFilter = ref('전체');
 
 function selectFilter(filter) {
     selectedFilter.value = filter;
+    if (filter === '전체') {
+        emit('update:area', { parent: '', child: '' });
+        emit('update:date', { startDate: '', endDate: '' });
+    }
 }
 
 const router = useRouter();
@@ -31,29 +59,19 @@ const handleWritePackage = () => {
             </button>
         </div>
         <div class="d-flex align-items-center justify-content-between border-bottom border-black">
-            <div>
+            <div class="d-flex align-items-center" style="gap: 16px">
                 <button
                     class="filter-button"
                     :class="{ active: selectedFilter === '전체' }"
                     @click="selectFilter('전체')">
                     전체
                 </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter === '지역' }"
-                    @click="selectFilter('지역')">
-                    지역 선택하기
-                </button>
-                <button
-                    class="filter-button"
-                    :class="{ active: selectedFilter == '날짜' }"
-                    @click="selectFilter('날짜')">
-                    날짜 선택하기
-                </button>
+                <AreaSelectDropdown :area="area" @update:area="handleAreaChange" />
+                <DateSelectDropdown :date="date" @update:date="handleDateChange" />
             </div>
-            <div class="d-flex" style="gap: 16px">
+            <div class="d-flex" style="gap: 16px; position: relative">
                 <SearchBar placeholder="원하는 패키지를 검색해보세요!" @search="handleSearch" />
-                <button class="sort">시작일 빠른순</button>
+                <SortDropdown :sort="sort" @update:sort="handleSortChange" />
             </div>
         </div>
     </div>
@@ -80,15 +98,5 @@ const handleWritePackage = () => {
 .filter-button.active {
     font-weight: 700;
     border-bottom: 4px solid #000000;
-}
-
-.sort {
-    height: 48px;
-    width: 100px;
-    word-break: keep-all;
-    border: 1px solid #cac4d0;
-    border-radius: 10px;
-    background-color: #fff;
-    line-height: 1;
 }
 </style>
