@@ -1,7 +1,10 @@
-import { api } from '@/plugins/axios';
+import { api } from '@/plugins/axios.js';
 
-export function fetchReviews(targetType, targetId) {
-    return api.get('/reviews', {
-        params: { targetType, targetId },
+export function fetchReviews(targetId, targetType) {
+    return api.get('/review', {
+        params: {
+            targetId,
+            targetType,
+        },
     });
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import ReviewList from '@/features/review/components/ReviewList.vue';
 import { fetchReviews } from '@/features/review/api.js';
@@ -31,11 +31,14 @@ const targetType = computed(() => {
 const targetId = computed(() => Number(route.params.id));
 
 onMounted(async () => {
+    if (!targetType.value || !targetId.value) return;
+
     try {
-        const res = await fetchReviews(targetType.value, targetId.value);
-        reviews.value = res.data.review;
+        const res = await fetchReviews(targetId.value, targetType.value);
+        reviews.value = res.data?.data?.review ?? [];
     } catch (err) {
         console.error('[리뷰 조회 실패]', err);
+        reviews.value = [];
     }
 });
 </script>
