@@ -16,6 +16,10 @@ export function getPlaceDetail(placeId) {
   return api.get(`/place/placeDetail/${placeId}`);
 }
 
-export function getLike(params){
-  return api.get(`/like/likes`, params)
-}
+// 좋아요 여부 단건 확인
+export const checkLike = (params) => api.get('/like/check', { params });
+
+export const getLike = (params) => api.get('/like/likes', { params });
+
+// 좋아요 토글
+export const toggleLike = (data) => api.post('/like/toggle', data);

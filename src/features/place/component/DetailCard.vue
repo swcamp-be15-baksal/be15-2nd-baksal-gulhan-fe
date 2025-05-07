@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import filledHeartIcon from '@/assets/icons/heart-filled.svg'; // 채워진 하트
-import emptyHeartIcon from '@/assets/icons/heart-empty.svg';   // 빈 하트
+import { ref, onMounted, computed } from 'vue';
+import filledHeartIcon from '@/assets/icons/heart-filled.svg';
+import emptyHeartIcon from '@/assets/icons/heart-empty.svg';
+import { checkLike, getLike, toggleLike } from '@/features/place/api.js'; // 추가
 
 const props = defineProps({
   data: {
@@ -14,21 +15,38 @@ const props = defineProps({
   },
 });
 
-// 좋아요 상태 및 수 초기화
 const isLiked = ref(false);
 const likeCount = ref(0);
 
-onMounted(() => {
-  isLiked.value = props.data.isLiked || false;
+const TARGET_TYPE = 'PLACE';
+
+onMounted(async () => {
   likeCount.value = props.data.likeCount || 0;
+
+  try {
+    const response = await checkLike({
+      targetId: props.data.placeId,
+      targetType: TARGET_TYPE,
+    });
+    isLiked.value = response.data.data === true;
+  } catch (e) {
+    console.error('좋아요 상태 확인 실패', e);
+  }
 });
 
-// 토글 기능
-const toggleLike = () => {
-  isLiked.value = !isLiked.value;
-  likeCount.value = isLiked.value
-    ? likeCount.value + 1
-    : Math.max(0, likeCount.value - 1);
+const toggle = async () => {
+  try {
+    const response = await toggleLike({
+      targetId: props.data.placeId,
+      targetType: TARGET_TYPE,
+    });
+    isLiked.value = response.data.liked;
+    likeCount.value = isLiked.value
+      ? likeCount.value + 1
+      : Math.max(0, likeCount.value - 1);
+  } catch (e) {
+    console.error('좋아요 토글 실패', e);
+  }
 };
 </script>
 
@@ -45,7 +63,7 @@ const toggleLike = () => {
         <div class="title">{{ props.data.title }}</div>
         <div class="address">{{ props.data.address }}</div>
       </div>
-      <div class="like" @click="toggleLike">
+      <div class="like" @click="toggle">
         <img :src="isLiked ? filledHeartIcon : emptyHeartIcon" alt="like" />
         <span>{{ likeCount }}</span>
       </div>
