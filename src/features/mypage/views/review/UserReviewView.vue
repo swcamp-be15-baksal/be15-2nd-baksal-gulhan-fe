@@ -6,7 +6,6 @@ import { useRoute, useRouter } from 'vue-router';
 import reviews from '@/features/review/mock/reviews.json';
 import packages from '@/features/package/mock/packages.json';
 import goods from '@/features/goods/mock/goods.json';
-
 import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
 
 function getTargetName(review) {
@@ -59,7 +58,6 @@ function selectFilter(filter) {
 </script>
 
 <template>
-    <MyPageHeader />
     <div class="wrapper">
         <div class="d-flex" style="gap: 8px">
             <button
