@@ -73,11 +73,42 @@
 </template>
 
 <script setup>
+import { createGoods } from '@/features/goods/api.js';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchGoodsDetail, updateGoods } from '@/features/goods/api';
+import { nextTick } from 'vue';
+
+onMounted(async () => {
+    initQuill();
+
+    if (goodsId) {
+        try {
+            const res = await fetchGoodsDetail(goodsId);
+            const data = res.data.data;
+
+            title.value = data.title;
+            category.value = reverseMapCategoryIdToName(data.goodsCategoryId);
+            price.value = data.price.toString();
+            quantity.value = data.quantity.toString();
+            sold.value = data.sold.toString();
+            remaining.value = data.remaining.toString();
+
+            // Quill 내용 세팅은 nextTick 이후에 실행
+            await nextTick();
+            quill.root.innerHTML = data.detail || '';
+        } catch (err) {
+            console.error('[수정모드] 불러오기 실패:', err);
+        }
+    }
+});
+
+const route = useRoute();
+const goodsId = route.query.goodsId;
+
 Quill.register('modules/resize', QuillResize);
 
 const router = useRouter();
@@ -89,7 +120,32 @@ const sold = ref('');
 const remaining = ref('');
 let quill;
 
-onMounted(() => {
+onMounted(async () => {
+    initQuill();
+
+    if (goodsId) {
+        try {
+            const res = await fetchGoodsDetail(goodsId);
+            const data = res.data.data;
+
+            title.value = data.title;
+            category.value = reverseMapCategoryIdToName(data.goodsCategoryId);
+            price.value = data.price.toString();
+            quantity.value = data.quantity.toString();
+            sold.value = data.sold.toString();
+            remaining.value = data.remaining.toString();
+
+            await nextTick();
+            quill.root.innerHTML = data.detail || '';
+        } catch (err) {
+            console.error('[수정모드] 불러오기 실패:', err);
+        }
+    }
+});
+
+function initQuill() {
+    if (quill) return;
+
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
         ['link', 'image'],
@@ -119,22 +175,67 @@ onMounted(() => {
         theme: 'snow',
         placeholder: '기념품 상세설명을 작성해 주세요.',
     });
-});
+}
 
-const onCancel = () => {
-    router.back();
+const onCancel = () => router.back();
+
+const onSubmit = async () => {
+    const content = quill.root.innerText.trim();
+
+    const payload = {
+        title: title.value.trim(),
+        detail: content,
+        quantity: Number(quantity.value) || 0,
+        sold: Number(sold.value) || 0,
+        remaining: Number(remaining.value) || 0,
+        price: Number(price.value) || 0,
+        goodsCategoryId: mapCategoryNameToId(category.value),
+    };
+
+    try {
+        let res;
+        if (goodsId) {
+            res = await updateGoods(goodsId, payload);
+            alert('기념품이 수정되었습니다.');
+        } else {
+            res = await createGoods(payload);
+            alert('기념품이 등록되었습니다.');
+        }
+        router.push('/goods');
+    } catch (err) {
+        alert(err.message || '요청 중 오류가 발생했습니다.');
+    }
 };
 
-const onSubmit = () => {
-    const content = quill.root.innerHTML;
-    console.log('제목:', title.value);
-    console.log('카테고리:', category.value);
-    console.log('가격:', price.value);
-    console.log('수량:', quantity.value);
-    console.log('판매량:', sold.value);
-    console.log('잔여수량:', remaining.value);
-    console.log('내용:', content);
-};
+function mapCategoryNameToId(name) {
+    const map = {
+        사무문구: 1,
+        생활잡화: 2,
+        악세서리: 3,
+        디지털전자: 4,
+        주방식품: 5,
+    };
+    if (!(name in map)) {
+        throw new Error(`[카테고리 변환 실패] 유효하지 않은 이름: ${name}`);
+    }
+
+    if (!map[name]) {
+        alert('유효하지 않은 카테고리입니다.');
+        return;
+    }
+    return map[name];
+}
+
+function reverseMapCategoryIdToName(id) {
+    const map = {
+        1: '사무문구',
+        2: '생활잡화',
+        3: '악세서리',
+        4: '디지털전자',
+        5: '주방식품',
+    };
+    return map[id] || '';
+}
 </script>
 
 <style scoped>
@@ -183,13 +284,17 @@ const onSubmit = () => {
     border-radius: 10px;
 }
 
-#editor {
-    margin: 0 0;
+.editor-wrapper {
     width: 786px;
     height: 500px;
     background: white;
+    border-radius: 10px;
+}
+
+::v-deep .ql-editor {
     padding: 10px;
     font-size: 1.2rem;
+    min-height: 480px;
 }
 
 .button-wrapper {
