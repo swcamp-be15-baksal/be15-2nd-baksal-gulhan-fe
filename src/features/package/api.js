@@ -83,8 +83,24 @@ export async function createPackage(payload) {
     }
 }
 
-export function updatePackage(packageId, payload) {
-    return api.put(`/packages/${packageId}`, payload);
+export async function updatePackage(packageId, payload) {
+    try {
+        const authStore = useAuthStore();
+        const token = authStore.accessToken;
+        if (!token) throw new Error('로그인이 필요합니다.');
+
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+
+        console.log('[updatePackage] 전송 payload:', payload);
+        const res = await api.put(`/packages/list/${packageId}`, payload, { headers });
+
+        return res;
+    } catch (err) {
+        console.error('[updatePackage] 수정 실패:', err);
+        throw err;
+    }
 }
 
 export async function deletePackage(packageId) {

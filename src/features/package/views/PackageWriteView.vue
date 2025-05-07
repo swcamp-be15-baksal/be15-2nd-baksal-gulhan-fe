@@ -263,18 +263,18 @@ const onSubmit = async () => {
 
     const payload = {
         title: title.value.trim(),
-        detail: content,
+        detail: quill.root.innerHTML.trim(), // 기존 innerText → innerHTML
         area: formData.value.address.split(' ').slice(0, 2).join(' '),
         price: Number(price.value) || 0,
         capacity: Number(quantity.value) || 0,
-        // currentRegist: Number(sold.value) || 0,
+        currentRegist: Number(sold.value) || 0,
         remaining: Number(remaining.value) || 0,
         startDate: dayjs(startDate.value).format('YYYY-MM-DDTHH:mm:ss'),
         endDate: dayjs(endDate.value).format('YYYY-MM-DDTHH:mm:ss'),
         guideName: guide.value.name,
-        guideEmail: guide.value.email,
+        guideEmail: guide.value.email?.trim() || '',
         guidePhone: guide.value.phone,
-        guideGender: genderCode,
+        guideGender: guide.value.gender === '남' ? 'M' : 'F',
     };
 
     try {

@@ -80,6 +80,7 @@ import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchGoodsDetail, updateGoods } from '@/features/goods/api';
+import { nextTick } from 'vue';
 
 onMounted(async () => {
     initQuill();
@@ -214,7 +215,15 @@ function mapCategoryNameToId(name) {
         디지털전자: 4,
         주방식품: 5,
     };
-    return map[name] || 0;
+    if (!(name in map)) {
+        throw new Error(`[카테고리 변환 실패] 유효하지 않은 이름: ${name}`);
+    }
+
+    if (!map[name]) {
+        alert('유효하지 않은 카테고리입니다.');
+        return;
+    }
+    return map[name];
 }
 
 function reverseMapCategoryIdToName(id) {

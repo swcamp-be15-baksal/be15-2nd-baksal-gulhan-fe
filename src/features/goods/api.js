@@ -43,7 +43,7 @@ export async function updateGoods(goodsId, payload) {
         };
 
         console.log('[updateGoods] 전송 payload:', payload);
-        const res = await api.put(`/goods/${goodsId}`, payload, { headers });
+        const res = await api.put(`/goods/list/${goodsId}`, payload, { headers });
 
         return res;
     } catch (err) {
