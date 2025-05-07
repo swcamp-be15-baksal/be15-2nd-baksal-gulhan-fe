@@ -258,7 +258,7 @@ onMounted(async () => {
 const disabled = ref(false);
 
 const onSubmit = async () => {
-    const content = quill.root.innerHTML;
+    const content = quill.root.innerText.trim();
     const genderCode = guide.value.gender === '남' ? 'M' : 'F';
 
     const payload = {

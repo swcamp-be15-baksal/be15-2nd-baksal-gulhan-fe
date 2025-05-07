@@ -3,12 +3,17 @@ import editIcon from '@/assets/icons/edit.svg';
 import deleteIcon from '@/assets/icons/delete.svg';
 import heartIcon from '@/assets/icons/heart.svg';
 import starIcon from '@/assets/icons/star.svg';
+import heartFilledIcon from '@/assets/icons/heartFilled.svg';
+import heartEmptyIcon from '@/assets/icons/heartEmpty.svg';
 import { computed } from 'vue';
 import { deletePackage } from '@/features/package/api';
 import { deleteGoods } from '@/features/goods/api';
 import { useRouter } from 'vue-router';
+import { toggleLike } from '@/features/mypage/api.js';
+import { ref } from 'vue';
 
 const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
+const isLiked = ref(false);
 
 const router = useRouter();
 
@@ -47,6 +52,20 @@ function formatDate(ts) {
     return date.toISOString().split('T')[0];
 }
 
+const onLikeClick = async () => {
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+    const type = isGoods.value ? 'GOODS' : 'PACKAGE';
+
+    try {
+        const res = await toggleLike(id, type);
+        isLiked.value = res.data.liked;
+        alert('좋아요가 반영되었습니다.');
+    } catch (err) {
+        console.error('[좋아요 실패]', err);
+        alert('좋아요 요청 중 오류 발생');
+    }
+};
+
 async function deleteItem() {
     const id = isGoods.value ? props.data.goodsId : props.data.packageId;
 
@@ -76,6 +95,7 @@ async function deleteItem() {
     <div v-if="data" class="d-flex justify-content-center">
         <div class="d-flex" style="gap: 47px">
             <img src="https://placehold.co/555x416" alt="data-image" class="main-img" />
+
             <div class="info-box d-flex flex-column">
                 <div class="d-flex justify-content-end" style="position: relative; width: 353px">
                     <button class="edit-icon" @click="goToEditPage">
@@ -108,6 +128,9 @@ async function deleteItem() {
                         잔여수량 {{ data.remaining }}
                     </div>
                 </div>
+                <button @click="onLikeClick" class="like-btn">
+                    <img :src="isLiked ? heartFilledIcon : heartEmptyIcon" alt="like" />
+                </button>
                 <div class="price">{{ data.price.toLocaleString() }}원</div>
                 <div class="buy-button">
                     <button style="background-color: #e57575">장바구니 담기</button>
@@ -118,6 +141,21 @@ async function deleteItem() {
 </template>
 
 <style scoped>
+.like-btn {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.like-btn img {
+    width: 32px;
+    height: 32px;
+}
+
 .main-img {
     width: 555px;
     height: 416px;

@@ -179,7 +179,7 @@ function initQuill() {
 const onCancel = () => router.back();
 
 const onSubmit = async () => {
-    const content = quill.root.innerHTML;
+    const content = quill.root.innerText.trim();
 
     const payload = {
         title: title.value.trim(),
