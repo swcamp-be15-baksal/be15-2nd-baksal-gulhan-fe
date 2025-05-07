@@ -9,8 +9,19 @@ const api = axios.create({
 const api2 = axios.create({
     baseURL: import.meta.env.VITE_AUTH_SERVER_LOCAL_URL,
     headers: { 'Content-Type': 'application/json' },
-    withCredentials: true, // HttpOnly Cookie 사용 시 설정하기!
+    withCredentials: true, // HttpOnly Cookie 사용 시 d설정하기!
 });
+
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 api2.interceptors.response.use(
     (res) => res,

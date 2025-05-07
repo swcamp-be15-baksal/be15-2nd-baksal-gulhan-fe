@@ -146,7 +146,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { createPackage } from '@/features/package/api.js';
+import { ref, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
@@ -156,7 +157,6 @@ Quill.register('modules/resize', QuillResize);
 const router = useRouter();
 const title = ref('');
 const date = ref('');
-const departure = ref('');
 const price = ref('');
 const quantity = ref('');
 const sold = ref('');
@@ -211,16 +211,31 @@ const onCancel = () => {
     router.back();
 };
 
-const onSubmit = () => {
+const onSubmit = async () => {
     const content = quill.root.innerHTML;
-    console.log('제목:', title.value);
-    console.log('날짜:', date.value);
-    console.log('출발지:', departure.value);
-    console.log('가격:', price.value);
-    console.log('수량:', quantity.value);
-    console.log('판매량:', sold.value);
-    console.log('잔여수량:', remaining.value);
-    console.log('내용:', content);
+    const payload = {
+        title: title.value.trim(),
+        detail: content,
+        area: formData.value.address + ' ' + formData.value.detailAddress,
+        startDate: date.value, // 추후 정규화 필요
+        endDate: date.value,
+        quantity: Number(quantity.value) || 0,
+        sold: Number(sold.value) || 0,
+        remaining: Number(remaining.value) || 0,
+        price: Number(price.value) || 0,
+        guideName: guide.value.name,
+        guideGender: guide.value.gender,
+        guidePhone: guide.value.phone,
+        guideEmail: guide.value.email,
+    };
+
+    try {
+        const response = await createPackage(payload);
+        console.log('등록 성공:', response.data);
+        router.push('/packages');
+    } catch (error) {
+        console.error('등록 실패:', error);
+    }
 };
 
 function searchPostcode() {
@@ -282,13 +297,17 @@ function searchPostcode() {
     border-radius: 10px;
 }
 
-#editor {
-    margin: 0 0;
+.editor-wrapper {
     width: 786px;
     height: 500px;
     background: white;
+    border-radius: 10px;
+}
+
+::v-deep .ql-editor {
     padding: 10px;
     font-size: 1.2rem;
+    min-height: 480px;
 }
 
 .button-wrapper {

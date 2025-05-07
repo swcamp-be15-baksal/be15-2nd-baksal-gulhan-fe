@@ -73,6 +73,7 @@
 </template>
 
 <script setup>
+import { createGoods } from '@/features/goods/api.js';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Quill from 'quill';
@@ -125,16 +126,39 @@ const onCancel = () => {
     router.back();
 };
 
-const onSubmit = () => {
+const onSubmit = async () => {
     const content = quill.root.innerHTML;
-    console.log('제목:', title.value);
-    console.log('카테고리:', category.value);
-    console.log('가격:', price.value);
-    console.log('수량:', quantity.value);
-    console.log('판매량:', sold.value);
-    console.log('잔여수량:', remaining.value);
-    console.log('내용:', content);
+
+    const payload = {
+        title: title.value.trim(),
+        detail: content,
+        quantity: Number(quantity.value) || 0,
+        sold: Number(sold.value) || 0,
+        remaining: Number(remaining.value) || 0,
+        price: Number(price.value) || 0,
+        goodsCategoryId: mapCategoryNameToId(category.value),
+    };
+
+    console.log('payload: ', payload);
+    try {
+        const res = await createGoods(payload);
+        console.log('등록 성공:', res.data);
+        router.push('/goods');
+    } catch (err) {
+        alert(err.message || '등록에 실패했습니다.');
+    }
 };
+
+function mapCategoryNameToId(name) {
+    const map = {
+        사무문구: 1,
+        생활잡화: 2,
+        악세서리: 3,
+        디지털전자: 4,
+        주방식품: 5,
+    };
+    return map[name] || 0;
+}
 </script>
 
 <style scoped>
@@ -183,13 +207,17 @@ const onSubmit = () => {
     border-radius: 10px;
 }
 
-#editor {
-    margin: 0 0;
+.editor-wrapper {
     width: 786px;
     height: 500px;
     background: white;
+    border-radius: 10px;
+}
+
+::v-deep .ql-editor {
     padding: 10px;
     font-size: 1.2rem;
+    min-height: 480px;
 }
 
 .button-wrapper {
