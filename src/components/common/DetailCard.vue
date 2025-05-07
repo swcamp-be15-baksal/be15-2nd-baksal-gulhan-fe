@@ -11,6 +11,7 @@ import { deleteGoods } from '@/features/goods/api';
 import { useRouter } from 'vue-router';
 import { toggleLike } from '@/features/mypage/api.js';
 import { ref } from 'vue';
+import { addToCartAPI } from '@/features/cart/api.js';
 
 const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
 const isLiked = ref(false);
@@ -89,6 +90,34 @@ async function deleteItem() {
         }
     }
 }
+
+const addToCart = async () => {
+    const targetType = isGoods.value ? 'GOODS' : 'PACKAGE';
+    const targetId = isGoods.value ? props.data.goodsId : props.data.packageId;
+
+    const payload = {
+        quantity: 1, // 수량 기본값
+        targetType,
+        targetId,
+    };
+
+    try {
+        const res = await addToCartAPI(payload);
+        if (res.data?.success) {
+            alert(res.data.data.message || '장바구니에 담겼습니다!');
+        } else {
+            console.warn('[장바구니 실패 응답]', res.data);
+            alert(res.data.message || '장바구니 추가 실패');
+        }
+    } catch (err) {
+        console.error('[장바구니 요청 오류]', err);
+        if (err.response?.status === 401) {
+            alert('로그인이 필요합니다. 로그인 후 다시 시도해주세요.');
+        } else {
+            alert('장바구니 추가 중 오류가 발생했습니다.');
+        }
+    }
+};
 </script>
 
 <template>
@@ -133,7 +162,9 @@ async function deleteItem() {
                 </button>
                 <div class="price">{{ data.price.toLocaleString() }}원</div>
                 <div class="buy-button">
-                    <button style="background-color: #e57575">장바구니 담기</button>
+                    <button style="background-color: #e57575" @click="addToCart">
+                        장바구니 담기
+                    </button>
                 </div>
             </div>
         </div>
