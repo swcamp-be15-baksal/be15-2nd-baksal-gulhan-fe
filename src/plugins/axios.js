@@ -20,6 +20,7 @@ const imageApi = axios.create({
     withCredentials: true,
 });
 
+
 api2.interceptors.response.use(
     (res) => res,
     async (err) => {

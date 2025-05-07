@@ -5,13 +5,14 @@
         <button class="icon-small" @click="navigate('home')">
           <img src="../../assets/icons/home.svg" alt="home" />
         </button>
-        <button class="icon-small" @click="navigate('cart')">
+        <button class="icon-small" @click="navigate('cart')" v-if="!authStore.userRank === 'SLAVE'">
           <img src="../../assets/icons/cart.svg" alt="cart" />
         </button>
         <button @click="navigate('login')" v-if="!authStore.isAuthenticated">로그인</button>
         <button @click="handleLogout" v-if="authStore.isAuthenticated">로그아웃</button>
         <button @click="navigate('signup')" v-if="!authStore.isAuthenticated">회원가입</button>
         <button @click="navigate('mypage')">마이페이지</button>
+        <button @click="navigate('dashboard')" v-if="authStore.userRank === 'SLAVE'">대시보드</button>
       </div>
     </div>
 
@@ -21,7 +22,13 @@
       </button>
       <nav class="nav-menu">
         <button @click="navigate('place')">관람 정보</button>
-        <button @click="navigate('packages')">패키지</button>
+        <div class="dropdown">
+          <button @click="navigate('packages')">패키지</button>
+          <div class="dropdown-menu">
+            <button @click="navigate('packages')">패키지</button>
+            <button @click="navigate('travelpost')">동행글</button>
+          </div>
+        </div>
         <button @click="navigate('goods')">기념품</button>
         <button @click="navigate('notice')">공지사항</button>
       </nav>
@@ -110,6 +117,39 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  text-align: center;
+  background-color: black;
+  padding: 8px 0;
+  border-radius: 4px;
+  width: 100px;
+  min-width: 120px;
+  z-index: 20;
+}
+.dropdown-menu button {
+  all: unset;
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #d4c56f;
+  cursor: pointer;
+}
+.dropdown-menu button:hover {
+  background-color: #333;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
 </style>
 
 <script setup>
@@ -160,6 +200,12 @@ function navigate(target) {
       break;
     case 'cart':
       router.push('/cart');
+      break;
+    case 'dashboard':
+      router.push('/dashboard');
+      break;
+    case 'travelpost':
+      router.push('/board');
       break;
   }
 }
