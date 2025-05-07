@@ -75,10 +75,39 @@
 <script setup>
 import { createGoods } from '@/features/goods/api.js';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchGoodsDetail, updateGoods } from '@/features/goods/api';
+
+onMounted(async () => {
+    initQuill();
+
+    if (goodsId) {
+        try {
+            const res = await fetchGoodsDetail(goodsId);
+            const data = res.data.data;
+
+            title.value = data.title;
+            category.value = reverseMapCategoryIdToName(data.goodsCategoryId);
+            price.value = data.price.toString();
+            quantity.value = data.quantity.toString();
+            sold.value = data.sold.toString();
+            remaining.value = data.remaining.toString();
+
+            // Quill 내용 세팅은 nextTick 이후에 실행
+            await nextTick();
+            quill.root.innerHTML = data.detail || '';
+        } catch (err) {
+            console.error('[수정모드] 불러오기 실패:', err);
+        }
+    }
+});
+
+const route = useRoute();
+const goodsId = route.query.goodsId;
+
 Quill.register('modules/resize', QuillResize);
 
 const router = useRouter();
@@ -90,7 +119,32 @@ const sold = ref('');
 const remaining = ref('');
 let quill;
 
-onMounted(() => {
+onMounted(async () => {
+    initQuill();
+
+    if (goodsId) {
+        try {
+            const res = await fetchGoodsDetail(goodsId);
+            const data = res.data.data;
+
+            title.value = data.title;
+            category.value = reverseMapCategoryIdToName(data.goodsCategoryId);
+            price.value = data.price.toString();
+            quantity.value = data.quantity.toString();
+            sold.value = data.sold.toString();
+            remaining.value = data.remaining.toString();
+
+            await nextTick();
+            quill.root.innerHTML = data.detail || '';
+        } catch (err) {
+            console.error('[수정모드] 불러오기 실패:', err);
+        }
+    }
+});
+
+function initQuill() {
+    if (quill) return;
+
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
         ['link', 'image'],
@@ -120,11 +174,9 @@ onMounted(() => {
         theme: 'snow',
         placeholder: '기념품 상세설명을 작성해 주세요.',
     });
-});
+}
 
-const onCancel = () => {
-    router.back();
-};
+const onCancel = () => router.back();
 
 const onSubmit = async () => {
     const content = quill.root.innerHTML;
@@ -139,13 +191,18 @@ const onSubmit = async () => {
         goodsCategoryId: mapCategoryNameToId(category.value),
     };
 
-    console.log('payload: ', payload);
     try {
-        const res = await createGoods(payload);
-        console.log('등록 성공:', res.data);
+        let res;
+        if (goodsId) {
+            res = await updateGoods(goodsId, payload);
+            alert('기념품이 수정되었습니다.');
+        } else {
+            res = await createGoods(payload);
+            alert('기념품이 등록되었습니다.');
+        }
         router.push('/goods');
     } catch (err) {
-        alert(err.message || '등록에 실패했습니다.');
+        alert(err.message || '요청 중 오류가 발생했습니다.');
     }
 };
 
@@ -158,6 +215,17 @@ function mapCategoryNameToId(name) {
         주방식품: 5,
     };
     return map[name] || 0;
+}
+
+function reverseMapCategoryIdToName(id) {
+    const map = {
+        1: '사무문구',
+        2: '생활잡화',
+        3: '악세서리',
+        4: '디지털전자',
+        5: '주방식품',
+    };
+    return map[id] || '';
 }
 </script>
 

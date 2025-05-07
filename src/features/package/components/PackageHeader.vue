@@ -8,7 +8,7 @@ import DateSelectDropdown from '@/features/package/components/DateSelectDropdown
 
 const props = defineProps({
     sort: String,
-    area: String,
+    area: Object,
     date: Object,
     keyword: String,
 });
@@ -36,8 +36,8 @@ const selectedFilter = ref('전체');
 function selectFilter(filter) {
     selectedFilter.value = filter;
     if (filter === '전체') {
-        emit('update:area', '');
-        emit('update:date', '');
+        emit('update:area', { parent: '', child: '' });
+        emit('update:date', { startDate: '', endDate: '' });
     }
 }
 

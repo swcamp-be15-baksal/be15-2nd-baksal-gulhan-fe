@@ -1,6 +1,5 @@
 import { api, api2 } from '@/plugins/axios.js';
 import { useAuthStore } from '@/stores/auth';
-import dayjs from 'dayjs';
 
 /**
  * 패키지 목록 조회
@@ -79,6 +78,46 @@ export async function createPackage(payload) {
             }
         } else {
             console.error('[createPackage] 알 수 없는 오류:', err);
+        }
+        throw err;
+    }
+}
+
+export function updatePackage(packageId, payload) {
+    return api.put(`/packages/${packageId}`, payload);
+}
+
+export async function deletePackage(packageId) {
+    try {
+        const authStore = useAuthStore();
+        const accessToken = authStore.accessToken;
+
+        if (!accessToken) {
+            throw new Error('로그인이 필요합니다.');
+        }
+
+        const res = await api.delete(`/packages/list/${packageId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            withCredentials: true,
+        });
+
+        return res;
+    } catch (err) {
+        if (err.response) {
+            console.error('[deletePackage] 삭제 실패:', err.message);
+            console.error('[서버 응답 상태]:', err.response.status);
+            console.error('[서버 응답 본문]:', JSON.stringify(err.response.data, null, 2));
+
+            if (err.response.data?.errorCode === '11003') {
+                const authStore = useAuthStore();
+                await authStore.clearAuth();
+                alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+                location.href = '/login';
+            }
+        } else {
+            console.error('[deletePackage] 알 수 없는 오류:', err);
         }
         throw err;
     }

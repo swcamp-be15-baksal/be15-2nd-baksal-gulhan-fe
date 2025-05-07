@@ -149,15 +149,18 @@
 </template>
 
 <script setup>
-import { createPackage } from '@/features/package/api.js';
+import { createPackage, updatePackage } from '@/features/package/api.js';
+import { fetchPackageDetail } from '@/features/package/api';
 import { ref, onMounted, nextTick } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
 import dayjs from 'dayjs';
 Quill.register('modules/resize', QuillResize);
 
+const route = useRoute();
+const packageId = route.query.packageId;
 const router = useRouter();
 const title = ref('');
 const startDate = ref('');
@@ -217,6 +220,43 @@ const onCancel = () => {
     router.back();
 };
 
+onMounted(async () => {
+    if (packageId) {
+        try {
+            const response = await fetchPackageDetail(packageId);
+            const detail = response.data.data; // ✅ 여기 핵심 포인트
+
+            console.log('[package 수정모드] 불러온 데이터:', detail);
+
+            title.value = detail.title;
+            startDate.value = detail.startDate?.slice(0, 10);
+            endDate.value = detail.endDate?.slice(0, 10);
+            price.value = detail.price?.toString() || '';
+            quantity.value = detail.capacity?.toString() || '';
+            remaining.value = detail.remaining?.toString() || '';
+
+            formData.value.address = detail.area || '';
+            formData.value.detailAddress = '';
+            formData.value.postcode = '';
+
+            guide.value.name = detail.guideName || '';
+            guide.value.phone = detail.guidePhone || '';
+            guide.value.email = detail.guideEmail || '';
+            guide.value.gender = detail.guideGender === 'M' ? '남' : '여';
+
+            nextTick(() => {
+                if (quill && detail.detail) {
+                    quill.root.innerHTML = detail.detail;
+                }
+            });
+        } catch (err) {
+            console.error('수정모드: 상세조회 실패', err);
+        }
+    }
+});
+
+const disabled = ref(false);
+
 const onSubmit = async () => {
     const content = quill.root.innerHTML;
     const genderCode = guide.value.gender === '남' ? 'M' : 'F';
@@ -224,7 +264,7 @@ const onSubmit = async () => {
     const payload = {
         title: title.value.trim(),
         detail: content,
-        area: `${formData.value.address} ${formData.value.detailAddress}`,
+        area: formData.value.address.split(' ').slice(0, 2).join(' '),
         price: Number(price.value) || 0,
         capacity: Number(quantity.value) || 0,
         // currentRegist: Number(sold.value) || 0,
@@ -237,14 +277,18 @@ const onSubmit = async () => {
         guideGender: genderCode,
     };
 
-    console.log('[createPackage] 전송 payload:', payload);
-
     try {
-        const response = await createPackage(payload);
-        console.log('등록 성공:', response.data);
+        if (packageId) {
+            await updatePackage(packageId, payload);
+            alert('패키지가 수정되었습니다.');
+        } else {
+            await createPackage(payload);
+            alert('패키지가 등록되었습니다.');
+        }
         router.push('/packages');
     } catch (error) {
-        console.error('등록 실패:', error);
+        console.error('등록/수정 실패:', error);
+        alert('처리 중 오류가 발생했습니다.');
     }
 };
 

@@ -44,8 +44,10 @@ async function loadPackages() {
     const mappedSort = mapSortKeyword(props.sort);
     if (mappedSort) params.sort = mappedSort;
 
-    if (props.area?.child && props.area?.parent) {
-        params.area = `${props.area.parent} ${props.area.child}`;
+    if (props.area?.child && props.area.child.trim() !== '') {
+        params.area = props.area.child.trim();
+    } else {
+        delete params.area;
     }
 
     if (props.date?.startDate && dayjs(props.date.startDate).isValid()) {

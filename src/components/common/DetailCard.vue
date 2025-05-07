@@ -3,6 +3,24 @@ import editIcon from '@/assets/icons/edit.svg';
 import deleteIcon from '@/assets/icons/delete.svg';
 import heartIcon from '@/assets/icons/heart.svg';
 import starIcon from '@/assets/icons/star.svg';
+import { computed } from 'vue';
+import { deletePackage } from '@/features/package/api';
+import { deleteGoods } from '@/features/goods/api';
+import { useRouter } from 'vue-router';
+
+const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
+
+const router = useRouter();
+
+function goToEditPage() {
+    const path = isGoods.value ? '/goods/write' : '/packages/write';
+    const queryKey = isGoods.value ? 'goodsId' : 'packageId';
+
+    router.push({
+        path,
+        query: { [queryKey]: props.data[queryKey] || props.data.packageId },
+    });
+}
 
 const props = defineProps({
     data: {
@@ -28,6 +46,30 @@ function formatDate(ts) {
     const date = new Date(ts);
     return date.toISOString().split('T')[0];
 }
+
+async function deleteItem() {
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+
+    try {
+        if (isGoods.value) {
+            await deleteGoods(id);
+        } else {
+            await deletePackage(id);
+        }
+        alert('삭제가 완료되었습니다.');
+        location.reload();
+    } catch (err) {
+        console.error('[삭제 실패]', err);
+
+        if (err.response?.status === 401 || err.response?.data?.errorCode === '11003') {
+            alert('로그인이 필요합니다. 다시 로그인해주세요.');
+        } else {
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    }
+}
 </script>
 
 <template>
@@ -36,8 +78,12 @@ function formatDate(ts) {
             <img src="https://placehold.co/555x416" alt="data-image" class="main-img" />
             <div class="info-box d-flex flex-column">
                 <div class="d-flex justify-content-end" style="position: relative; width: 353px">
-                    <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
-                    <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
+                    <button class="edit-icon" @click="goToEditPage">
+                        <img :src="editIcon" alt="edit-icon" />
+                    </button>
+                    <button class="edit-icon" @click="deleteItem">
+                        <img :src="deleteIcon" alt="delete-icon" />
+                    </button>
                 </div>
                 <div class="data-info">
                     <button class="category" style="margin-bottom: 8px">
