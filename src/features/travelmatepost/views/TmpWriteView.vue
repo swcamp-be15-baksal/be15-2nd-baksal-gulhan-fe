@@ -22,9 +22,15 @@ const onSubmit = async () => {
   }
 
   try {
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.value.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map(img => img.getAttribute('src'));
+
     const postData = {
       title: title.value,
-      content: content.value
+      content: fixedContent,
+      imageUrls: imageUrls
     }
     const id = await createTmpPost(authStore.accessToken, postData)
     alert('게시글이 등록되었습니다!')

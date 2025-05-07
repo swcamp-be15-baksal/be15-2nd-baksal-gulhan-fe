@@ -29,7 +29,7 @@ const props = defineProps({
     <div class="card">
         <router-link :to="`${linkPrefix}/${data[idKey]}`">
             <div class="data-img">
-                <div class="category-label">{{ data[categoryKey] }}</div>
+                <div class="category-label">{{ data[categoryKey] || '기타' }}</div>
                 <img :src="data.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'" />
             </div>
             <div>
