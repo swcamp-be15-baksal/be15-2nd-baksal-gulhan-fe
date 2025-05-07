@@ -37,3 +37,10 @@ export function findPassword(data) {
 export function findPasswordEmailVerify(data) {
     return api2.post('/users/find/password/verify', data);
 }
+
+export function addKakaoAdditionalInfo(data) {
+  return api2.post('/oauth/kakao/additional-info', data);
+}
+
+
+

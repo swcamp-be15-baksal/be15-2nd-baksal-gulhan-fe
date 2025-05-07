@@ -49,6 +49,8 @@ async function bootstrap() {
     app.use(Toast, notificationOptions);
 
     app.mount('#app');
+
+    window.Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
 }
 
 await bootstrap();
