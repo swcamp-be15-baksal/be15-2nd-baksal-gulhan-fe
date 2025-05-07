@@ -73,4 +73,3 @@ api2.interceptors.response.use(
 );
 
 export { api, api2, imageApi };
-export { api, api2, imageApi };
