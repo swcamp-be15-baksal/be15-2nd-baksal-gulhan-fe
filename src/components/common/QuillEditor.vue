@@ -19,32 +19,31 @@ const emit = defineEmits(['update:modelValue']);
 let quill;
 
 function imageHandler() {
-  const input = document.createElement('input')
-  input.setAttribute('type', 'file')
-  input.setAttribute('accept', 'image/*')
-  input.click()
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
 
-  input.onchange = async () => {
-    const file = input.files[0]
-    if (!file) return
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
 
-    const formData = new FormData()
-    formData.append('image', file)
-    console.log("파일 정보 : ", file);
+        const formData = new FormData();
+        formData.append('image', file);
+        console.log('파일 정보 : ', file);
 
-    try {
-      const response = await uploadTempImage(formData)
-      console.log(response);
-      const imageUrl = response.data.data.imageUrl;
+        try {
+            const response = await uploadTempImage(formData);
+            console.log(response);
+            const imageUrl = response.data.data.imageUrl;
 
-      const range = quill.getSelection()
-      quill.insertEmbed(range.index, 'image', imageUrl)
-    } catch (err) {
-      console.error('이미지 업로드 실패:', err)
-    }
-  }
+            const range = quill.getSelection();
+            quill.insertEmbed(range.index, 'image', imageUrl);
+        } catch (err) {
+            console.error('이미지 업로드 실패:', err);
+        }
+    };
 }
-
 
 onMounted(() => {
     quill = new Quill('#editor', {
@@ -61,9 +60,9 @@ onMounted(() => {
                     [{ font: [] }],
                     [{ align: [] }],
                 ],
-              handlers: {
-                  image: imageHandler
-              }
+                handlers: {
+                    image: imageHandler,
+                },
             },
             resize: {
                 parchment: {
