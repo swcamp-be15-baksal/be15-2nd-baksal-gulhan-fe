@@ -27,10 +27,19 @@ const handleLogin = async () => {
         authStore.setAuth(at);
         await router.replace('/');
     } catch (e) {
+      console.log(e)
         toast.error(e.response.data.message);
         // console.log(e);
     }
 };
+
+console.log(window.Kakao.isInitialized());
+function loginWithKakao() {
+  window.Kakao.Auth.authorize({
+    redirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI
+  });
+}
+
 </script>
 
 <template>
@@ -50,10 +59,11 @@ const handleLogin = async () => {
             <button type="submit" class="login">로그인</button>
         </form>
 
-        <button class="kakao-login">
+        <button class="kakao-login" @click="loginWithKakao">
             <img class="kakao-logo" src="@/assets/icons/kakao-logo.svg" alt="kakao-logo" />
             카카오 로그인
         </button>
+        <p id="token-result"></p>
         <hr />
         <button @click="router.push('/signup')" class="signup">회원 가입</button>
     </div>

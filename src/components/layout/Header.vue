@@ -9,8 +9,8 @@
           <img src="../../assets/icons/cart.svg" alt="cart" />
         </button>
         <button @click="navigate('login')" v-if="!authStore.isAuthenticated">로그인</button>
-        <button @click="handleLogout" v-else>로그아웃</button>
-        <button @click="navigate('signup')">회원가입</button>
+        <button @click="handleLogout" v-if="authStore.isAuthenticated">로그아웃</button>
+        <button @click="navigate('signup')" v-if="!authStore.isAuthenticated">회원가입</button>
         <button @click="navigate('mypage')">마이페이지</button>
       </div>
     </div>
