@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 import { refreshUserToken } from '@/features/user/api/user.js';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: import.meta.env.VITE_COMMERCE_SERVER_LOCAL_URL,
 });
 
 const api2 = axios.create({
@@ -12,15 +12,34 @@ const api2 = axios.create({
     withCredentials: true, // HttpOnly Cookie 사용 시 d설정하기!
 });
 
-api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.response.use(
+    (res) => res,
+    async (err) => {
+        const authStore = useAuthStore();
+        const { config, response } = err;
+
+        if (config.url.includes('/auth/token/reissue')) {
+            await authStore.clearAuth();
+            return Promise.reject(err);
         }
-        return config;
-    },
-    (error) => Promise.reject(error)
+
+        if (response?.status === 401 && !config._retry) {
+            config._retry = true;
+            try {
+                console.log('[api] 토큰 재발급 시도');
+                const refreshRes = await refreshUserToken();
+                const newToken = refreshRes.data.data.accessToken;
+                authStore.setAuth(newToken);
+                config.headers.Authorization = `Bearer ${newToken}`;
+                return api(config);
+            } catch (refreshErr) {
+                await authStore.clearAuth();
+                return Promise.reject(refreshErr);
+            }
+        }
+
+        return Promise.reject(err);
+    }
 );
 
 api2.interceptors.response.use(

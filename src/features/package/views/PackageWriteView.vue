@@ -12,11 +12,14 @@
         </div>
         <div class="input-info">
             <div class="input-title">날ㅤ짜</div>
-            <input
-                v-model="date"
-                type="text"
-                placeholder="날짜를 입력하세요."
-                class="title-input" />
+            <div class="input-info" style="gap: 12px">
+                <div class="input-title">출발일</div>
+                <input v-model="startDate" type="date" class="title-input" />
+            </div>
+            <div class="input-info">
+                <div class="input-title">종료일</div>
+                <input v-model="endDate" type="date" class="title-input" />
+            </div>
         </div>
         <div class="input-info">
             <div class="input-title" style="margin-bottom: 172px">출 발 지</div>
@@ -152,11 +155,14 @@ import { useRouter } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
+import dayjs from 'dayjs';
 Quill.register('modules/resize', QuillResize);
 
 const router = useRouter();
 const title = ref('');
-const date = ref('');
+const startDate = ref('');
+const endDate = ref('');
+
 const price = ref('');
 const quantity = ref('');
 const sold = ref('');
@@ -213,21 +219,25 @@ const onCancel = () => {
 
 const onSubmit = async () => {
     const content = quill.root.innerHTML;
+    const genderCode = guide.value.gender === '남' ? 'M' : 'F';
+
     const payload = {
         title: title.value.trim(),
         detail: content,
-        area: formData.value.address + ' ' + formData.value.detailAddress,
-        startDate: date.value, // 추후 정규화 필요
-        endDate: date.value,
-        quantity: Number(quantity.value) || 0,
-        sold: Number(sold.value) || 0,
-        remaining: Number(remaining.value) || 0,
+        area: `${formData.value.address} ${formData.value.detailAddress}`,
         price: Number(price.value) || 0,
+        capacity: Number(quantity.value) || 0,
+        // currentRegist: Number(sold.value) || 0,
+        remaining: Number(remaining.value) || 0,
+        startDate: dayjs(startDate.value).format('YYYY-MM-DDTHH:mm:ss'),
+        endDate: dayjs(endDate.value).format('YYYY-MM-DDTHH:mm:ss'),
         guideName: guide.value.name,
-        guideGender: guide.value.gender,
-        guidePhone: guide.value.phone,
         guideEmail: guide.value.email,
+        guidePhone: guide.value.phone,
+        guideGender: genderCode,
     };
+
+    console.log('[createPackage] 전송 payload:', payload);
 
     try {
         const response = await createPackage(payload);

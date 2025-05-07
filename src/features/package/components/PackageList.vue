@@ -45,11 +45,7 @@ async function loadPackages() {
     if (mappedSort) params.sort = mappedSort;
 
     if (props.area?.child && props.area?.parent) {
-        const fullArea = `${props.area.parent} ${props.area.child}`;
-        params.area = fullArea;
-
-        console.log(params.area);
-        console.log(fullArea);
+        params.area = `${props.area.parent} ${props.area.child}`;
     }
 
     if (props.date?.startDate && dayjs(props.date.startDate).isValid()) {
@@ -66,8 +62,18 @@ async function loadPackages() {
 
     try {
         const response = await fetchPackageList(params);
-        packages.value = response.data.data.packages;
-        totalPages.value = response.data.data.pagination.totalPage;
+        const responseData = response.data;
+
+        console.log('[loadPackages] 응답 구조 확인:', responseData);
+
+        // 구조 안전성 체크
+        if (responseData.success && responseData.data?.packages) {
+            packages.value = responseData.data.packages;
+            totalPages.value = responseData.data.pagination?.totalPage || 1;
+        } else {
+            packages.value = [];
+            totalPages.value = 1;
+        }
     } catch (err) {
         console.error('패키지 목록 조회 실패:', err);
         console.error('params:', params);

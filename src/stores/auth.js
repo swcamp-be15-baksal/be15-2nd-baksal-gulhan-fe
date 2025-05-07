@@ -6,6 +6,7 @@ import router from '@/router';
 export const useAuthStore = defineStore('auth', () => {
     const accessToken = ref(null);
     const userRank = ref(null);
+    const userId = ref(null);
     const expirationTime = ref(null);
 
     const isAuthenticated = computed(() => {
@@ -17,6 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             const payload = JSON.parse(atob(at.split('.')[1]));
             userRank.value = payload.rank;
+            userId.value =payload.sub;
             expirationTime.value = payload.exp * 1000;
         } catch (e) {
             console.log('에러 발생!!!' + e);
@@ -32,13 +34,20 @@ export const useAuthStore = defineStore('auth', () => {
         expirationTime.value = null;
     }
 
-    return {
+  function logout() {
+    clearAuth();
+    router.push({ name: 'login' });
+  }
+
+  return {
         accessToken,
+        userId,
         userRank,
         expirationTime,
         isAuthenticated,
         setAuth,
         clearAuth,
+        logout,
     };
 });
 
