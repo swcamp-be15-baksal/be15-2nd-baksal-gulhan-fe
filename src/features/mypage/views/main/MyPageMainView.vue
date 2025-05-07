@@ -1,5 +1,39 @@
 <script setup>
 import UserSummaryItem from '../../components/common/UserSummaryItem.vue';
+import { computed, watch } from 'vue';
+import { useUserStore } from '@/features/mypage/stores/user.js';
+import { useAuthStore } from '@/stores/auth.js';
+
+const userStore = useUserStore();
+const authStore = useAuthStore();
+
+watch(
+  () => authStore.accessToken,
+  token => {
+    if (token) {
+      userStore.loadUserInfo();
+    }
+  },
+  { immediate: true }
+);
+
+const userInfo = computed(() => userStore.userInfo || {});
+
+const maskedUsername = computed(() => {
+  const name = userInfo.value.username || '';
+  if (name.length === 2) return name[0] + '*';
+  if (name.length === 3) return name[0] + '*' + name[2];
+  if (name.length >= 4) return name[0] + '*'.repeat(name.length - 2) + name[name.length - 1];
+  return '*';
+});
+
+const rankDisplayMap = {
+  SLAVE: '노비',
+  COMMONER: '평민',
+  CHUNGIN: '중인',
+  NOBLE: '양반',
+  KING: '왕'
+};
 
 const menuList = [
   { label: '구매 내역', to: `/mypage/orderhistory` },
@@ -8,6 +42,7 @@ const menuList = [
   { label: '리뷰 관리', to: `/mypage/review` },
   { label: '작성글 관리', to: `/mypage/post` }
 ];
+
 </script>
 
 <template>
@@ -17,7 +52,11 @@ const menuList = [
     </div>
 
     <div class="mb-4">
-      <UserSummaryItem />
+      <UserSummaryItem
+        :user-info="userInfo"
+        :maskedUsername="maskedUsername"
+        :rankDisplayMap="rankDisplayMap"
+      />
     </div>
 
     <div class="border rounded bg-white shadow-sm overflow-hidden">

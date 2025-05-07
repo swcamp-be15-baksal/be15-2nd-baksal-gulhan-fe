@@ -6,7 +6,7 @@ defineProps({
   displayGender: String
 })
 
-const emit = defineEmits(['edit', 'delete']);
+defineEmits(['edit', 'delete']);
 </script>
 
 <template>
