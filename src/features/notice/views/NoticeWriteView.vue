@@ -8,6 +8,7 @@ import { createNotice } from '@/features/notice/api/notice'
 const router = useRouter()
 const title = ref('')
 const content = ref('')
+const imageList = ref([]);
 
 const authStore = useAuthStore()
 
@@ -23,10 +24,16 @@ const onSubmit = async () => {
 
   try {
     const accessToken = authStore.accessToken
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.value.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map(img => img.getAttribute('src'));
     const payload = {
       title: title.value,
-      content: content.value,
+      content: fixedContent,
+      imageUrls: imageUrls
     }
+
 
     await createNotice(accessToken, payload)
 
