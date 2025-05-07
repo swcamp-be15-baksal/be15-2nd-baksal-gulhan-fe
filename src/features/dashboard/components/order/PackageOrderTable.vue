@@ -11,7 +11,7 @@ const props = defineProps({
     <table>
       <thead>
       <tr>
-        <th>패키지 ID</th>
+        <th>패키지 번호</th>
         <th>패키지명</th>
         <th>주문 수량</th>
         <th>총 결제 금액</th>

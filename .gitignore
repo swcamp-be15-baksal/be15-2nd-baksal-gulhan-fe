@@ -29,5 +29,5 @@ coverage
 
 *.tsbuildinfo
 
-# env 파일
+# .env 파일
 .env

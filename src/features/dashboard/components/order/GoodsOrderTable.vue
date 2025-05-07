@@ -5,8 +5,8 @@ defineProps({
 </script>
 
 <template>
-  <div class="table-wrapper">
-    <table class="order-table">
+  <div class="package-table">
+    <table>
       <thead>
       <tr>
         <th>기념품 번호</th>
@@ -28,31 +28,29 @@ defineProps({
 </template>
 
 <style scoped>
-.table-wrapper {
-  overflow-x: auto;
-  margin-top: 16px;
+.package-table {
+    margin-top: 1rem;
 }
 
-.order-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-  background-color: white;
+.package-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.order-table th,
-.order-table td {
-  border: 1px solid #ddd;
-  padding: 12px 10px;
-  text-align: center;
+.package-table th,
+.package-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 0.875rem;
 }
 
-.order-table th {
-  background-color: #f3f3f3;
-  font-weight: bold;
-}
-
-.order-table tbody tr:hover {
-  background-color: #fafafa;
+.package-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
 }
 </style>

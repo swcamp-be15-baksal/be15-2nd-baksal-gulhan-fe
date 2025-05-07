@@ -32,22 +32,6 @@ export const fetchGoodsOrders = async (params, accessToken) => {
     }
 }
 
-// 전체 주문 내역 (운송정보용)
-export const fetchOrders = async (params, accessToken) => {
-  try {
-    const res = await api2.get('/admin/dashboard/orders', {
-      params,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    return res.data.data
-  } catch (err) {
-    console.error('전체 주문 내역 조회 실패:', err)
-    throw err
-  }
-}
-
 // 운송장 정보 조회
 export const fetchShippingOrders = async (params, accessToken) => {
   try {
@@ -63,6 +47,22 @@ export const fetchShippingOrders = async (params, accessToken) => {
     throw err;
   }
 }
+
+/* 주문 정보 수정 */
+export const updateShippingOrder = async (orderId, payload, accessToken) => {
+  try {
+    const res = await api2.put(`/admin/order/${orderId}`, payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('운송장 정보 수정 실패:', err);
+    throw err;
+  }
+};
+
 
 // 월별 수익 조회
 export const fetchMonthlyRevenue = async (accessToken) => {

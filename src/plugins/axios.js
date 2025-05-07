@@ -12,6 +12,7 @@ const api2 = axios.create({
     withCredentials: true, // HttpOnly Cookie 사용 시 설정하기!
 });
 
+
 api2.interceptors.response.use(
     (res) => res,
     async (err) => {
