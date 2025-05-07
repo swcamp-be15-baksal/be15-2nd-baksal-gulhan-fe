@@ -29,4 +29,14 @@ export const userRoutes = [
     name: 'verify-fail',
     component: () => import('@/features/user/views/EmailVerifyFailView.vue'),
   },
+  {
+    path: '/kakao/callback',
+    name: 'kakao-callback',
+    component: () => import('@/features/user/views/KakaoCallbackView.vue'),
+  },
+  {
+    path: '/kakao/additional-info',
+    name: 'kakao-additional-info',
+    component: () => import('@/features/user/views/AdditinalInfoView.vue'),
+  },
 ];
