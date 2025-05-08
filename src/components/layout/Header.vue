@@ -29,13 +29,8 @@
             </button>
             <nav class="nav-menu">
                 <button @click="navigate('place')">관람 정보</button>
-                <div class="dropdown">
-                    <button @click="navigate('packages')">패키지</button>
-                    <div class="dropdown-menu">
-                        <button @click="navigate('packages')">패키지</button>
-                        <button @click="navigate('travelpost')">동행글</button>
-                    </div>
-                </div>
+                <button @click="navigate('packages')">패키지</button>
+                <button @click="navigate('travelpost')">동행글</button>
                 <button @click="navigate('goods')">기념품</button>
                 <button @click="navigate('notice')">공지사항</button>
             </nav>
@@ -45,11 +40,13 @@
 
 <style scoped>
 .header {
+    margin-top: 20px;
     width: 100%;
     background: #fff;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;
     z-index: 10;
+    height: 150px;
 }
 
 .icon-small {
@@ -101,6 +98,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin-left: 80px;
 }
 
 .logo-button img {
