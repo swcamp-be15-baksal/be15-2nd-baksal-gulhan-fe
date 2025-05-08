@@ -88,6 +88,7 @@ export function fetchUserComment(accessToken) {
     });
 }
 
+// 좋아요 등록
 export async function toggleLike(targetId, targetType) {
     const authStore = useAuthStore();
     const token = authStore.accessToken;
@@ -121,5 +122,15 @@ export function fetchLikes(accessToken, params) {
 export async function fetchUserReviews(targetType = 'PACKAGE') {
     return await api.get('/users/me/review', {
         params: { targetType },
+    });
+}
+
+// 특정 대상에 대한 좋아요 여부 확인
+export async function fetchIsLiked(targetId, targetType) {
+    return await api.get('/like/check', {
+        params: {
+            targetId,
+            targetType,
+        },
     });
 }
