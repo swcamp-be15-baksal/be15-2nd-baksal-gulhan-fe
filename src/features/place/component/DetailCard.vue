@@ -19,6 +19,7 @@ const props = defineProps({
   },
 });
 
+
 const isLiked = ref(false);
 const likeCount = ref(0);
 const TARGET_TYPE = 'PLACE';
