@@ -29,8 +29,11 @@ const props = defineProps({
     <div class="card">
         <router-link :to="`${linkPrefix}/${data[idKey]}`">
             <div class="data-img">
-                <div class="category-label">{{ data[categoryKey] }}</div>
-                <img :src="data.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'" />
+                <div class="category-label">{{ data[categoryKey] || '기타' }}</div>
+                <img
+                    :src="
+                        data.firstImage || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'
+                    " />
             </div>
             <div>
                 <div class="main-info">{{ data.title }}</div>
@@ -80,7 +83,7 @@ function formatDate(ts) {
 
 .data-img img {
     width: 100%;
-    height: auto;
+    height: 360px;
     object-fit: cover;
     display: block;
     border-radius: 20px;

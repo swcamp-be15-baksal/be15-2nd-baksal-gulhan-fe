@@ -20,10 +20,6 @@ function nextStep() {
       </p>
     </div>
     <button class="signup" @click="nextStep">일반 회원가입</button>
-    <button class="kakao-signup">
-      <img class="kakao-logo" src="@/assets/icons/kakao-logo.svg" alt="kakao-logo" />
-      카카오 회원가입
-    </button>
   </div>
 </template>
 
@@ -61,13 +57,6 @@ function nextStep() {
 .signup{
   background-color: #3e4042;
   color: #ededed;
-}
-
-.kakao-signup{
-  background-color: #fee500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 </style>

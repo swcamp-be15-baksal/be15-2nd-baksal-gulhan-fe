@@ -12,11 +12,14 @@
         </div>
         <div class="input-info">
             <div class="input-title">날ㅤ짜</div>
-            <input
-                v-model="date"
-                type="text"
-                placeholder="날짜를 입력하세요."
-                class="title-input" />
+            <div class="input-info" style="gap: 12px">
+                <div class="input-title">출발일</div>
+                <input v-model="startDate" type="date" class="title-input" />
+            </div>
+            <div class="input-info">
+                <div class="input-title">종료일</div>
+                <input v-model="endDate" type="date" class="title-input" />
+            </div>
         </div>
         <div class="input-info">
             <div class="input-title" style="margin-bottom: 172px">출 발 지</div>
@@ -146,17 +149,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { createPackage, updatePackage } from '@/features/package/api.js';
+import { fetchPackageDetail } from '@/features/package/api';
+import { ref, onMounted, nextTick } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillResize from 'quill-resize-module';
+import dayjs from 'dayjs';
+import { uploadTempImage } from '@/apis/image.js';
 Quill.register('modules/resize', QuillResize);
 
+const route = useRoute();
+const packageId = route.query.packageId;
 const router = useRouter();
 const title = ref('');
-const date = ref('');
-const departure = ref('');
+const startDate = ref('');
+const endDate = ref('');
+
 const price = ref('');
 const quantity = ref('');
 const sold = ref('');
@@ -175,6 +185,33 @@ const guide = ref({
 
 let quill;
 
+function imageHandler() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        console.log('파일 정보 : ', file);
+
+        try {
+            const response = await uploadTempImage(formData);
+            console.log(response);
+            const imageUrl = response.data.data.imageUrl;
+
+            const range = quill.getSelection();
+            quill.insertEmbed(range.index, 'image', imageUrl);
+        } catch (err) {
+            console.error('이미지 업로드 실패:', err);
+        }
+    };
+}
+
 onMounted(() => {
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
@@ -188,7 +225,12 @@ onMounted(() => {
 
     quill = new Quill('#editor', {
         modules: {
-            toolbar: toolbarOptions,
+            toolbar: {
+                container: toolbarOptions,
+                handlers: {
+                    image: imageHandler,
+                },
+            },
             resize: {
                 parchment: {
                     image: {
@@ -211,16 +253,82 @@ const onCancel = () => {
     router.back();
 };
 
-const onSubmit = () => {
-    const content = quill.root.innerHTML;
-    console.log('제목:', title.value);
-    console.log('날짜:', date.value);
-    console.log('출발지:', departure.value);
-    console.log('가격:', price.value);
-    console.log('수량:', quantity.value);
-    console.log('판매량:', sold.value);
-    console.log('잔여수량:', remaining.value);
-    console.log('내용:', content);
+onMounted(async () => {
+    if (packageId) {
+        try {
+            const response = await fetchPackageDetail(packageId);
+            const detail = response.data.data; // ✅ 여기 핵심 포인트
+
+            console.log('[package 수정모드] 불러온 데이터:', detail);
+
+            title.value = detail.title;
+            startDate.value = detail.startDate?.slice(0, 10);
+            endDate.value = detail.endDate?.slice(0, 10);
+            price.value = detail.price?.toString() || '';
+            quantity.value = detail.capacity?.toString() || '';
+            remaining.value = detail.remaining?.toString() || '';
+
+            formData.value.address = detail.area || '';
+            formData.value.detailAddress = '';
+            formData.value.postcode = '';
+
+            guide.value.name = detail.guideName || '';
+            guide.value.phone = detail.guidePhone || '';
+            guide.value.email = detail.guideEmail || '';
+            guide.value.gender = detail.guideGender === 'M' ? '남' : '여';
+
+            nextTick(() => {
+                if (quill && detail.detail) {
+                    quill.root.innerHTML = detail.detail;
+                }
+            });
+        } catch (err) {
+            console.error('수정모드: 상세조회 실패', err);
+        }
+    }
+});
+
+const disabled = ref(false);
+
+const onSubmit = async () => {
+    const content = quill.root.innerHTML.trim();
+    const genderCode = guide.value.gender === '남' ? 'M' : 'F';
+
+    const editor = document.querySelector('.ql-editor');
+    const images = editor.querySelectorAll('img');
+    const fixedContent = content.replace(/\/temp\//g, '/image/');
+    const imageUrls = Array.from(images).map((img) => img.getAttribute('src'));
+
+    const payload = {
+        title: title.value.trim(),
+        detail: fixedContent, // 기존 innerText → innerHTML
+        area: formData.value.address.split(' ').slice(0, 2).join(' '),
+        price: Number(price.value) || 0,
+        capacity: Number(quantity.value) || 0,
+        currentRegist: Number(sold.value) || 0,
+        remaining: Number(remaining.value) || 0,
+        startDate: dayjs(startDate.value).format('YYYY-MM-DDTHH:mm:ss'),
+        endDate: dayjs(endDate.value).format('YYYY-MM-DDTHH:mm:ss'),
+        guideName: guide.value.name,
+        guideEmail: guide.value.email?.trim() || '',
+        guidePhone: guide.value.phone,
+        guideGender: guide.value.gender === '남' ? 'M' : 'F',
+        imageUrls: imageUrls,
+    };
+
+    try {
+        if (packageId) {
+            await updatePackage(packageId, payload);
+            alert('패키지가 수정되었습니다.');
+        } else {
+            await createPackage(payload);
+            alert('패키지가 등록되었습니다.');
+        }
+        router.push('/packages');
+    } catch (error) {
+        console.error('등록/수정 실패:', error);
+        alert('처리 중 오류가 발생했습니다.');
+    }
 };
 
 function searchPostcode() {
@@ -282,13 +390,17 @@ function searchPostcode() {
     border-radius: 10px;
 }
 
-#editor {
-    margin: 0 0;
+.editor-wrapper {
     width: 786px;
     height: 500px;
     background: white;
+    border-radius: 10px;
+}
+
+::v-deep .ql-editor {
     padding: 10px;
     font-size: 1.2rem;
+    min-height: 480px;
 }
 
 .button-wrapper {

@@ -31,7 +31,7 @@ const fetchAddressList = async () => {
     addressList.value = wrapper?.data?.addressList || [];
   } catch (e) {
     console.error('주소 불러오기 실패:', e?.response?.data || e.message);
-    alert('배송지 불러오기에 실패했습니다.');
+    toast.error('배송지 불러오기에 실패했습니다.');
   } finally {
     isLoading.value = false;
   }

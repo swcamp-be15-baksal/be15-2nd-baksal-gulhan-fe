@@ -6,14 +6,19 @@ import GoodsHeader from '@/features/goods/components/GoodsHeader.vue';
 import DetailCard from '@/components/common/DetailCard.vue';
 import DetailReviewTab from '@/components/common/DetailReviewTab.vue';
 import ReviewItem from '@/features/review/components/ReviewItem.vue';
-import goods from '@/features/goods/mock/goods.json';
+import { fetchGoodsDetail } from '@/features/goods/api';
 
 const route = useRoute();
 const goodsData = ref(null);
 
-onMounted(() => {
+onMounted(async () => {
     const id = Number(route.params.id);
-    goodsData.value = goods.find((g) => g.goodsId === id);
+    try {
+        const res = await fetchGoodsDetail(id);
+        goodsData.value = res.data.data;
+    } catch (err) {
+        console.error('[GoodsDetailView] 상품 상세 조회 실패:', err);
+    }
 });
 </script>
 
