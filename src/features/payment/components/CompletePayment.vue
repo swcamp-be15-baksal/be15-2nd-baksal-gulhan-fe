@@ -2,13 +2,22 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.js';
 import { fetchUserInfo } from '@/features/mypage/api.js';
+import { onMounted, ref } from 'vue';
 const router = useRouter();
 const route = useRoute()
-const responseData = route.state ? route.state.data : null
+const responseData = route.query ? route.query : null
 const authStore = useAuthStore();
 const accessToken = authStore.accessToken;
-const userinfo = fetchUserInfo(accessToken)
-
+const username = ref('');
+const phone = ref('');
+const address = ref('');
+onMounted(async () => {
+  const userinfo = await fetchUserInfo(accessToken);
+  const data = userinfo.data.data;
+  username.value = data.username;
+  phone.value = data.phone;
+  address.value = data.address;
+});
 function goToHome(){
   router.push('/')
 
@@ -31,17 +40,17 @@ function goToMyPage(){
     <!-- 배송지 정보 -->
     <div class="box address-info">
       <h3>배송지 정보</h3>
-      <p><strong>수령인:</strong> {{userinfo.username}}</p>
-      <p><strong>휴대폰:</strong> {{userinfo.phone}}</p>
-      <p><strong>주소:</strong> {{userinfo.address}}</p>
+      <p><strong>수령인:</strong> {{username}}</p>
+      <p><strong>휴대폰:</strong> {{phone}}</p>
+      <p><strong>주소:</strong> {{address}}</p>
     </div>
 
     <!-- 결제 내역 -->
     <div class="box payment-info">
       <h3>결제 내역</h3>
-      <p><strong>주문번호:</strong> {{responseData[0]}}</p>
-      <p><strong>결제금액:</strong> {{responseData[1]}}</p>
-      <p><strong>주문 상품:</strong> {{responseData[2]}}</p>
+      <p><strong>주문번호:</strong> {{responseData.orderId}}</p>
+      <p><strong>결제금액:</strong> {{responseData.totalAmount}}</p>
+      <p><strong>주문 상품:</strong> {{responseData.orderName}}</p>
     </div>
 
     <!-- 버튼 영역 -->
