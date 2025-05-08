@@ -5,16 +5,25 @@ import heartIcon from '@/assets/icons/heart.svg';
 import starIcon from '@/assets/icons/star.svg';
 import heartFilledIcon from '@/assets/icons/heartFilled.svg';
 import heartEmptyIcon from '@/assets/icons/heartEmpty.svg';
-import { computed } from 'vue';
 import { deletePackage } from '@/features/package/api';
 import { deleteGoods } from '@/features/goods/api';
 import { useRouter } from 'vue-router';
-import { toggleLike } from '@/features/mypage/api.js';
-import { ref } from 'vue';
+import { toggleLike, fetchIsLiked } from '@/features/mypage/api.js';
+import { ref, computed, onMounted } from 'vue';
 import { addToCartAPI } from '@/features/cart/api.js';
 
-const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
-const isLiked = ref(false);
+onMounted(async () => {
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+    const type = isGoods.value ? 'GOODS' : 'PACKAGE';
+
+    try {
+        const res = await fetchIsLiked(id, type);
+        isLiked.value = res.data?.data ?? false;
+    } catch (err) {
+        console.error('[좋아요 여부 확인 실패]', err);
+        isLiked.value = false; // fallback
+    }
+});
 
 const router = useRouter();
 
@@ -47,47 +56,27 @@ const props = defineProps({
     },
 });
 
+const isGoods = computed(() => props.categoryKey === 'goodsCategoryName');
+const isLiked = ref(false);
+const likeCount = ref(props.data.likeCount ?? 0);
+
 function formatDate(ts) {
     if (!ts) return '';
     const date = new Date(ts);
     return date.toISOString().split('T')[0];
 }
 
-// const onLikeClick = async () => {
-//     const id = isGoods.value ? props.data.goodsId : props.data.packageId;
-//     const type = isGoods.value ? 'GOODS' : 'PACKAGE';
-
-//     try {
-//         const res = await toggleLike(id, type);
-//         isLiked.value = res.data.liked;
-//         alert('좋아요가 반영되었습니다.');
-//     } catch (err) {
-//         console.error('[좋아요 실패]', err);
-//         alert('좋아요 요청 중 오류 발생');
-//     }
-// };
-
 const onLikeClick = async () => {
-    let id, type;
-
-    // 좋아요 대상 식별 (각 객체가 가진 고유 ID 키를 기준으로 판별)
-    if (props.data.goodsId) {
-        id = props.data.goodsId;
-        type = 'GOODS'; // GOODS 좋아요
-    } else if (props.data.packageId) {
-        id = props.data.packageId;
-        type = 'PACKAGE'; // PACKAGE 좋아요
-    } else if (props.data.placeId) {
-        id = props.data.placeId;
-        type = 'PLACE'; // PLACE 좋아요
-    } else {
-        alert('좋아요 대상을 찾을 수 없습니다.');
-        return;
-    }
+    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+    const type = isGoods.value ? 'GOODS' : 'PACKAGE';
 
     try {
         const res = await toggleLike(id, type);
-        isLiked.value = res.data.liked;
+        const likedNow = res.data.liked;
+        if (likedNow !== isLiked.value) {
+            isLiked.value = likedNow;
+            likeCount.value += likedNow ? 1 : -1;
+        }
         alert('좋아요가 반영되었습니다.');
     } catch (err) {
         console.error('[좋아요 실패]', err);
@@ -175,7 +164,7 @@ const addToCart = async () => {
                     </div>
                     <div class="like-review" style="margin-top: 16px">
                         <img :src="heartIcon" style="margin-left: 6px; margin-right: 6px" />
-                        <span style="color: #ff268f">{{ data.likeCount }}</span>
+                        <span style="color: #ff268f">{{ likeCount }}</span>
                     </div>
                     <div class="like-review" style="margin-bottom: 16px">
                         <img :src="starIcon" />
