@@ -7,6 +7,7 @@ import router from '@/router/index.js';
 const cartStore = useCartStore();
 const orderItems = cartStore.selectedItems;
 const priceDetails = ref([]);
+sessionStorage.setItem('selectedItems', JSON.stringify(orderItems));
 onMounted(() => {
 
   const storedPriceDetails = sessionStorage.getItem('priceDetails');
@@ -16,6 +17,7 @@ onMounted(() => {
 });
 const handlePayment = (payload) => {
   sessionStorage.setItem('paymentInfo',JSON.stringify(payload));
+
   router.push({ name: 'payment'});
 
 }

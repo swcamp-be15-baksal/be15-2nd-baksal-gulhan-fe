@@ -105,3 +105,11 @@ export async function toggleLike(targetId, targetType) {
         withCredentials: true,
     });
 }
+export function getMyOrderHistory(accessToken){
+  return api.get('/order/order_history',{
+    headers:{
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  })
+}

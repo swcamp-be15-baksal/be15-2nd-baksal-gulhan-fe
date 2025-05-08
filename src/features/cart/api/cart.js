@@ -28,4 +28,3 @@ export function deleteAllMyCart(){
 /* 특정 장바구니 품목 조회(?) -> id 넘겨서 해당 상품으로..*/
 
 /* 장바구니 품목 수량 수정*/
-

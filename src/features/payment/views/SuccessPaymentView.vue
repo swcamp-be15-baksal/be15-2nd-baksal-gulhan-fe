@@ -1,11 +1,11 @@
 <script setup>
-
-import SuccessPayment from '@/features/payment/components/SuccessPayment.vue';
+import SuccessPayment from '@/features/payment/components/SuccessPayment.vue'
+const selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
 </script>
 
 <template>
   <div>
-    <SuccessPayment/>
+    <SuccessPayment :selectedItems="selectedItems"/>
   </div>
 </template>
 

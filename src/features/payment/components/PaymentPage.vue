@@ -1,6 +1,6 @@
 <script setup>
 import '@/features/payment/css/style.css';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { getKey, getValue } from '@/features/payment/api/payment.js';
 import { useAuthStore } from '@/stores/auth.js';
 import { fetchUserInfo } from '@/features/mypage/api.js';
@@ -11,7 +11,7 @@ const props = defineProps({
     required: true
   },
   paymentInfo: {
-    type: Array,
+    type: Object,
     required: true
   }
 });
@@ -27,6 +27,24 @@ const orderId = ref(null);
 const isPaymentDisabled = ref(false);
 const authStore = useAuthStore();
 const accessToken = authStore.accessToken;
+
+const orderName = ref(''); // ✅ 주문명 ref로 선언
+
+// props.selectedItems 변화 감지해서 orderName 갱신
+watch(
+  () => props.selectedItems,
+  (items) => {
+    if (!items || items.length === 0) {
+      orderName.value = '상품';
+    } else if (items.length === 1) {
+      console.log(items)
+      orderName.value = items[0].title;
+    } else {
+      orderName.value = `${items[0].title} 외 ${items.length - 1}건`;
+    }
+  },
+  { immediate: true }
+);
 
 // 외부 스크립트 로드
 const loadTossPaymentsSDK = () => {
@@ -98,28 +116,25 @@ const handlePayment = async () => {
     const userinfo = await fetchUserInfo(accessToken);
     const username = userinfo.data.data.username;
     const email = userinfo.data.data.email;
-    const items = props.selectedItems;
-    const orderName =
-      items.length === 1
-        ? items[0].name
-        : items.length > 1
-          ? `${items[0].name} 외 ${items.length - 1}건`
-          : '상품';
 
     const widgets = widgetsInstance.value;
     if (!widgets) {
       console.error("결제 위젯이 초기화되지 않았습니다.");
       return;
+
     }
 
+
+    console.log(`${window.location.origin}/widget/success?accessToken=${accessToken}`)
     await widgets.requestPayment({
       orderId: orderId.value,
-      orderName: orderName, // 수정 필요
+      orderName: orderName.value,
       successUrl:  `${window.location.origin}/widget/success?accessToken=${accessToken}`,
       failUrl: `${window.location.origin}/widget/fail?accessToken=${accessToken}`,
       customerEmail: email,
       customerName: username,
     });
+
   } catch (err) {
     console.error('결제 요청 실패:', err);
   }
@@ -142,8 +157,11 @@ function generateRandomString() {
 onMounted(async () => {
   await loadTossPaymentsSDK();
   await initializePaymentWidget();
+
+
 });
 </script>
+
 
 
 <template>

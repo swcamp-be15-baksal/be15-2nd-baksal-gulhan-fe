@@ -1,4 +1,22 @@
 <script setup>
+import { useRoute, useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth.js';
+import { fetchUserInfo } from '@/features/mypage/api.js';
+const router = useRouter();
+const route = useRoute()
+const responseData = route.state ? route.state.data : null
+const authStore = useAuthStore();
+const accessToken = authStore.accessToken;
+const userinfo = fetchUserInfo(accessToken)
+
+function goToHome(){
+  router.push('/')
+
+}
+function goToMyPage(){
+  router.push('/mypage/orderhistory ')
+}
+
 
 </script>
 
@@ -13,23 +31,23 @@
     <!-- 배송지 정보 -->
     <div class="box address-info">
       <h3>배송지 정보</h3>
-      <p><strong>수령인:</strong> 홍길동</p>
-      <p><strong>휴대폰:</strong> 010-1234-5678</p>
-      <p><strong>주소:</strong> 서울특별시 강남구 테헤란로 123</p>
+      <p><strong>수령인:</strong> {{userinfo.username}}</p>
+      <p><strong>휴대폰:</strong> {{userinfo.phone}}</p>
+      <p><strong>주소:</strong> {{userinfo.address}}</p>
     </div>
 
     <!-- 결제 내역 -->
     <div class="box payment-info">
       <h3>결제 내역</h3>
-      <p><strong>주문번호:</strong> 202505050001</p>
-      <p><strong>결제금액:</strong> 30,000원</p>
-      <p><strong>주문 상품:</strong> 기념품 A 외 2건</p>
+      <p><strong>주문번호:</strong> {{responseData[0]}}</p>
+      <p><strong>결제금액:</strong> {{responseData[1]}}</p>
+      <p><strong>주문 상품:</strong> {{responseData[2]}}</p>
     </div>
 
     <!-- 버튼 영역 -->
     <div class="button-group">
-      <button class="btn-home">홈으로</button>
-      <button class="btn-info">구매내역</button>
+      <button class="btn-home" @click="goToHome">홈으로</button>
+      <button class="btn-info" @click="goToMyPage">구매내역</button>
     </div>
   </div>
 </template>

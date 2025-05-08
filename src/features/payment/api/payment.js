@@ -41,7 +41,7 @@ export function saveOrder(accessToken, requestData){
 
 export function saveOrderHistory(accessToken, requestOrderData){
   return api.post(
-    'payment/success/order-histoyr',
+    'payment/success/order-history',
     requestOrderData,
     {
       headers: {Authorization: `Bearer ${accessToken}`}

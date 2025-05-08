@@ -1,113 +1,77 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.js';
 import { confirmWidget, saveOrder, saveOrderHistory } from '@/features/payment/api/payment.js';
-import { useCartStore } from '@/stores/cart.js';
 
 const urlParams = new URLSearchParams(window.location.search);
 const authStore = useAuthStore();
-const cartStore = useCartStore();
-
+const props = defineProps({
+  selectedItems: {
+    type: Array,
+    required: true
+  }
+});
 
 const accessToken = authStore.accessToken;
-const selectedItems = cartStore.selectedItems;
-const amount = ref(urlParams.get('amount'));
+const router = useRouter();
+const amount = ref(Number(urlParams.get('amount')));
 const orderId = ref(urlParams.get('orderId'));
 const paymentKey = ref(urlParams.get('paymentKey'));
 const responseData = ref(null);
-/*
-const showCancelButton = ref(false);
-const showCancelButton2 = ref(false);
-*/
+const result = [];
 
 const confirmPayment = async () => {
   const requestData = {
-    paymentKey: paymentKey,
-    orderId: orderId,
-    amount: amount,
+    paymentKey: paymentKey.value,
+    orderId: orderId.value,
+    amount: amount.value,
   };
-
   try {
-    const response = await confirmWidget(accessToken, requestData)
-    const json = await response.json();
-    if (!response.ok) {
-      throw { message: json.message, code: json.code };
-    }
-    responseData.value = JSON.stringify(json, null, 4);
+    const response = await confirmWidget(accessToken, requestData);
+
+    // 👇 객체 그대로 저장
+    responseData.value = response.data;
+
+    // 👇 정상적으로 속성에 접근
+    result.push(responseData.value.orderId);
+    result.push(responseData.value.totalAmount);
+    result.push(decodeURIComponent(responseData.value.orderName));
   } catch (err) {
+    console.error('에러 발생:', err);
     window.location.href = `/widget/fail?message=${err.message}&code=${err.code}`;
   }
 };
 
 const sendPaymentData = async () => {
   const requestData = {
-    orderCode: paymentKey,
-    totalPrice: amount,
-    orderId: orderId,
+    orderCode: paymentKey.value,
+    totalPrice: amount.value,
+    orderId: orderId.value,
   };
-
-  await saveOrder(accessToken,requestData)
+  await saveOrder(accessToken, requestData);
 
   const requestOrderData = {
-    orderItem: selectedItems
-  }
-  await saveOrderHistory(accessToken, requestOrderData);
+    orderItem: props.selectedItems
+  };
+  await saveOrderHistory(accessToken, requestOrderData.orderItem);
 };
 
-/*
-const cancelPayment = async () => {
-  const cancelRequestData = {
-    cancelReason: '사용자 요청으로 취소',
-  };
+const goToResult = () => {
+  if (result.length > 0) {
+    router.push({
+      name: 'paymentResult',
+      query: {
+        orderId: result[0],
+        totalAmount: result[1],
+        orderName: result[2]
+      }
+    });
 
-  await fetch('/api/v1/s1/payment/cancel', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(cancelRequestData),
-  });
-};
-
-const cancelPayment2 = async () => {
-  const cancelRequestData2 = {
-    cancelReason: '사용자 요청으로 취소',
-    amount: 5300,
-  };
-
-  const response = await fetch('/api/v1/s1/payment/cancel', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(cancelRequestData2),
-  });
-
-  if (!response.ok) {
-    console.error(`Error: ${response.status} - ${response.statusText}`);
   } else {
-    const data = await response.json();
-    console.log('Success:', data);
+    console.error('Result 데이터가 아직 준비되지 않았습니다!');
   }
 };
-*/
-
-/*const onPaymentSuccess = () => {
-  showCancelButton.value = true;
-};
-
-const successPartial = () => {
-  showCancelButton2.value = true;
-};*/
-
-onMounted(() => {
-  confirmPayment();
-  sendPaymentData();
-  /*onPaymentSuccess();
-  successPartial();*/
-});
 
 const navigateToDocs = () => {
   window.location.href = 'https://docs.tosspayments.com/guides/v2/payment-widget/integration';
@@ -116,7 +80,13 @@ const navigateToDocs = () => {
 const navigateToDiscord = () => {
   window.location.href = 'https://discord.gg/A4fRFXQhRu';
 };
+
+onMounted(async () => {
+  await confirmPayment();
+  await sendPaymentData();
+});
 </script>
+
 <template>
   <div class="box_section w-600">
     <img width="100px" src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png" />
@@ -135,18 +105,55 @@ const navigateToDiscord = () => {
       <div class="p-grid-col text--right" style="white-space: initial; width: 250px">{{ paymentKey }}</div>
     </div>
 
-    <div class="p-grid mt-30">
-      <button class="button p-grid-col5" @click="navigateToDocs">연동 문서</button>
-      <button class="button p-grid-col5 btn-discord" @click="navigateToDiscord">실시간 문의</button>
+    <div class="button-group">
+      <button class="button" @click="navigateToDocs">연동 문서</button>
+      <button class="button btn-discord" @click="navigateToDiscord">실시간 문의</button>
+    </div>
+
+    <div class="button-confirm">
+      <button class="button" @click="goToResult">확인</button>
     </div>
   </div>
 
   <div class="box_section w-600 text--left">
     <b>Response Data :</b>
-    <div v-text="responseData" style="white-space: initial"></div>
+    <div v-text="JSON.stringify(responseData, null, 4)" style="white-space: initial"></div>
   </div>
-
-
 </template>
 
+<style scoped>
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 30px;
+}
 
+.button-confirm {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  background-color: #3182f6;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #2563eb;
+}
+
+.btn-discord {
+  background-color: #5865f2;
+}
+
+.btn-discord:hover {
+  background-color: #4752c4;
+}
+</style>
