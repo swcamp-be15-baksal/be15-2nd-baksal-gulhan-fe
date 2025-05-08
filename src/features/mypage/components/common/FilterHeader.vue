@@ -33,7 +33,7 @@ function selectFilter(filter) {
           class="filter-button"
           :class="{ active: selectedFilter === '장소' }"
           @click="selectFilter('장소')">
-          기념품
+          장소
         </button>
     </div>
 </template>
