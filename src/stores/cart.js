@@ -68,6 +68,7 @@ export const useCartStore = defineStore('cart', () => {
                     : await fetchPackageById(item.targetId);
 
                 const detail = detailRes.data.data;
+                console.log(detail);
 
                 return {
                     id: item.targetId,
@@ -76,7 +77,7 @@ export const useCartStore = defineStore('cart', () => {
                     type: isGoods ? '기념품' : '패키지',
                     title: detail.title || detail.name,
                     price: detail.price,
-                    imageUrl: detail.imageUrl || null,
+                    imageUrl: detail.firstImage || null,
                 };
             });
 

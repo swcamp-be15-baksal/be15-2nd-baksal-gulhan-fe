@@ -57,7 +57,6 @@ const removeFromCart = async () => {
             <div class="cart-item-header">
                 <!-- 구분선 -->
                 <div class="item-line"></div>
-
                 <!-- 체크박스 -->
                 <input
                     type="checkbox"
@@ -72,7 +71,7 @@ const removeFromCart = async () => {
                 <!-- 왼쪽 영역 -->
                 <div class="item-left">
                     <div class="cart-item-image">
-                        <img :src="item.image" alt="상품이미지" />
+                        <img :src="item.imageUrl" alt="상품이미지" />
                     </div>
                     <div class="item-info">
                         <div class="item-type">{{ item.type }}</div>

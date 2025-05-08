@@ -1,7 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import filledHeartIcon from '@/assets/icons/heart-filled.svg'; // 채워진 하트
-import emptyHeartIcon from '@/assets/icons/heart-empty.svg';   // 빈 하트
+import filledHeartIcon from '@/assets/icons/heart-filled.svg';
+import emptyHeartIcon from '@/assets/icons/heart-empty.svg';
+import {
+  checkLike,
+  toggleLike,
+  getTargetLikeCount,
+} from '@/features/place/api.js';
 
 const props = defineProps({
   data: {
@@ -14,28 +19,51 @@ const props = defineProps({
   },
 });
 
-// 좋아요 상태 및 수 초기화
+
 const isLiked = ref(false);
 const likeCount = ref(0);
+const TARGET_TYPE = 'PLACE';
 
-onMounted(() => {
-  isLiked.value = props.data.isLiked || false;
-  likeCount.value = props.data.likeCount || 0;
+onMounted(async () => {
+  try {
+    // ✅ 좋아요 여부 확인
+    const [checkResponse, countResponse] = await Promise.all([
+      checkLike(props.data.placeId, TARGET_TYPE),
+      getTargetLikeCount({
+        targetId: props.data.placeId,
+        targetType: TARGET_TYPE,
+      }),
+    ]);
+
+    isLiked.value = checkResponse.data.data === true;
+    likeCount.value = countResponse.data.data;
+  } catch (e) {
+    console.error('좋아요 정보 초기화 실패:', e);
+  }
 });
 
-// 토글 기능
-const toggleLike = () => {
-  isLiked.value = !isLiked.value;
-  likeCount.value = isLiked.value
-    ? likeCount.value + 1
-    : Math.max(0, likeCount.value - 1);
+const toggle = async () => {
+  try {
+    const response = await toggleLike(props.data.placeId, TARGET_TYPE);
+
+    isLiked.value = response.data.liked;
+
+    // ✅ 좋아요 수는 항상 서버에서 최신값으로 다시 가져오기
+    const countResponse = await getTargetLikeCount({
+      targetId: props.data.placeId,
+      targetType: TARGET_TYPE,
+    });
+    likeCount.value = countResponse.data.data;
+  } catch (e) {
+    console.error('좋아요 토글 실패', e);
+  }
 };
 </script>
 
 <template>
-  <div v-if="props.data" class="wrapper">
+  <div class="wrapper">
     <img
-      src="https://placehold.co/1166x421"
+      :src="props.data.image || 'https://placehold.co/1166x421'"
       alt="data-image"
       class="main-img"
     />
@@ -45,7 +73,7 @@ const toggleLike = () => {
         <div class="title">{{ props.data.title }}</div>
         <div class="address">{{ props.data.address }}</div>
       </div>
-      <div class="like" @click="toggleLike">
+      <div class="like" @click="toggle">
         <img :src="isLiked ? filledHeartIcon : emptyHeartIcon" alt="like" />
         <span>{{ likeCount }}</span>
       </div>
