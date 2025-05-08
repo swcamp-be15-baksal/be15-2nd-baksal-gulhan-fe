@@ -24,11 +24,10 @@ export async function checkLike(targetId, targetType) {
 
   if (!token) throw new Error('로그인이 필요합니다.');
 
-  const payload = { targetId, targetType };
-
-  return api.get('/like/check', payload, {
+  return api.get('/like/check', {
+    params: { targetId, targetType }, // ✅ 쿼리로 전달
     headers: {
-      Authorization: `Bearer ${token}`, // ✅ 명확히 추가
+      Authorization: `Bearer ${token}`,
     },
     withCredentials: true,
   });

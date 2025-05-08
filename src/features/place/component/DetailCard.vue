@@ -2,7 +2,11 @@
 import { ref, onMounted } from 'vue';
 import filledHeartIcon from '@/assets/icons/heart-filled.svg';
 import emptyHeartIcon from '@/assets/icons/heart-empty.svg';
-import { checkLike, toggleLike, getTargetLikeCount } from '@/features/place/api.js'; // 추가
+import {
+  checkLike,
+  toggleLike,
+  getTargetLikeCount,
+} from '@/features/place/api.js';
 
 const props = defineProps({
   data: {
@@ -17,39 +21,38 @@ const props = defineProps({
 
 const isLiked = ref(false);
 const likeCount = ref(0);
-
 const TARGET_TYPE = 'PLACE';
 
 onMounted(async () => {
   try {
-    const [countResponse, checkResponse] = await Promise.all([
+    // ✅ 좋아요 여부 확인
+    const [checkResponse, countResponse] = await Promise.all([
+      checkLike(props.data.placeId, TARGET_TYPE),
       getTargetLikeCount({
-        targetId: props.data.placeId,
-        targetType: TARGET_TYPE,
-      }),
-      checkLike({
         targetId: props.data.placeId,
         targetType: TARGET_TYPE,
       }),
     ]);
 
-    likeCount.value = countResponse.data.data || 0;
     isLiked.value = checkResponse.data.data === true;
+    likeCount.value = countResponse.data.data;
   } catch (e) {
-    console.error('좋아요 정보 초기화 실패', e);
+    console.error('좋아요 정보 초기화 실패:', e);
   }
 });
 
 const toggle = async () => {
   try {
-    const response = await toggleLike({
+    const response = await toggleLike(props.data.placeId, TARGET_TYPE);
+
+    isLiked.value = response.data.liked;
+
+    // ✅ 좋아요 수는 항상 서버에서 최신값으로 다시 가져오기
+    const countResponse = await getTargetLikeCount({
       targetId: props.data.placeId,
       targetType: TARGET_TYPE,
     });
-    isLiked.value = response.data.liked;
-    likeCount.value = isLiked.value
-      ? likeCount.value + 1
-      : Math.max(0, likeCount.value - 1);
+    likeCount.value = countResponse.data.data;
   } catch (e) {
     console.error('좋아요 토글 실패', e);
   }
