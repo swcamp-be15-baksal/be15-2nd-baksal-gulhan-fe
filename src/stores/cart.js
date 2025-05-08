@@ -1,15 +1,23 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { fetchCartItemsAPI, fetchGoodsById, fetchPackageById } from '@/features/cart/api';
 import { updateCartItem } from '@/features/cart/api';
-
+import { getCarts } from '@/features/cart/api/cart.js';
+import { useAuthStore } from '@/stores/auth.js';
 export const useCartStore = defineStore('cart', () => {
-    const cartItems = ref([]);
-    const selectedItems = ref([]);
-    // Getter: 선택된 아이템들의 총 금액 계산
-    const totalPrice = computed(() => {
-        return selectedItems.value.reduce((total, item) => total + item.price * item.quantity, 0);
-    });
+  const cartItems = ref([]);
+  const authStore = useAuthStore();
+  const fetchCartItems = async () => {
+    try {
+      const response = await getCarts(authStore.accessToken)
+      cartItems.value = response.data.data.carts
+    } catch (error) {
+      console.error('장바구니 불러오기 실패:', error)
+    }
+  }
+  const imageSrc = 'https://placehold.co/555x416';
+
+  const selectedItems = ref([])
 
     // Actions
     const addItem = (item) => {
@@ -28,24 +36,24 @@ export const useCartStore = defineStore('cart', () => {
         }
     };
 
-    const removeItem = (id) => {
-        cartItems.value = cartItems.value.filter((item) => item.id !== id);
-        selectedItems.value = selectedItems.value.filter((item) => item.id !== id); // 선택목록에서도 제거
-    };
+  const removeItem = (cartId) => {
+    cartItems.value = cartItems.value.filter((item) => item.cartId !== cartId)
+    selectedItems.value = selectedItems.value.filter((item) => item.cartId !== cartId) // 선택목록에서도 제거
+  }
 
     const clearCart = () => {
         cartItems.value = [];
         selectedItems.value = [];
     };
 
-    const toggleSelection = (item) => {
-        const index = selectedItems.value.findIndex((selected) => selected.id === item.id);
-        if (index !== -1) {
-            selectedItems.value.splice(index, 1);
-        } else {
-            selectedItems.value.push(item);
-        }
-    };
+  const toggleSelection = (item) => {
+    const index = selectedItems.value.findIndex(selected => selected.cartId === item.cartId)
+    if (index !== -1) {
+      selectedItems.value.splice(index, 1)
+    } else {
+      selectedItems.value.push(item)
+    }
+  }
 
     const toggleSelectAll = () => {
         if (selectedItems.value.length === cartItems.value.length) {
@@ -68,6 +76,7 @@ export const useCartStore = defineStore('cart', () => {
                     : await fetchPackageById(item.targetId);
 
                 const detail = detailRes.data.data;
+                console.log(detail);
 
                 return {
                     id: item.targetId,
@@ -76,7 +85,7 @@ export const useCartStore = defineStore('cart', () => {
                     type: isGoods ? '기념품' : '패키지',
                     title: detail.title || detail.name,
                     price: detail.price,
-                    imageUrl: detail.imageUrl || null,
+                    imageUrl: detail.firstImage || null,
                 };
             });
 
@@ -87,16 +96,17 @@ export const useCartStore = defineStore('cart', () => {
         }
     };
 
-    return {
-        cartItems,
-        selectedItems,
-        totalPrice,
-        addItem,
-        updateItemQuantity,
-        removeItem,
-        clearCart,
-        toggleSelection,
-        toggleSelectAll,
-        loadCartItems,
-    };
+  return {
+    loadCartItems,
+    cartItems,
+    selectedItems,
+    addItem,
+    updateItemQuantity,
+    removeItem,
+    clearCart,
+    toggleSelection,
+    toggleSelectAll,
+    fetchCartItems,
+    imageSrc
+  }
 });

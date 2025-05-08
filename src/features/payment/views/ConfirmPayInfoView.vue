@@ -3,17 +3,24 @@ import ConfirmPayInfo from '@/features/payment/components/ConfirmPayInfo.vue';
 import PayInfo from '@/features/payment/components/PayInfo.vue';
 import { useCartStore } from '@/stores/cart.js';
 import { onMounted, ref } from 'vue';
-
+import router from '@/router/index.js';
 const cartStore = useCartStore();
 const orderItems = cartStore.selectedItems;
-
 const priceDetails = ref([]);
+sessionStorage.setItem('selectedItems', JSON.stringify(orderItems));
 onMounted(() => {
+
   const storedPriceDetails = sessionStorage.getItem('priceDetails');
   if (storedPriceDetails){
     priceDetails.value = JSON.parse(storedPriceDetails);
   }
 });
+const handlePayment = (payload) => {
+  sessionStorage.setItem('paymentInfo',JSON.stringify(payload));
+
+  router.push({ name: 'payment'});
+
+}
 </script>
 
 <template>
@@ -23,7 +30,7 @@ onMounted(() => {
       <ConfirmPayInfo :orderItems="orderItems"/>
     </div>
     <div class="right">
-      <PayInfo :orderItems="orderItems" :priceDetails="priceDetails"/>
+      <PayInfo :orderItems="orderItems" :priceDetails="priceDetails" @submit-payment="handlePayment"/>
     </div>
   </div>
 </template>

@@ -1,12 +1,17 @@
 <script setup>
 import Header from '@/components/layout/Header.vue';
 import Footer from '@/components/layout/Footer.vue';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
+const useLayout = computed(() => route.meta.layout !== 'none');
 </script>
 
 <template>
     <div id="app">
-      <Header />
-      <div class="layout">
+        <Header />
+        <div class="useLayout ? 'layout' : ''">
             <router-view />
         </div>
         <Footer />
