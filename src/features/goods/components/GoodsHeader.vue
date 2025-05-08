@@ -39,13 +39,13 @@ const handleWriteGoods = () => {
 </script>
 
 <template>
-    <div style="margin-bottom: 103px">
+    <div style="padding: 80px 60px">
         <div
             class="d-flex align-items-center"
-            style="gap: 10px; margin-left: 33px; margin-bottom: 41px">
-            <span style="font-size: 1.5rem; font-weight: 700"> 기념품 </span>
+            style="gap: 10px; margin-left: 80px; margin-bottom: 41px">
+            <span style="font-size: 2rem; font-weight: 700"> 기념품 </span>
             <button class="text-white add-package-button" @click="handleWriteGoods">
-                기념품 등록하기
+                등록하기
             </button>
         </div>
         <div class="d-flex align-items-center justify-content-between border-bottom border-black">
@@ -76,18 +76,19 @@ const handleWriteGoods = () => {
 
 <style scoped>
 .add-package-button {
-    background-color: #3e4042;
-    border-radius: 14px;
-    font-size: 0.9rem;
+    background-color: #757575;
+    border-radius: 20px;
+    font-size: 1.2rem;
     font-weight: 400;
-    width: 117px;
+    width: 120px;
+    height: 40px;
     border: none;
 }
 
 .filter-button {
     border: none;
-    padding: 17px 20px;
-    background-color: #fffdf8;
+    padding: 17px 36px;
+    background-color: #fff;
     font-size: 1.4rem;
     font-weight: 400;
 }

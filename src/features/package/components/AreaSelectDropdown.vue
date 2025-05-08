@@ -102,7 +102,7 @@ function selectArea(area) {
 <style scoped>
 .dropdown {
     border: none;
-    background-color: #fffdf8;
+    background-color: #fff;
     font-size: 1.4rem;
     font-weight: 400;
     padding: 17px 24px;

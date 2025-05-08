@@ -3,16 +3,16 @@
 <template>
     <footer class="footer">
         <div class="team-info">
-            <p>상호명:</p>
+            <!-- <p>상호명:</p>
             <p>주소:</p>
             <p>사업자등록번호:</p>
-            <p>개인정보보호책임자:</p>
+            <p>개인정보보호책임자:</p> -->
         </div>
         <div class="customer-center">
-            <p class="location">고객센터</p>
+            <!-- <p class="location">고객센터</p>
             <p class="phone">010-0000-0000</p>
             <p>영업시간: 10:00 - 17:30</p>
-            <p>주말, 공휴일 휴무</p>
+            <p>주말, 공휴일 휴무</p> -->
         </div>
         <div class="footer-logo">
             <img src="../../assets/icons/logo-white.svg" alt="logo-white" />
@@ -24,6 +24,7 @@
 .footer {
     background: #4e5457;
     color: white;
+    margin-top: 80px;
     padding-top: 37px;
     padding-bottom: 25px;
     padding-left: 108px;
@@ -32,6 +33,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 240px;
 }
 
 .team-info,
