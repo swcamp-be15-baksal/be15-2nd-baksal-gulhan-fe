@@ -88,6 +88,7 @@ export function fetchUserComment(accessToken) {
     });
 }
 
+// 좋아요 등록
 export async function toggleLike(targetId, targetType) {
     const authStore = useAuthStore();
     const token = authStore.accessToken;
@@ -104,12 +105,4 @@ export async function toggleLike(targetId, targetType) {
         },
         withCredentials: true,
     });
-}
-export function getMyOrderHistory(accessToken){
-  return api.get('/order/order_history',{
-    headers:{
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  })
 }

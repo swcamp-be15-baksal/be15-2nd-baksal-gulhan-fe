@@ -22,6 +22,14 @@ const imageApi = axios.create({
     withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+    const authStore = useAuthStore();
+    const accessToken = authStore.accessToken;
+    if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+});
 
 api2.interceptors.response.use(
     (res) => res,

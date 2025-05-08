@@ -73,7 +73,8 @@ onMounted(async () => {
 
             <div class="main">
                 <div v-if="activeTab === 'detail'">
-                    {{ detail }}
+                    <!-- {{ detail }} -->
+                    <div v-html="detail" />
                 </div>
                 <div v-else>
                     <template v-if="reviews.length > 0">
@@ -91,6 +92,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+::v-deep(.main img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .page-wrapper {
     display: flex;
     flex-direction: column;
@@ -119,6 +127,7 @@ onMounted(async () => {
     border-top-right-radius: 8px;
     border: none;
 }
+
 .main {
     position: relative;
     max-width: 927px;

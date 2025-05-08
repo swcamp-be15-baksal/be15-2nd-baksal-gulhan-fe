@@ -4,10 +4,15 @@ import CartItemList from '@/features/cart/components/CartItemList.vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cart.js';
 import { useToast} from 'vue-toastification';
+import { clearCartAPI } from '@/features/cart/api';
 
-const router = useRouter()
+const router = useRouter();
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.cartItems);
+onMounted(() => {
+    cartStore.loadCartItems();
+});
+
 const selectedItems = computed(() => cartStore.selectedItems);
 const showSelectAll = ref(true);
 const toast = useToast();
@@ -21,16 +26,16 @@ onMounted(() => {
 });
 // 전체 선택 및 선택된 항목 관리
 const selectAll = computed({
-  get() {
-    return selectedItems.value.length === cartItems.value.length;
-  },
-  set(value) {
-    if (value) {
-      cartStore.toggleSelectAll();
-    } else {
-      cartStore.selectedItems = [];
-    }
-  }
+    get() {
+        return selectedItems.value.length === cartItems.value.length;
+    },
+    set(value) {
+        if (value) {
+            cartStore.toggleSelectAll();
+        } else {
+            cartStore.selectedItems = [];
+        }
+    },
 });
 
 // 가격 계산
@@ -51,22 +56,15 @@ const packagePrice = computed(() => {
     .reduce((total, item) => total + item.price * item.quantity, 0);
 });
 
-// 전체 삭제
-const deleteAllItems = () => {
-  showDeleteModal.value = true;
-};
-
-// 개별 삭제 확인
-const deleteItem = (item) => {
-  itemToDelete.value = item;
-  showCancelModal.value = true;
-};
-
-// 삭제 확정
-const confirmDeleteAll = () => {
-  cartStore.clearCart();
-  showDeleteModal.value = false;
-  showSelectAll.value = false;
+const deleteAllItems = async () => {
+    if (!confirm('장바구니를 비우시겠습니까?')) return;
+    try {
+        await clearCartAPI();
+        cartStore.clearCart();
+        showSelectAll.value = false;
+    } catch (err) {
+        alert('전체 삭제 실패');
+    }
 };
 
 // 삭제 취소
@@ -85,9 +83,9 @@ const confirmDeleteItem = () => {
 
 // 가격 세부사항
 const priceDetails = computed(() => [
-  { label: '총 금액', value: totalPrice.value },
-  { label: '기념품 금액', value: souvenirPrice.value },
-  { label: '패키지 금액', value: packagePrice.value }
+    { label: '총 금액', value: totalPrice.value },
+    { label: '기념품 금액', value: souvenirPrice.value },
+    { label: '패키지 금액', value: packagePrice.value },
 ]);
 
 const goToPayInfo = () => {
@@ -100,6 +98,8 @@ const goToPayInfo = () => {
   // 결제 정보 페이지로 이동
   router.push({ name: 'beforePayment' });
 };
+
+
 </script>
 
 <template>
@@ -166,10 +166,10 @@ const goToPayInfo = () => {
 
 <style scoped>
 .cart-page {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 2rem; /* 스크롤 시 위 공간 확보 */
 }
 
 .cart-content {
@@ -182,15 +182,15 @@ const goToPayInfo = () => {
 }
 
 .cart-header {
-  display: flex;
-  width: 100%;
-  padding: 0 1rem;
-  margin-bottom: 0.25rem;
+    display: flex;
+    width: 100%;
+    padding: 0 1rem;
+    margin-bottom: 0.25rem;
 }
 
 .cart-title {
-  font-size: 2rem;
-  font-weight: bold;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .delete-all-btn {
@@ -208,14 +208,14 @@ const goToPayInfo = () => {
 }
 
 .select-all-wrapper {
-  width: 100%;
-  padding: 0 1rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .paymentInfo {
@@ -231,49 +231,49 @@ const goToPayInfo = () => {
 }
 
 .total-price {
-  font-size: 1.5rem;
-  font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .divider {
-  width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  margin: 1rem 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 1rem 0;
 }
 
 .price-details {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.2rem;
 }
 
 .price-left {
-  font-weight: bold;
-  text-align: left;
-  width: 50%;
+    font-weight: bold;
+    text-align: left;
+    width: 50%;
 }
 
 .price-right {
-  text-align: right;
-  width: 50%;
+    text-align: right;
+    width: 50%;
 }
 
 .complete-purchase {
-  width: 27.5rem;
-  height: 3.5rem;
-  background-color: #000000;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: auto;
+    width: 27.5rem;
+    height: 3.5rem;
+    background-color: #000000;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
 }
 
 /* Modal */

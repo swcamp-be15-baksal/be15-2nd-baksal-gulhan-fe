@@ -19,5 +19,4 @@ export const noticeRoutes = [
     name: 'NoticeEdit',
     component: () => import('@/features/notice/views/NoticeEditView.vue')
   }
-
 ];
