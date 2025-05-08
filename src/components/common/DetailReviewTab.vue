@@ -92,6 +92,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+::v-deep(.main img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .page-wrapper {
     display: flex;
     flex-direction: column;
@@ -120,6 +127,7 @@ onMounted(async () => {
     border-top-right-radius: 8px;
     border: none;
 }
+
 .main {
     position: relative;
     max-width: 927px;
