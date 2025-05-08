@@ -2,14 +2,13 @@
 import { useCartStore } from '@/stores/cart.js';
 import { updateCartItem } from '@/features/cart/api.js';
 import { deleteCartItem } from '@/features/cart/api.js';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     item: Object,
 });
 const cartStore = useCartStore();
 
-// id 기준으로 선택 여부 확인
 const isSelected = computed(() =>
     cartStore.selectedItems.some((selectedItem) => selectedItem.id === props.item.id)
 );
@@ -38,16 +37,26 @@ const decreaseCount = async () => {
         alert('수량 감소 실패');
     }
 };
+const showModal = ref(false)
 
 const removeFromCart = async () => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
     try {
         await deleteCartItem(props.item.cartId);
         cartStore.removeItem(props.item.id);
+        showModal.value = true
     } catch (err) {
         alert('삭제 실패');
     }
 };
+const closeModal = () => {
+  showModal.value = false
+
+}
+const confirmDelete = () => {
+  cartStore.removeItem(props.item.cartId)
+  showModal.value = false
+}
 </script>
 
 <template>
@@ -95,8 +104,20 @@ const removeFromCart = async () => {
                 </div>
             </div>
         </div>
+      <!-- 모달 -->
+      <div v-if="showModal" class="modal-overlay">
+        <div class="modal-content">
+          <h3>이 항목을 삭제하시겠습니까?</h3>
+          <div class="modal-buttons">
+            <button class="delete-btn" @click="confirmDelete">삭제</button>
+            <button class="cancel-btn-modal" @click="closeModal">취소</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
+
 
 <style scoped>
 .cart-container {
@@ -239,5 +260,55 @@ const removeFromCart = async () => {
     right: 1rem;
     top: -0.8rem; /* 구분선 위로 올리기 */
     z-index: 2;
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.delete-btn {
+  background-color: #E57575;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+.cancel-btn-modal {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>

@@ -1,6 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
-
+import { ref, computed, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth.js';
+import { fetchUserInfo } from '@/features/mypage/api.js';
+const authStore = useAuthStore();
+const accessToken = authStore.accessToken
 const props = defineProps({
   orderItems: {
     type: Array,
@@ -11,14 +14,19 @@ const props = defineProps({
     required: true
   }
 });
+const submitemit = defineEmits(['submit-payment']);
 const totalAmount = computed(() => {
   const totalItem = props.priceDetails.find(item => item.label === '총 금액');
   return totalItem ? totalItem.value : 0;
 });
 
-
+const point = ref(0);
+const fetchPoint = async () =>{
+  const resp = await fetchUserInfo(accessToken);
+  point.value = resp.data.data.point;
+}
 // 보유 적립금
-const totalPoints = ref(1000); // 예시로 1000원 보유
+const totalPoints = point;
 // 사용한 적립금
 const usedPoints = ref(0);
 // 할인 금액 계산
@@ -31,6 +39,20 @@ const updateDiscount = () => {
     usedPoints.value = totalPoints.value;
   }
 };
+onMounted(async () => {
+  await fetchPoint();
+
+})
+const onSubmit = () => {
+  const finalAmount = totalAmount.value - discountAmount.value;
+  const items = props.orderItems.map(item => item.name);
+  submitemit('submit-payment',{
+    amount: finalAmount,
+    itemName: items
+  });
+}
+
+
 </script>
 
 <template>
@@ -67,7 +89,7 @@ const updateDiscount = () => {
     <hr class="divider" />
 
     <div class="button-container">
-      <button class="dopayment">결제하기</button>
+      <button class="dopayment" @click="onSubmit">결제하기</button>
     </div>
   </div>
 </template>
