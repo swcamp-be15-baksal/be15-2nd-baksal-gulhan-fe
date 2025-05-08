@@ -5,10 +5,11 @@
                 <button class="icon-small" @click="navigate('home')">
                     <img src="../../assets/icons/home.svg" alt="home" />
                 </button>
-                <button
+                <!-- <button
                     class="icon-small"
                     @click="navigate('cart')"
-                    v-if="authStore.userRank !== 'SLAVE'">
+                    v-if="authStore.userRank !== 'SLAVE'"> -->
+                <button class="icon-small" @click="navigate('cart')">
                     <img src="../../assets/icons/cart.svg" alt="cart" />
                 </button>
                 <button @click="navigate('login')" v-if="!authStore.isAuthenticated">로그인</button>

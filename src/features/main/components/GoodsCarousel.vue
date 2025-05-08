@@ -14,6 +14,10 @@ function goToGoods() {
     router.push('/goods');
 }
 
+function gotoGoodsDetail(param) {
+    router.push(`/goods/${param}`);
+}
+
 onMounted(async () => {
     try {
         const res = await fetchGoodsList({ page: 1, size: 5 });
@@ -35,6 +39,7 @@ onMounted(async () => {
                 <Slide v-for="item in goods" :key="item.goodsId">
                     <div class="carousel__item">
                         <img
+                            @click="gotoGoodsDetail(item.goodsId)"
                             class="slideImg"
                             :src="
                                 item.firstImage ||
@@ -69,15 +74,19 @@ onMounted(async () => {
 }
 
 .carousel__item {
+    width: 100%;
     color: white;
     display: flex;
+    height: 480px;
     justify-content: center;
+    object-fit: cover;
     align-items: center;
+    cursor: pointer;
 }
 
 .slideImg {
     width: 100%;
-    height: 100%;
+    height: 480px;
     object-fit: cover;
 }
 .wrapper {
