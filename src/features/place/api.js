@@ -1,3 +1,6 @@
-import api from '@/plugins/axios';
+import { api } from '@/plugins/axios.js';
 
-export const getPlaces = (params) => api.get('s1/place/places', { params });
+// 장소 목록 조회
+export function fetchPlaceList(params) {
+  return api.get('/places', { params });
+}
