@@ -4,6 +4,7 @@ import { refreshUserToken } from '@/features/user/api/user.js';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_COMMERCE_SERVER_LOCAL_URL,
+    withCredentials: true,
 });
 
 const api2 = axios.create({
