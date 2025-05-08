@@ -2,57 +2,65 @@
   <div class="place-list-wrapper">
     <div class="grid">
       <PlaceItem
-        v-for="place in paginatedPlaces"
+        v-for="place in places"
         :key="place.placeId"
         :data="place"
         linkPrefix="/place"
-        idKey="placeId"
-      />
+        idKey="placeId" />
     </div>
     <PaginationBar
       :current-page="currentPage"
       :total-pages="totalPages"
-      @update:page="onPageChange"
-    />
+      @update:page="onPageChange" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import PlaceItem from '@/features/place/component/ItemCard.vue';
 import PaginationBar from '@/components/common/PaginationBar.vue';
-import places from '@/features/place/mock/places.json';
+import { getPlaces } from '@/features/place/api.js';
 
-const props = defineProps({ filter: { type: String, default: '전체' } });
+const props = defineProps({
+  filter: { type: String, default: '전체' },
+  childAreaId: { type: Number },
+  title: { type: String, default: '' },
+});
 
 const currentPage = ref(1);
-const itemsPerPage = 30;
-
-// 필터 prop에 따른 장소 필터링
-const filteredPlaces = computed(() =>
-  props.filter === '전체'
-    ? places
-    : places.filter(p => p.category === props.filter)
-);
-
-const totalPages = computed(() => Math.ceil(filteredPlaces.value.length / itemsPerPage));
-
-const paginatedPlaces = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return filteredPlaces.value.slice(start, start + itemsPerPage);
-});
+const totalPages = ref(1);
+const places = ref([]);
+const itemsPerPage = ref(1);
 
 function onPageChange(page) {
   currentPage.value = page;
 }
 
-// 필터 변경 시 페이지 초기화
-watch(
-  () => props.filter,
-  () => {
-    currentPage.value = 1;
-  }
-);
+// category, areaId, page 변경 감지
+watch([currentPage, () => props.filter, () => props.childAreaId, () => props.title], async () => {
+  const params = {
+    areaId: props.childAreaId,
+    page: currentPage.value,
+    category: props.filter === '전체' ? null : props.filter, // ✅ 카테고리 필터 추가
+    title: props.title,
+  };
+  const response = await getPlaces(params);
+  places.value = response.data.data.places;
+
+  const pagination = response.data.data.pagination;
+  itemsPerPage.value = pagination.size;
+  currentPage.value = pagination.currentPage;
+  totalPages.value = pagination.totalPage;
+});
+
+onMounted(async() => {
+  const response = await getPlaces();
+  places.value = response.data.data.places;
+  const pagination =  response.data.data.pagination
+  itemsPerPage.value = pagination.size;
+  currentPage.value = pagination.currentPage;
+  totalPages.value = pagination.totalPage;
+})
 </script>
 
 <style scoped>
