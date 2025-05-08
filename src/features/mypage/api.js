@@ -105,3 +105,11 @@ export async function toggleLike(targetId, targetType) {
         withCredentials: true,
     });
 }
+
+// 내 리뷰 조회
+
+export async function fetchUserReviews(targetType = 'PACKAGE') {
+    return await api.get('/users/me/review', {
+        params: { targetType },
+    });
+}
