@@ -29,6 +29,12 @@ function selectFilter(filter) {
             @click="selectFilter('기념품')">
             기념품
         </button>
+        <button
+          class="filter-button"
+          :class="{ active: selectedFilter === '장소' }"
+          @click="selectFilter('장소')">
+          기념품
+        </button>
     </div>
 </template>
 
