@@ -15,7 +15,8 @@ const props = defineProps({
             <div class="packages-img">
                 <img
                     :src="
-                        packages.image || 'https://d152i3f1t56z95.cloudfront.net/test/image.png'
+                        packages.firstImage ||
+                        'https://d152i3f1t56z95.cloudfront.net/test/image.png'
                     " />
             </div>
             <div class="info">
@@ -52,7 +53,7 @@ const props = defineProps({
 
 .packages-img img {
     width: 100%;
-    height: auto;
+    height: 200px;
     object-fit: cover;
     display: block;
 }
