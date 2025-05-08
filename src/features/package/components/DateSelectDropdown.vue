@@ -90,7 +90,7 @@ const displayText = computed(() => {
 <style scoped>
 .date-button {
     border: none;
-    background-color: #fffdf8;
+    background-color: #fff;
     font-size: 1.4rem;
     font-weight: 400;
     padding: 17px 24px;
