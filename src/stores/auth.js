@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             const payload = JSON.parse(atob(at.split('.')[1]));
             userRank.value = payload.rank;
-            userId.value =payload.sub;
+            userId.value = payload.sub;
             expirationTime.value = payload.exp * 1000;
         } catch (e) {
             console.log('에러 발생!!!' + e);
@@ -35,12 +35,12 @@ export const useAuthStore = defineStore('auth', () => {
         expirationTime.value = null;
     }
 
-  function logout() {
-    clearAuth();
-    router.push({ name: 'login' });
-  }
+    function logout() {
+        clearAuth();
+        router.push({ name: 'login' });
+    }
 
-  return {
+    return {
         accessToken,
         userId,
         userRank,
@@ -55,14 +55,31 @@ export const useAuthStore = defineStore('auth', () => {
 router.beforeEach((to) => {
     const authStore = useAuthStore();
     const toast = useToast();
+    const authRequirePages = [
+        'MypageMain',
+        'cart',
+        'beforePayment',
+        'paymentResult',
+        'payment',
+        'success',
+        'packages-write',
+        'goods-write',
+        'DashboardMain',
+        'DashboardOrder',
+        'DashboardShippingView',
+        'board-edit',
+        'board-write',
+        'NoticeWrite',
+        'NoticeEdit',
+    ];
 
     if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
-        toast.error("이미 로그인 된 상태입니다.")
+        toast.error('이미 로그인 된 상태입니다.');
         return { name: 'main' };
     }
 
-    if(to.name === 'MypageMain' && !authStore.isAuthenticated) {
-      toast.error("로그인이 필요합니다.")
-      return {name: 'login'}
+    if (authRequirePages.includes(to.name) && !authStore.isAuthenticated) {
+        toast.error('로그인이 필요합니다.');
+        return { name: 'login' };
     }
 });
