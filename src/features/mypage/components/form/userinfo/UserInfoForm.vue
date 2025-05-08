@@ -18,15 +18,13 @@ defineEmits(['edit', 'delete']);
         class="form-control mb-2"
         :value="isVerified ? userInfo.userId : maskedInfo.id"
         readonly
-        :style="{ color: !isVerified ? '#A0A0A0' : '#000', height: '56px', padding: '8px', border: '1px solid #3E4042' }"
-      />
+        style="height: 56px; padding: 8px; border: 1px solid #3E4042;"      />
       <input
         type="text"
         class="form-control mb-2"
         :value="isVerified ? userInfo.email : maskedInfo.email"
         readonly
-        :style="{ color: !isVerified ? '#A0A0A0' : '#000', height: '56px', padding: '8px', border: '1px solid #3E4042' }"
-      />
+        style="height: 56px; padding: 8px; border: 1px solid #3E4042;"      />
       <input
         type="text"
         class="form-control mb-2"

@@ -53,9 +53,37 @@ function formatDate(ts) {
     return date.toISOString().split('T')[0];
 }
 
+// const onLikeClick = async () => {
+//     const id = isGoods.value ? props.data.goodsId : props.data.packageId;
+//     const type = isGoods.value ? 'GOODS' : 'PACKAGE';
+
+//     try {
+//         const res = await toggleLike(id, type);
+//         isLiked.value = res.data.liked;
+//         alert('좋아요가 반영되었습니다.');
+//     } catch (err) {
+//         console.error('[좋아요 실패]', err);
+//         alert('좋아요 요청 중 오류 발생');
+//     }
+// };
+
 const onLikeClick = async () => {
-    const id = isGoods.value ? props.data.goodsId : props.data.packageId;
-    const type = isGoods.value ? 'GOODS' : 'PACKAGE';
+    let id, type;
+
+    // 좋아요 대상 식별 (각 객체가 가진 고유 ID 키를 기준으로 판별)
+    if (props.data.goodsId) {
+        id = props.data.goodsId;
+        type = 'GOODS'; // GOODS 좋아요
+    } else if (props.data.packageId) {
+        id = props.data.packageId;
+        type = 'PACKAGE'; // PACKAGE 좋아요
+    } else if (props.data.placeId) {
+        id = props.data.placeId;
+        type = 'PLACE'; // PLACE 좋아요
+    } else {
+        alert('좋아요 대상을 찾을 수 없습니다.');
+        return;
+    }
 
     try {
         const res = await toggleLike(id, type);

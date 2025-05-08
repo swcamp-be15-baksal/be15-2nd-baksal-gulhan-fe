@@ -5,80 +5,153 @@ import { useRoute, useRouter } from 'vue-router';
 import ItemCard from '@/components/common/ItemCard.vue';
 import FilterHeader from '@/features/mypage/components/common/FilterHeader.vue';
 import MyPageHeader from '@/features/mypage/components/common/MyPageHeader.vue';
-
-import likes from '@/features/mypage/mock/likes.json';
-import packages from '@/features/package/mock/packages.json';
-import goods from '@/features/goods/mock/goods.json';
+import { useAuthStore } from '@/stores/auth.js';
+import { useToast } from 'vue-toastification';
+import { fetchLikes } from '@/features/mypage/api.js';
+import { fetchPackageDetail } from '@/features/package/api.js';
+import { fetchGoodsDetail } from '@/features/goods/api.js';
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
+const authStore = useAuthStore();
+
+const isLoading = ref(false);
 
 const currentPage = ref(1);
 const itemsPerPage = 20;
-const selectedUserNo = ref(1);
-const selectedFilter = ref('전체'); // 필터 초기화
+const selectedFilter = ref('전체');
+const targetTypeMap = {
+  '패키지': 'PACKAGE',
+  '기념품': 'GOODS',
+  '전체': ''
+};
 
-// 관심 패키지/기념품 ID 추출
-const likedPackageIds = computed(() =>
-    likes
-        .filter((l) => l.user_id === selectedUserNo.value && l.target_type === 'PACKAGE')
-        .map((l) => l.target_id)
-);
+const likes = ref([]);
+const packages = ref([]);
+const goods = ref([]);
+const pagination = ref({});
 
-const likedGoodsIds = computed(() =>
-    likes
-        .filter((l) => l.user_id === selectedUserNo.value && l.target_type === 'GOODS')
-        .map((l) => l.target_id)
-);
+const likedPackageIds = computed(() => {
+  return likes.value
+    .map((l) => Number(l.targetId))
+    .filter((id) => packages.value.some((p) => p.packageId === id));
+});
 
-// 전체 관심 아이템 목록
+const likedGoodsIds = computed(() => {
+  return likes.value
+    .map((l) => Number(l.targetId))
+    .filter((id) => goods.value.some((g) => g.goodsId === id));
+});
+
 const allLikedItems = computed(() => {
-    return likes
-        .filter((l) => l.user_id === selectedUserNo.value)
-        .sort((a, b) => b.like_id - a.like_id) // ⬅️ like_id 기준 정렬
-        .map((l) => {
-            if (l.target_type === 'PACKAGE') {
-                return packages.find((p) => p.packageId === l.target_id);
-            } else if (l.target_type === 'GOODS') {
-                return goods.find((g) => g.goodsId === l.target_id);
-            }
-            return null;
-        })
-        .filter((item) => item !== null); // 존재하지 않는 데이터 제거
+  return likes.value
+    .map((l) => {
+      const id = Number(l.targetId);
+      if (isNaN(id)) return null;
+
+      const pkg = packages.value.find((p) => p.packageId === id);
+      if (pkg) return pkg;
+
+      const good = goods.value.find((g) => g.goodsId === id);
+      if (good) return good;
+
+      return null;
+    })
+    .filter((item) => item !== null);
 });
 
-// 필터링된 관심 아이템 목록
 const filteredItems = computed(() => {
-    if (selectedFilter.value === '전체') return allLikedItems.value;
-    if (selectedFilter.value === '패키지')
-        return packages.filter((p) => likedPackageIds.value.includes(p.packageId));
-    if (selectedFilter.value === '기념품')
-        return goods.filter((g) => likedGoodsIds.value.includes(g.goodsId));
-    return [];
+  if (selectedFilter.value === '전체') return allLikedItems.value;
+  if (selectedFilter.value === '패키지')
+    return packages.value.filter((p) => likedPackageIds.value.includes(p.packageId));
+  if (selectedFilter.value === '기념품')
+    return goods.value.filter((g) => likedGoodsIds.value.includes(g.goodsId));
+  return [];
 });
 
-// 페이지네이션 계산
-const totalPages = computed(() => Math.ceil(filteredItems.value.length / itemsPerPage));
+const totalPages = computed(() =>
+  Math.ceil(filteredItems.value.length / itemsPerPage)
+);
+
 const paginatedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    return filteredItems.value.slice(start, start + itemsPerPage);
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return filteredItems.value.slice(start, start + itemsPerPage);
 });
 
-// 페이지 변경 처리
-function updatePage(page) {
-    router.push({ query: { ...route.query, page } });
-    currentPage.value = page;
-}
+const loadLikesData = async () => {
+  isLoading.value = true;
+  try {
+    const token = authStore.accessToken;
+    if (!token) {
+      console.log('엑세스 토큰 없음');
+      toast.error('로그인이 필요합니다!');
+      setTimeout(() => {
+        router.push({ name: 'login' });
+      }, 500);
+      return;
+    }
 
-// URL에서 페이지 초기화
-onMounted(() => {
-    const page = Number(route.query.page || 1);
-    currentPage.value = page < 1 ? 1 : page;
+    const filter = selectedFilter.value?.trim();
+    const rawType = targetTypeMap[filter];
+    const params = {
+      page: currentPage.value,
+      size: itemsPerPage,
+      ...(rawType ? { targetType: rawType } : {}) // 전체일 땐 안 보냄
+    };
+
+    const res = await fetchLikes(token, params);
+    const likesRaw = res.data?.data?.likes ?? [];
+    likes.value = likesRaw;
+    pagination.value = res.data?.data?.pagination ?? {};
+
+    const targetIds = likesRaw
+      .map((l) => Number(l.targetId))
+      .filter((id) => !isNaN(id));
+
+    const packageDetails = [];
+    const goodsDetails = [];
+
+    for (const id of targetIds) {
+      if (filter === '패키지') {
+        const res = await fetchPackageDetail(id);
+        if (res.data?.data) packageDetails.push(res.data.data);
+      } else if (filter === '기념품') {
+        const res = await fetchGoodsDetail(id);
+        if (res.data?.data) goodsDetails.push(res.data.data);
+      } else {
+        const [pkgRes, goodsRes] = await Promise.allSettled([
+          fetchPackageDetail(id),
+          fetchGoodsDetail(id),
+        ]);
+        if (pkgRes.status === 'fulfilled' && pkgRes.value?.data?.data)
+          packageDetails.push(pkgRes.value.data.data);
+        if (goodsRes.status === 'fulfilled' && goodsRes.value?.data?.data)
+          goodsDetails.push(goodsRes.value.data.data);
+      }
+    }
+
+    packages.value = packageDetails;
+    goods.value = goodsDetails;
+
+  } catch (e) {
+    toast.error(`데이터 로딩 실패 : ${e.response?.data?.message || e.message}`);
+    console.error(e);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+
+onMounted(async () => {
+  const page = Number(route.query.page || 1);
+  currentPage.value = page < 1 ? 1 : page;
+  await loadLikesData();
 });
 
-// 필터 바뀔 때 페이지 리셋
-watch(selectedFilter, () => {
-    currentPage.value = 1;
+watch(selectedFilter, async () => {
+  currentPage.value = 1;
+  await loadLikesData();
 });
 </script>
 
@@ -86,10 +159,14 @@ watch(selectedFilter, () => {
     <MyPageHeader />
     <div class="wrapper">
         <FilterHeader @update:filter="selectedFilter = $event" />
+        <div v-if="isLoading" class="text-center my-10">
+          <span>로딩 중입니다...</span>
+        </div>
+      <div v-else>
         <div class="grid">
             <ItemCard
                 v-for="item in paginatedItems"
-                :key="item.packageId || item.goodsId"
+                :key="item.packageId ? `package_${item.packageId}` : `goods_${item.goodsId}`"
                 :data="item"
                 :idKey="item.packageId ? 'packageId' : 'goodsId'"
                 :linkPrefix="item.packageId ? '/packages' : '/goods'"
@@ -100,6 +177,7 @@ watch(selectedFilter, () => {
             :current-page="currentPage"
             :total-pages="totalPages"
             @update:page="updatePage" />
+      </div>
     </div>
 </template>
 
