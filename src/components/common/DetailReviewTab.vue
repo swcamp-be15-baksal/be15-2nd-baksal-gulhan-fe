@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import ReviewList from '@/features/review/components/ReviewList.vue';
-import reviews from '@/features/review/mock/reviews.json';
+import { fetchReviews } from '@/features/review/api.js';
 
 const props = defineProps({
     detail: {
@@ -20,6 +20,7 @@ const props = defineProps({
 });
 
 const activeTab = ref('detail');
+const reviews = ref([]);
 const route = useRoute();
 
 const targetType = computed(() => {
@@ -27,17 +28,18 @@ const targetType = computed(() => {
     if (route.path.startsWith('/goods/')) return 'GOODS';
     return null;
 });
-
 const targetId = computed(() => Number(route.params.id));
 
-const filteredReviews = computed(() =>
-    reviews.filter((r) => r.targetType === targetType.value && r.targetId === targetId.value)
-);
+onMounted(async () => {
+    if (!targetType.value || !targetId.value) return;
 
-watchEffect(() => {
-    console.log('[ReviewTab] targetType:', targetType.value);
-    console.log('[ReviewTab] targetId:', targetId.value);
-    console.log('[ReviewTab] filteredReviews:', filteredReviews.value);
+    try {
+        const res = await fetchReviews(targetId.value, targetType.value);
+        reviews.value = res.data?.data?.review ?? [];
+    } catch (err) {
+        console.error('[리뷰 조회 실패]', err);
+        reviews.value = [];
+    }
 });
 </script>
 
@@ -65,17 +67,18 @@ watchEffect(() => {
                             : 'background-color: #e6e6e6'
                     "
                     @click="activeTab = 'review'">
-                    리뷰 ({{ filteredReviews.length }})
+                    리뷰 ({{ reviews.length }})
                 </button>
             </div>
 
             <div class="main">
                 <div v-if="activeTab === 'detail'">
-                    {{ detail }}
+                    <!-- {{ detail }} -->
+                    <div v-html="detail" />
                 </div>
                 <div v-else>
-                    <template v-if="filteredReviews.length > 0">
-                        <ReviewList :reviews="filteredReviews" />
+                    <template v-if="reviews.length > 0">
+                        <ReviewList :reviews="reviews" />
                     </template>
                     <template v-else>
                         <div style="text-align: center; color: gray">

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 
 import router from '@/router';
+import { useToast } from 'vue-toastification';
 
 export const useAuthStore = defineStore('auth', () => {
     const accessToken = ref(null);
@@ -34,7 +35,12 @@ export const useAuthStore = defineStore('auth', () => {
         expirationTime.value = null;
     }
 
-    return {
+  function logout() {
+    clearAuth();
+    router.push({ name: 'login' });
+  }
+
+  return {
         accessToken,
         userId,
         userRank,
@@ -42,14 +48,21 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated,
         setAuth,
         clearAuth,
+        logout,
     };
 });
 
 router.beforeEach((to) => {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
-        console.log('리다이렉트 동작!!');
+        toast.error("이미 로그인 된 상태입니다.")
         return { name: 'main' };
+    }
+
+    if(to.name === 'MypageMain' && !authStore.isAuthenticated) {
+      toast.error("로그인이 필요합니다.")
+      return {name: 'login'}
     }
 });
