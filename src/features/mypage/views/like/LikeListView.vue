@@ -142,7 +142,7 @@ const loadLikesData = async () => {
         if (res.data?.data) goodsDetails.push(res.data.data);
       } else if (filter === '장소') {
         const res = await getPlaceDetail(id);
-        if (res.data?.data) placeDetails.push({ ...res.data.data, targetType: 'PLACE' });
+        if (res.data?.data) placeDetails.push({ ...res.data.data.place, targetType: 'PLACE' });
       } else {
           const [pkgRes, goodsRes, placeRes] = await Promise.allSettled([
             fetchPackageDetail(id),
@@ -154,7 +154,7 @@ const loadLikesData = async () => {
           if (goodsRes.status === 'fulfilled' && goodsRes.value?.data?.data)
             goodsDetails.push(goodsRes.value.data.data);
           if (placeRes.status === 'fulfilled' && placeRes.value?.data?.data)
-            placeDetails.push({ ...placeRes.value.data.data, targetType: 'PLACE' });
+            placeDetails.push({ ...placeRes.value.data.data.place, targetType: 'PLACE' });
       }
     }
 

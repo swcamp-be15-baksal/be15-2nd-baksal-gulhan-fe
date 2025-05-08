@@ -18,14 +18,6 @@ const categoryLabel = computed(() => {
   }
 });
 
-// onMounted(async () => {
-//   const params ={
-//     category: props.targetTypeKey,
-//     parentAreaId: null,
-//
-//   }
-//   const res = await getPlaces()
-// });
 
 const place = ref({ ...props.data });
 
