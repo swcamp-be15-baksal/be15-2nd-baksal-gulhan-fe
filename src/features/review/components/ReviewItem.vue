@@ -35,7 +35,7 @@ const displayDateInfo = computed(() => {
         <div class="review-header">
             <!-- 이거 나중에는 userNo의 이름으로 불러와야 됨 -->
             <div v-if="!showName"></div>
-            <div v-if="showName">User {{ review.userNo }}</div>
+            <div v-if="showName">익명의 유저 {{ review.userNo }}</div>
             <div>
                 <button class="edit-icon"><img :src="editIcon" alt="edit-icon" /></button>
                 <button class="edit-icon"><img :src="deleteIcon" alt="delete-icon" /></button>
