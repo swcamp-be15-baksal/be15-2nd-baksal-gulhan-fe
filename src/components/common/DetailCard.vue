@@ -77,7 +77,6 @@ const onLikeClick = async () => {
             isLiked.value = likedNow;
             likeCount.value += likedNow ? 1 : -1;
         }
-        alert('좋아요가 반영되었습니다.');
     } catch (err) {
         console.error('[좋아요 실패]', err);
         alert('좋아요 요청 중 오류 발생');

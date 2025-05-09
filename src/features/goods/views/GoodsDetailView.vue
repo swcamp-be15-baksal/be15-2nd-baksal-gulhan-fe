@@ -23,7 +23,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <GoodsHeader />
+    <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 80px" />
     <DetailCard
         v-if="goodsData"
         :data="goodsData"

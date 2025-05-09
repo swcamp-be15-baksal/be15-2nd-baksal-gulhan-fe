@@ -24,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <PackageHeader />
+    <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 80px" />
     <DetailCard
         v-if="packagesData"
         :data="packagesData"

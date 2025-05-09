@@ -36,14 +36,27 @@ const router = useRouter();
 const handleWriteGoods = () => {
     router.push('/goods/write');
 };
+
+const goToGoods = () => {
+    window.location.reload();
+};
 </script>
 
 <template>
-    <div style="padding: 80px 60px">
+    <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 80px">
         <div
             class="d-flex align-items-center"
             style="gap: 10px; margin-left: 80px; margin-bottom: 41px">
-            <span style="font-size: 2rem; font-weight: 700"> 기념품 </span>
+            <button
+                style="
+                    font-size: 2rem;
+                    font-weight: 700;
+                    border: none;
+                    background-color: transparent;
+                "
+                @click="goToGoods">
+                기념품
+            </button>
             <button class="text-white add-package-button" @click="handleWriteGoods">
                 등록하기
             </button>
@@ -87,8 +100,8 @@ const handleWriteGoods = () => {
 
 .filter-button {
     border: none;
-    padding: 17px 36px;
-    background-color: #fff;
+    padding: 17px 20px;
+    background-color: #fffdf8;
     font-size: 1.4rem;
     font-weight: 400;
 }
@@ -104,7 +117,7 @@ const handleWriteGoods = () => {
     word-break: keep-all;
     border: 1px solid #cac4d0;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #fffdf8;
     line-height: 1;
 }
 </style>

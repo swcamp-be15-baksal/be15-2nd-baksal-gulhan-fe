@@ -11,7 +11,7 @@ const useLayout = computed(() => route.meta.layout !== 'none');
 <template>
     <div id="app">
         <Header />
-        <div class="useLayout ? 'layout' : ''">
+        <div :class="useLayout ? 'layout' : ''">
             <router-view />
         </div>
         <Footer />

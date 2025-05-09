@@ -46,14 +46,27 @@ const router = useRouter();
 const handleWritePackage = () => {
     router.push('/packages/write');
 };
+
+const goToPackages = () => {
+    window.location.reload();
+};
 </script>
 
 <template>
-    <div style="padding: 80px 60px">
+    <div style="padding-left: 300px; padding-right: 300px; padding-bottom: 80px">
         <div
             class="d-flex align-items-center"
             style="gap: 10px; margin-left: 80px; margin-bottom: 41px">
-            <span style="font-size: 2rem; font-weight: 700"> 패키지 </span>
+            <button
+                style="
+                    font-size: 2rem;
+                    font-weight: 700;
+                    border: none;
+                    background-color: transparent;
+                "
+                @click="goToPackages">
+                패키지
+            </button>
             <button class="text-white add-package-button" @click="handleWritePackage">
                 등록하기
             </button>
@@ -91,7 +104,7 @@ const handleWritePackage = () => {
 .filter-button {
     border: none;
     padding: 17px 46px;
-    background-color: #fff;
+    background-color: #fffdf8;
     font-size: 1.4rem;
     font-weight: 400;
 }
