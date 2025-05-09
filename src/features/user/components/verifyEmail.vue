@@ -31,8 +31,10 @@ const isEmailValid = computed(() => userValid.validateEmail(userInput.value.emai
 const clickSendEmail = async () => {
     if (typeof props.sendEmail === 'function') {
         const success = await props.sendEmail();
-        if (!success) return; // 실패 시 중단
-
+        console.log(success);
+        if (!success) {
+            return; // 실패 시 중단
+        }
         isSendEmail.value = true;
 
         // 타이머 초기화

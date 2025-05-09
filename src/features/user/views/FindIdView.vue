@@ -23,7 +23,9 @@ const sendEmail = async () => {
     } catch (e) {
         toast.error(e.response);
         console.log('이메일 전송 에러', e);
+        return false;
     }
+    return true;
 };
 
 const findFunction = async () => {
