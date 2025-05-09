@@ -138,15 +138,15 @@
 <h4>로그인<h4>
 
 <h5> 일반 로그인
-
+<img src="https://github.com/user-attachments/assets/da4c1bb3-2092-442c-8c53-5828e5ea3788"/>
 <h5> 소셜 로그인
 
 <h4>회원 가입</h4>
-
+<img src="https://github.com/user-attachments/assets/86fc18d9-5e24-4bb6-8c52-f7d2368c289f"/>
 <h4>아이디 찾기</h4>
-
+<img src="https://github.com/user-attachments/assets/90fb6ef9-d7d1-425e-9ea3-5a1908c6136c"/>
 <h4>비밀번호 찾기</h4>
-
+<img src="https://github.com/user-attachments/assets/e1aef42d-179c-488b-a001-7abea2ad7ef4"/>
 <h2>마이 페이지</h2>
 
 <h2>관람 정보</h2>
