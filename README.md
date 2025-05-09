@@ -120,7 +120,7 @@
 <details>
 <summary>미리보기(아직 안 넣음)</summary>
 <div >
-  <img src="https://github.com/user-attachments/assets/3c8cac48-f8ef-4aca-9d08-62d6a3772a8e"/>  
+  <img src="https://github.com/user-attachments/assets/4adce412-643a-4606-86ad-dd032df7c9df" />
 </div>
 </details>
 <br><br>
