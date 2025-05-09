@@ -115,7 +115,8 @@
 
 
 ##  <p id="3"> 🛢️ 3. 화면 설계서</p>
-[![ERDCLOUD](https://img.shields.io/badge/Figma-바로가기-green?style=for-the-badge)](https://www.erdcloud.com/d/99TuoiE7CtAbEm8F7)
+[![ERDCLOUD](https://img.shields.io/badge/Figma-바로가기-green?style=for-the-badge)](https://www.figma.com/design/PJKajEZDcMF3QuDXS3PjpE/Baksal-Project?m=auto&t=abD6t3jT7bhH58ht-6)
+
 <details>
 <summary>미리보기(아직 안 넣음)</summary>
 <div >
