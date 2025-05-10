@@ -259,7 +259,7 @@
 
 <h5>주문내역 수정</h5>
 <h2>결제</h2>
-<img src="https://github.com/user-attachments/assets/e3bae37b-1b00-4f25-8f80-14d22483fdfc"/>
+<img src="https://github.com/user-attachments/assets/98fb6e21-bbdc-45fb-823b-2d442c328330"/>
 </div>
 </details>
 <br><br>
