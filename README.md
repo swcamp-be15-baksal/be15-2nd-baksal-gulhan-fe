@@ -143,6 +143,9 @@
 <h5> 소셜 로그인
 <img src="https://github.com/user-attachments/assets/70ed72de-cf82-4312-afde-2e9d61688599"/>
 
+<h5> 추가 정보 입력 </h5>
+<img src="https://github.com/user-attachments/assets/0b2172a6-2835-4000-9898-8ff2c0ad7872"/>
+
 <h4>회원 가입</h4>
 <img src="https://github.com/user-attachments/assets/86fc18d9-5e24-4bb6-8c52-f7d2368c289f"/>
 <h4>아이디 찾기</h4>
@@ -150,6 +153,11 @@
 <h4>비밀번호 찾기</h4>
 <img src="https://github.com/user-attachments/assets/e1aef42d-179c-488b-a001-7abea2ad7ef4"/>
 <h2>마이 페이지</h2>
+<h4>회원 정보 조회 / 수정</h4>
+<img src="https://github.com/user-attachments/assets/58bdaaf2-e77f-400b-82d5-d6e1fbf1dcab"/>
+
+<h4>회원 탈퇴</h4>
+<img src="https://github.com/user-attachments/assets/c838f4aa-7f36-4a61-becb-d708e98256f0"/>
 
 <h2>관람 정보</h2>
 <h4>관람 정보 목록 조회</h4>
