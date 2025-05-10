@@ -162,11 +162,14 @@
 <img src="https://github.com/user-attachments/assets/e8844bc3-3809-4558-ab60-a8e011b0b6bc">
 
 <h4>패키지 등록</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/376514a5-8838-4c5c-b8e2-1910ac69f99a">
+
 <h4>패키지 수정</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/a4345619-511b-4f5b-9771-e0148f2cac66">
+
 <h4>패키지 삭제</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/37ba32db-e1ff-4f19-9f39-37357190d03e">
+
 <h4>패키지 장바구니 담기</h4>
 <img src="https://github.com/user-attachments/assets/7344b88b-24bd-43d5-9328-7a038ed9849a">
 
@@ -181,11 +184,15 @@
 <img src="https://github.com/user-attachments/assets/cf5ae174-06ae-4986-bad1-2f6e6b7fe840">
 
 <h4>기념품 등록</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/b3201a7b-8477-442a-b0c2-8670a671490f">
+
 <h4>기념품 수정</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/10b622ab-3687-4e21-bf87-f6b161b1750f">
+
 <h4>기념품 삭제</h4>
-<img src="">
+<img src="https://github.com/user-attachments/assets/34c27217-a43a-4bf3-a9ff-d0e9b116c3f3">
+
+
 <h4>기념품 장바구니 담기</h4>
 <img src="https://github.com/user-attachments/assets/d786f53b-aaa7-47ed-9d1b-4802c16af8e8">
 
