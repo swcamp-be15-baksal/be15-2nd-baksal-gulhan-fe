@@ -153,33 +153,41 @@
 
 <h2>패키지</h2>
 <h4>패키지 목록 필터링 / 정렬</h4>
+<img src="https://github.com/user-attachments/assets/82a6f2cc-aedc-4504-9553-8282cf364b1d">
 
 <h4>패키지 상세정보 / 리뷰 조회</h4>
+<img src="https://github.com/user-attachments/assets/09433ef9-84a9-4c07-a515-b04c3297968c">
 
 <h4>패키지 관심 등록</h4>
+<img src="https://github.com/user-attachments/assets/e8844bc3-3809-4558-ab60-a8e011b0b6bc">
 
 <h4>패키지 등록</h4>
-
+<img src="">
 <h4>패키지 수정</h4>
-
+<img src="">
 <h4>패키지 삭제</h4>
-
-<h4>패키지 장바구니 담기기</h4>
+<img src="">
+<h4>패키지 장바구니 담기</h4>
+<img src="https://github.com/user-attachments/assets/7344b88b-24bd-43d5-9328-7a038ed9849a">
 
 <h2>기념품</h2>
 <h4>기념품 목록 필터링 / 정렬</h4>
+<img src="https://github.com/user-attachments/assets/356d94e4-3423-4537-9b4f-b1a1be728213">
 
 <h4>기념품 상세정보 / 리뷰 조회</h4>
+<img src="https://github.com/user-attachments/assets/e5d0e646-956e-41c7-aad9-90b62cf222a3">
 
 <h4>기념품 관심 등록</h4>
+<img src="https://github.com/user-attachments/assets/cf5ae174-06ae-4986-bad1-2f6e6b7fe840">
 
 <h4>기념품 등록</h4>
-
+<img src="">
 <h4>기념품 수정</h4>
-
+<img src="">
 <h4>기념품 삭제</h4>
-
-<h4>기념품 장바구니 담기기</h4>
+<img src="">
+<h4>기념품 장바구니 담기</h4>
+<img src="https://github.com/user-attachments/assets/d786f53b-aaa7-47ed-9d1b-4802c16af8e8">
 
 <h2>동행글</h2>
 <h4>동행글 목록 조회</h4>
