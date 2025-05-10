@@ -139,7 +139,9 @@
 
 <h5> 일반 로그인
 <img src="https://github.com/user-attachments/assets/da4c1bb3-2092-442c-8c53-5828e5ea3788"/>
+  
 <h5> 소셜 로그인
+<img src="https://github.com/user-attachments/assets/70ed72de-cf82-4312-afde-2e9d61688599"/>
 
 <h4>회원 가입</h4>
 <img src="https://github.com/user-attachments/assets/86fc18d9-5e24-4bb6-8c52-f7d2368c289f"/>
@@ -150,6 +152,17 @@
 <h2>마이 페이지</h2>
 
 <h2>관람 정보</h2>
+<h4>관람 정보 목록 조회</h4>
+<img src="https://github.com/user-attachments/assets/99e358ef-145d-4db1-a8e4-67cd5a52f6f2"/>
+
+<h4>필터 별 관람 정보 목록 조회</h4>
+<img src="https://github.com/user-attachments/assets/59b26651-6d31-402e-87bd-7e56cfc557e5"/>
+
+<h4>관람 정보 상세 조회</h4>
+<img src="https://github.com/user-attachments/assets/03207b4a-4379-4d79-973e-c507726aeb7d"/>
+
+<h4>관람 정보 좋아요</h4>
+<img src="https://github.com/user-attachments/assets/f712dc3f-1445-465d-9515-f5a934d50d9e"/>
 
 <h2>패키지</h2>
 <h4>패키지 목록 필터링 / 정렬</h4>
