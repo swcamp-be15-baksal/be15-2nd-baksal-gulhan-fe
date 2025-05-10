@@ -112,7 +112,7 @@
 <details>
 <summary>미리보기</summary>
 <div >
-  <img src="https://github.com/user-attachments/assets/c498eef6-022e-4fcc-84a6-74bfc2d0321a" />
+  <img src="https://github.com/user-attachments/assets/1d5fed7a-61e5-4539-a8ea-904cdb8fd42f" />
 </div>
 </details>
 <br><br>
