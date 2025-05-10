@@ -169,6 +169,15 @@
 <h4>배송지 삭제</h4>
 <img="https://github.com/user-attachments/assets/057323b1-2d80-40d5-a16e-6d5d1bee817c"/>
 
+<h4>관심 목록 조회</h4>
+<img src="https://github.com/user-attachments/assets/2ecffd77-0cbd-44a8-a5ef-e94fa9a59655"/>
+
+<h4>내가 쓴 동행글 조회</h4>
+<img src="https://github.com/user-attachments/assets/7bb0619b-881b-4188-a4b8-7a506979bb27"/>
+
+<h4>내가 쓴 댓글 조회</h4>
+<img src="https://github.com/user-attachments/assets/af8f9bf2-b5c6-4988-bcaa-2a327564f76c"/>
+
 <h2>관람 정보</h2>
 <h4>관람 정보 목록 조회</h4>
 <img src="https://github.com/user-attachments/assets/99e358ef-145d-4db1-a8e4-67cd5a52f6f2"/>
