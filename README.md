@@ -152,12 +152,22 @@
 <img src="https://github.com/user-attachments/assets/90fb6ef9-d7d1-425e-9ea3-5a1908c6136c"/>
 <h4>비밀번호 찾기</h4>
 <img src="https://github.com/user-attachments/assets/e1aef42d-179c-488b-a001-7abea2ad7ef4"/>
+
 <h2>마이 페이지</h2>
 <h4>회원 정보 조회 / 수정</h4>
 <img src="https://github.com/user-attachments/assets/58bdaaf2-e77f-400b-82d5-d6e1fbf1dcab"/>
 
 <h4>회원 탈퇴</h4>
 <img src="https://github.com/user-attachments/assets/c838f4aa-7f36-4a61-becb-d708e98256f0"/>
+
+<h4>배송지 등록</h4>
+<img src="https://github.com/user-attachments/assets/3cbe7f61-e685-4463-a2a2-282507ff6e8f"/>
+
+<h4>배송지 수정</h4>
+<img src="https://github.com/user-attachments/assets/f5c67224-335f-466e-9064-b2982d130fe2"/>
+
+<h4>배송지 삭제</h4>
+<img="https://github.com/user-attachments/assets/057323b1-2d80-40d5-a16e-6d5d1bee817c"/>
 
 <h2>관람 정보</h2>
 <h4>관람 정보 목록 조회</h4>
@@ -212,7 +222,6 @@
 
 <h4>기념품 삭제</h4>
 <img src="https://github.com/user-attachments/assets/34c27217-a43a-4bf3-a9ff-d0e9b116c3f3">
-
 
 <h4>기념품 장바구니 담기</h4>
 <img src="https://github.com/user-attachments/assets/d786f53b-aaa7-47ed-9d1b-4802c16af8e8">
