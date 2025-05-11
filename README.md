@@ -132,7 +132,7 @@
 ## <p id="4"> 🗃️ 4. 테스트 결과 </p>
 
 <details>
-<summary>미리보기(아직 안 넣음, 그 GIF 넣는 곳)</summary>
+<summary>미리보기</summary>
 <div >
 <h2>회원</h2>
 <h4>로그인<h4>
