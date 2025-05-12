@@ -236,46 +236,52 @@
 <img src="https://github.com/user-attachments/assets/d786f53b-aaa7-47ed-9d1b-4802c16af8e8">
 
 <h2>동행글</h2>
-<h4>동행글 목록 조회</h4>
-
-<h4>동행글 상세 조회</h4>
-
 <h4>동행글 등록</h4>
+<img src="https://github.com/user-attachments/assets/45867042-2630-4260-a7e9-ea8bab57179c">
 
 <h4>동행글 수정</h4>
+<img src="https://github.com/user-attachments/assets/8a165aac-b60b-4509-9a9b-09989b4ec6a1">
 
 <h4>동행글 삭제</h4>
+<img src="https://github.com/user-attachments/assets/cfac74f7-c663-49a5-9cdd-c38b6f7a541f">
 
 <h2>댓글 </h2>
-<h4>댓글 조회</h4>
-
 <h4>댓글 등록</h4>
+<img src="https://github.com/user-attachments/assets/a0399f80-dfa6-4d8a-aafa-f9bd59560cce">
 
 <h4>댓글 수정</h4>
+<img src="https://github.com/user-attachments/assets/93b23afd-4bb8-4793-832f-072bcee90e19">
 
 <h4>댓글 삭제</h4>
+<img src="https://github.com/user-attachments/assets/4cf26773-db42-4c29-bca4-0fd6d3965801">
 
 <h2>공지사항</h2>
-<h4>공지사항 목록 조회</h4>
-
-<h4>공지사항 상세 조회</h4>
+<h4>공지사항 목록 조회(사용자 시점)</h4>
+<img src="https://github.com/user-attachments/assets/bf471804-4a4d-48e3-9a82-28ca113630df">
 
 <h4>공지사항 등록</h4>
+<img src="https://github.com/user-attachments/assets/52b8be16-6ce1-41ba-968f-59490fd2fdac">
 
 <h4>공지사항 수정</h4>
+<img src="https://github.com/user-attachments/assets/ffd40693-bf77-4a46-b06f-d5c12a5fb5db">
 
 <h4>공지사항 삭제</h4>
+<img src="https://github.com/user-attachments/assets/279be5e4-c56c-4bf3-841d-0adc9aa09b8b">
 
 <h2>대시보드</h2>
-
 <h4>대시보드 화면</h4>
+<img src="https://github.com/user-attachments/assets/ff1c46c4-c905-43c6-aca6-6d364d50c5d2">
 
 <h4>주문 수</h4>
+<img src="https://github.com/user-attachments/assets/631e5deb-32bb-47b6-8b40-8ed006012bba">
 
 <h3>운송장</h3>
 <h4>주문내역 조회</h4>
+<img src="https://github.com/user-attachments/assets/282ea53d-b356-4368-8c1d-67d681fae0ac">
 
 <h5>주문내역 수정</h5>
+<img src="https://github.com/user-attachments/assets/033bacf2-0b9c-436c-a8b9-61634d138a08">
+
 <h2>결제</h2>
 <img src="https://github.com/user-attachments/assets/98fb6e21-bbdc-45fb-823b-2d442c328330"/>
 </div>
